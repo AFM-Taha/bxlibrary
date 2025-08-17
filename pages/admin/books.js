@@ -183,7 +183,7 @@ function AdminBooks() {
         tags: formData.tags.split(',').map(tag => tag.trim()).filter(tag => tag)
       };
 
-      const response = await fetch(`/api/admin/books/${editingBook._id}`, {
+      const response = await fetch(`/api/admin/books/${editingBook.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
@@ -331,7 +331,7 @@ function AdminBooks() {
                 </thead>
                 <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
                   {books.map((book) => (
-                    <tr key={book._id}>
+                    <tr key={book.id}>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="flex items-center">
                           <div className="flex-shrink-0 h-12 w-8">
@@ -385,7 +385,7 @@ function AdminBooks() {
                       <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                         <div className="flex justify-end space-x-2">
                           <Link
-                            href={`/books/${book._id}`}
+                            href={`/books/${book.id}`}
                             className="text-blue-600 hover:text-blue-900"
                           >
                             View
@@ -397,7 +397,7 @@ function AdminBooks() {
                             Edit
                           </button>
                           <button
-                            onClick={() => handleDeleteBook(book._id)}
+                            onClick={() => handleDeleteBook(book.id)}
                             className="text-red-600 hover:text-red-900"
                           >
                             Delete
