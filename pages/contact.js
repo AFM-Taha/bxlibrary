@@ -2,6 +2,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { useAuth } from '../contexts/AuthContext'
 import toast from 'react-hot-toast'
+import { CompactThemeToggle } from '../components/ThemeToggle'
 
 export default function Contact() {
   const { user, isAuthenticated } = useAuth()
@@ -47,9 +48,9 @@ export default function Contact() {
   }
 
   return (
-    <div className='min-h-screen bg-gray-50'>
+    <div className='min-h-screen bg-gray-50 dark:bg-gray-900'>
       {/* Navigation */}
-      <nav className='bg-white shadow-sm border-b'>
+      <nav className='bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700'>
         <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
           <div className='flex justify-between h-16'>
             <div className='flex items-center'>
@@ -57,31 +58,33 @@ export default function Contact() {
                 href={isAuthenticated ? '/library' : '/'}
                 className='flex-shrink-0'
               >
-                <h1 className='text-2xl font-bold text-blue-600'>BX Library</h1>
+                <h1 className='text-2xl font-bold text-blue-600 dark:text-blue-400'>BX Library</h1>
               </Link>
             </div>
             <div className='flex items-center space-x-4'>
               {isAuthenticated ? (
                 <>
-                  <span className='text-gray-700'>Welcome, {user?.name}</span>
+                  <span className='text-gray-700 dark:text-gray-300'>Welcome, {user?.name}</span>
+                  <CompactThemeToggle />
                   <Link
                     href='/library'
-                    className='text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors'
+                    className='text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 px-3 py-2 rounded-md text-sm font-medium transition-colors'
                   >
                     Library
                   </Link>
                   <Link
                     href='/account'
-                    className='text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors'
+                    className='text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 px-3 py-2 rounded-md text-sm font-medium transition-colors'
                   >
                     Account
                   </Link>
                 </>
               ) : (
                 <>
+                  <CompactThemeToggle />
                   <Link
                     href='/'
-                    className='text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors'
+                    className='text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 px-3 py-2 rounded-md text-sm font-medium transition-colors'
                   >
                     Home
                   </Link>
@@ -100,8 +103,8 @@ export default function Contact() {
 
       <div className='max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12'>
         <div className='text-center mb-12'>
-          <h1 className='text-4xl font-bold text-gray-900 mb-4'>Contact Us</h1>
-          <p className='text-xl text-gray-600 max-w-2xl mx-auto'>
+          <h1 className='text-4xl font-bold text-gray-900 dark:text-white mb-4'>Contact Us</h1>
+          <p className='text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto'>
             Have a question or need help? We&apos;d love to hear from you. Send
             us a message and we&apos;ll respond as soon as possible.
           </p>
@@ -110,8 +113,8 @@ export default function Contact() {
         <div className='grid grid-cols-1 lg:grid-cols-3 gap-8'>
           {/* Contact Information */}
           <div className='lg:col-span-1'>
-            <div className='bg-white rounded-lg shadow-sm border p-6'>
-              <h2 className='text-lg font-semibold text-gray-900 mb-6'>
+            <div className='bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6'>
+              <h2 className='text-lg font-semibold text-gray-900 dark:text-white mb-6'>
                 Get in Touch
               </h2>
 
@@ -133,8 +136,8 @@ export default function Contact() {
                     </svg>
                   </div>
                   <div className='ml-3'>
-                    <p className='text-sm font-medium text-gray-900'>Email</p>
-                    <p className='text-sm text-gray-600'>
+                    <p className='text-sm font-medium text-gray-900 dark:text-white'>Email</p>
+                    <p className='text-sm text-gray-600 dark:text-gray-400'>
                       support@bxlibrary.com
                     </p>
                   </div>
@@ -157,8 +160,8 @@ export default function Contact() {
                     </svg>
                   </div>
                   <div className='ml-3'>
-                    <p className='text-sm font-medium text-gray-900'>Phone</p>
-                    <p className='text-sm text-gray-600'>+1 (555) 123-4567</p>
+                    <p className='text-sm font-medium text-gray-900 dark:text-white'>Phone</p>
+                    <p className='text-sm text-gray-600 dark:text-gray-400'>+1 (555) 123-4567</p>
                   </div>
                 </div>
 
@@ -179,10 +182,10 @@ export default function Contact() {
                     </svg>
                   </div>
                   <div className='ml-3'>
-                    <p className='text-sm font-medium text-gray-900'>
+                    <p className='text-sm font-medium text-gray-900 dark:text-white'>
                       Response Time
                     </p>
-                    <p className='text-sm text-gray-600'>Within 24 hours</p>
+                    <p className='text-sm text-gray-600 dark:text-gray-400'>Within 24 hours</p>
                   </div>
                 </div>
 
@@ -209,8 +212,8 @@ export default function Contact() {
                     </svg>
                   </div>
                   <div className='ml-3'>
-                    <p className='text-sm font-medium text-gray-900'>Office</p>
-                    <p className='text-sm text-gray-600'>
+                    <p className='text-sm font-medium text-gray-900 dark:text-white'>Office</p>
+                    <p className='text-sm text-gray-600 dark:text-gray-400'>
                       123 Library Street
                       <br />
                       Digital City, DC 12345
@@ -223,8 +226,8 @@ export default function Contact() {
 
           {/* Contact Form */}
           <div className='lg:col-span-2'>
-            <div className='bg-white rounded-lg shadow-sm border p-6'>
-              <h2 className='text-lg font-semibold text-gray-900 mb-6'>
+            <div className='bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6'>
+              <h2 className='text-lg font-semibold text-gray-900 dark:text-white mb-6'>
                 Send us a Message
               </h2>
 
@@ -243,16 +246,16 @@ export default function Contact() {
                       d='M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z'
                     />
                   </svg>
-                  <h3 className='text-lg font-medium text-gray-900 mb-2'>
+                  <h3 className='text-lg font-medium text-gray-900 dark:text-white mb-2'>
                     Message Sent!
                   </h3>
-                  <p className='text-gray-600 mb-4'>
+                  <p className='text-gray-600 dark:text-gray-400 mb-4'>
                     Thank you for contacting us. We&apos;ll get back to you
                     soon.
                   </p>
                   <button
                     onClick={() => setSubmitted(false)}
-                    className='text-blue-600 hover:text-blue-800 underline'
+                    className='text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 underline'
                   >
                     Send Another Message
                   </button>
@@ -263,7 +266,7 @@ export default function Contact() {
                     <div>
                       <label
                         htmlFor='name'
-                        className='block text-sm font-medium text-gray-700 mb-2'
+                        className='block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2'
                       >
                         Full Name *
                       </label>
@@ -274,7 +277,7 @@ export default function Contact() {
                         value={formData.name}
                         onChange={handleChange}
                         required
-                        className='w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent'
+                        className='w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent'
                         placeholder='Your full name'
                       />
                     </div>
@@ -282,7 +285,7 @@ export default function Contact() {
                     <div>
                       <label
                         htmlFor='email'
-                        className='block text-sm font-medium text-gray-700 mb-2'
+                        className='block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2'
                       >
                         Email Address *
                       </label>
@@ -293,7 +296,7 @@ export default function Contact() {
                         value={formData.email}
                         onChange={handleChange}
                         required
-                        className='w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent'
+                        className='w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent'
                         placeholder='your.email@example.com'
                       />
                     </div>
@@ -302,7 +305,7 @@ export default function Contact() {
                   <div>
                     <label
                       htmlFor='subject'
-                      className='block text-sm font-medium text-gray-700 mb-2'
+                      className='block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2'
                     >
                       Subject *
                     </label>
@@ -313,7 +316,7 @@ export default function Contact() {
                       value={formData.subject}
                       onChange={handleChange}
                       required
-                      className='w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent'
+                      className='w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent'
                       placeholder='What is this about?'
                     />
                   </div>
@@ -321,7 +324,7 @@ export default function Contact() {
                   <div>
                     <label
                       htmlFor='message'
-                      className='block text-sm font-medium text-gray-700 mb-2'
+                      className='block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2'
                     >
                       Message *
                     </label>
@@ -332,7 +335,7 @@ export default function Contact() {
                       onChange={handleChange}
                       required
                       rows={6}
-                      className='w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent'
+                      className='w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent'
                       placeholder='Please describe your question or concern in detail...'
                     />
                   </div>
@@ -380,19 +383,19 @@ export default function Contact() {
         {/* FAQ Section */}
         <div className='mt-16'>
           <div className='text-center mb-8'>
-            <h2 className='text-2xl font-bold text-gray-900 mb-4'>
+            <h2 className='text-2xl font-bold text-gray-900 dark:text-white mb-4'>
               Frequently Asked Questions
             </h2>
-            <p className='text-gray-600'>Quick answers to common questions</p>
+            <p className='text-gray-600 dark:text-gray-400'>Quick answers to common questions</p>
           </div>
 
-          <div className='bg-white rounded-lg shadow-sm border'>
-            <div className='divide-y divide-gray-200'>
+          <div className='bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700'>
+            <div className='divide-y divide-gray-200 dark:divide-gray-700'>
               <div className='p-6'>
-                <h3 className='text-lg font-medium text-gray-900 mb-2'>
+                <h3 className='text-lg font-medium text-gray-900 dark:text-white mb-2'>
                   How do I access the library?
                 </h3>
-                <p className='text-gray-600'>
+                <p className='text-gray-600 dark:text-gray-400'>
                   You need an active account to access our digital library.
                   Contact your administrator to get an invitation to create your
                   account.
@@ -400,20 +403,20 @@ export default function Contact() {
               </div>
 
               <div className='p-6'>
-                <h3 className='text-lg font-medium text-gray-900 mb-2'>
+                <h3 className='text-lg font-medium text-gray-900 dark:text-white mb-2'>
                   Can I download books for offline reading?
                 </h3>
-                <p className='text-gray-600'>
+                <p className='text-gray-600 dark:text-gray-400'>
                   Our books are designed for online reading only. You can read
                   them directly in your browser with our built-in PDF reader.
                 </p>
               </div>
 
               <div className='p-6'>
-                <h3 className='text-lg font-medium text-gray-900 mb-2'>
+                <h3 className='text-lg font-medium text-gray-900 dark:text-white mb-2'>
                   I forgot my password. How can I reset it?
                 </h3>
-                <p className='text-gray-600'>
+                <p className='text-gray-600 dark:text-gray-400'>
                   Use the &quot;Forgot Password&quot; link on the login page to
                   receive a password reset email. If you continue having issues,
                   contact us for assistance.
@@ -421,10 +424,10 @@ export default function Contact() {
               </div>
 
               <div className='p-6'>
-                <h3 className='text-lg font-medium text-gray-900 mb-2'>
+                <h3 className='text-lg font-medium text-gray-900 dark:text-white mb-2'>
                   How do I search for specific books?
                 </h3>
-                <p className='text-gray-600'>
+                <p className='text-gray-600 dark:text-gray-400'>
                   Use the search bar in the library to find books by title or
                   author. You can also filter by category and sort results to
                   find what you&quot;re looking for.

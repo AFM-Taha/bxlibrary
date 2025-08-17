@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { useAuth } from '../../contexts/AuthContext';
 import ProtectedRoute from '../../components/ProtectedRoute';
+import { CompactThemeToggle } from '../../components/ThemeToggle';
 import { toast } from 'react-hot-toast';
 
 function AdminSettings() {
@@ -129,10 +130,10 @@ function AdminSettings() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+      <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900">
         <div className="flex flex-col items-center space-y-4">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600"></div>
-          <p className="text-sm text-gray-600">Loading settings...</p>
+          <p className="text-sm text-gray-600 dark:text-gray-400">Loading settings...</p>
         </div>
       </div>
     );
@@ -148,20 +149,21 @@ function AdminSettings() {
 
   return (
     <ProtectedRoute requireAdmin={true}>
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
         {/* Header */}
-        <div className="bg-white shadow">
+        <div className="bg-white dark:bg-gray-800 shadow border-b border-gray-200 dark:border-gray-700">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between items-center py-6">
               <div>
-                <Link href="/admin" className="text-primary-600 hover:text-primary-700 text-sm font-medium">
+                <Link href="/admin" className="text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 text-sm font-medium">
                   ← Back to Dashboard
                 </Link>
-                <h1 className="text-3xl font-bold text-gray-900 mt-2">System Settings</h1>
-                <p className="mt-1 text-sm text-gray-600">
+                <h1 className="text-3xl font-bold text-gray-900 dark:text-white mt-2">System Settings</h1>
+                <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
                   Configure system-wide settings and preferences
                 </p>
               </div>
+              <CompactThemeToggle />
             </div>
           </div>
         </div>
@@ -178,8 +180,8 @@ function AdminSettings() {
                     onClick={() => setActiveTab(tab.id)}
                     className={`w-full flex items-center px-3 py-2 text-sm font-medium rounded-md ${
                       activeTab === tab.id
-                        ? 'bg-primary-100 text-primary-700'
-                        : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+                        ? 'bg-primary-100 dark:bg-primary-900 text-primary-700 dark:text-primary-300'
+                        : 'text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-gray-200'
                     }`}
                   >
                     <span className="mr-3">{tab.icon}</span>
@@ -192,9 +194,9 @@ function AdminSettings() {
             {/* Content */}
             <div className="flex-1">
               <form onSubmit={handleSaveSettings}>
-                <div className="bg-white shadow rounded-lg">
-                  <div className="px-6 py-4 border-b border-gray-200">
-                    <h3 className="text-lg font-medium text-gray-900">
+                <div className="bg-white dark:bg-gray-800 shadow rounded-lg">
+                  <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
+                    <h3 className="text-lg font-medium text-gray-900 dark:text-white">
                       {tabs.find(tab => tab.id === activeTab)?.name} Settings
                     </h3>
                   </div>

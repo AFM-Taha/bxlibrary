@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { useAuth } from '../../contexts/AuthContext';
 import ProtectedRoute from '../../components/ProtectedRoute';
+import { CompactThemeToggle } from '../../components/ThemeToggle';
 import { toast } from 'react-hot-toast';
 
 function AdminCategories() {
@@ -142,10 +143,10 @@ function AdminCategories() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+      <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900">
         <div className="flex flex-col items-center space-y-4">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600"></div>
-          <p className="text-sm text-gray-600">Loading categories...</p>
+          <p className="text-sm text-gray-600 dark:text-gray-400">Loading categories...</p>
         </div>
       </div>
     );
@@ -153,26 +154,29 @@ function AdminCategories() {
 
   return (
     <ProtectedRoute requireAdmin={true}>
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
         {/* Header */}
-        <div className="bg-white shadow">
+        <div className="bg-white dark:bg-gray-800 shadow border-b border-gray-200 dark:border-gray-700">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between items-center py-6">
               <div>
                 <Link href="/admin" className="text-primary-600 hover:text-primary-700 text-sm font-medium">
                   ← Back to Dashboard
                 </Link>
-                <h1 className="text-3xl font-bold text-gray-900 mt-2">Category Management</h1>
-                <p className="mt-1 text-sm text-gray-600">
+                <h1 className="text-3xl font-bold text-gray-900 dark:text-white mt-2">Category Management</h1>
+                <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
                   Manage book categories and organize your library
                 </p>
               </div>
-              <button
-                onClick={() => setShowCreateModal(true)}
-                className="bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-md text-sm font-medium"
-              >
-                Add Category
-              </button>
+              <div className="flex items-center space-x-4">
+                <CompactThemeToggle />
+                <button
+                  onClick={() => setShowCreateModal(true)}
+                  className="bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-md text-sm font-medium"
+                >
+                  Add Category
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -181,14 +185,14 @@ function AdminCategories() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {categories.map((category) => (
-              <div key={category._id} className="bg-white rounded-lg shadow-md overflow-hidden">
+              <div key={category._id} className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
                 <div 
                   className="h-4"
                   style={{ backgroundColor: category.color || '#3B82F6' }}
                 ></div>
                 <div className="p-6">
                   <div className="flex items-center justify-between mb-4">
-                    <h3 className="text-lg font-semibold text-gray-900">
+                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
                       {category.name}
                     </h3>
                     <div className="flex space-x-2">

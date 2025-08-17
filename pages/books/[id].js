@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useAuth } from '../../contexts/AuthContext';
 import ProtectedRoute from '../../components/ProtectedRoute';
 import toast from 'react-hot-toast';
+import { CompactThemeToggle } from '../../components/ThemeToggle';
 
 function BookDetailsPage() {
   const { user, logout } = useAuth();
@@ -51,26 +52,27 @@ function BookDetailsPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50">
-        <nav className="bg-white shadow-sm border-b">
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+        <nav className="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between h-16">
               <div className="flex items-center">
                 <Link href="/library" className="flex-shrink-0">
-                  <h1 className="text-2xl font-bold text-blue-600">BX Library</h1>
+                  <h1 className="text-2xl font-bold text-blue-600 dark:text-blue-400">BX Library</h1>
                 </Link>
               </div>
               <div className="flex items-center space-x-4">
-                <span className="text-gray-700">Welcome, {user?.name}</span>
+                <span className="text-gray-700 dark:text-gray-300">Welcome, {user?.name}</span>
+                <CompactThemeToggle />
                 <Link
                   href="/account"
-                  className="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors"
+                  className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 px-3 py-2 rounded-md text-sm font-medium transition-colors"
                 >
                   Account
                 </Link>
                 <button
                   onClick={handleLogout}
-                  className="text-gray-700 hover:text-red-600 px-3 py-2 rounded-md text-sm font-medium transition-colors"
+                  className="text-gray-700 dark:text-gray-300 hover:text-red-600 dark:hover:text-red-400 px-3 py-2 rounded-md text-sm font-medium transition-colors"
                 >
                   Sign Out
                 </button>
@@ -87,26 +89,27 @@ function BookDetailsPage() {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gray-50">
-        <nav className="bg-white shadow-sm border-b">
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+        <nav className="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between h-16">
               <div className="flex items-center">
                 <Link href="/library" className="flex-shrink-0">
-                  <h1 className="text-2xl font-bold text-blue-600">BX Library</h1>
+                  <h1 className="text-2xl font-bold text-blue-600 dark:text-blue-400">BX Library</h1>
                 </Link>
               </div>
               <div className="flex items-center space-x-4">
-                <span className="text-gray-700">Welcome, {user?.name}</span>
+                <span className="text-gray-700 dark:text-gray-300">Welcome, {user?.name}</span>
+              <CompactThemeToggle />
                 <Link
                   href="/account"
-                  className="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors"
+                  className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 px-3 py-2 rounded-md text-sm font-medium transition-colors"
                 >
                   Account
                 </Link>
                 <button
                   onClick={handleLogout}
-                  className="text-gray-700 hover:text-red-600 px-3 py-2 rounded-md text-sm font-medium transition-colors"
+                  className="text-gray-700 dark:text-gray-300 hover:text-red-600 dark:hover:text-red-400 px-3 py-2 rounded-md text-sm font-medium transition-colors"
                 >
                   Sign Out
                 </button>
@@ -133,7 +136,7 @@ function BookDetailsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       {/* Navigation */}
       <nav className="bg-white shadow-sm border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -169,7 +172,7 @@ function BookDetailsPage() {
             <li className="inline-flex items-center">
               <Link
                 href="/library"
-                className="inline-flex items-center text-sm font-medium text-gray-700 hover:text-blue-600"
+                className="inline-flex items-center text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400"
               >
                 <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
                   <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>
@@ -182,17 +185,17 @@ function BookDetailsPage() {
                 <svg className="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd"></path>
                 </svg>
-                <span className="ml-1 text-sm font-medium text-gray-500 md:ml-2">{book?.title}</span>
+                <span className="ml-1 text-sm font-medium text-gray-500 dark:text-gray-400 md:ml-2">{book?.title}</span>
               </div>
             </li>
           </ol>
         </nav>
 
-        <div className="bg-white rounded-lg shadow-sm border overflow-hidden">
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden">
           <div className="md:flex">
             {/* Book Cover */}
             <div className="md:flex-shrink-0">
-              <div className="h-96 w-full md:w-64 bg-gray-200 flex items-center justify-center">
+              <div className="h-96 w-full md:w-64 bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
                 {book?.thumbnail ? (
                   <img
                     src={book.thumbnail}
@@ -213,8 +216,8 @@ function BookDetailsPage() {
             {/* Book Details */}
             <div className="p-8 flex-1">
               <div className="mb-6">
-                <h1 className="text-3xl font-bold text-gray-900 mb-2">{book?.title}</h1>
-                <p className="text-xl text-gray-600 mb-4">by {book?.author}</p>
+                <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">{book?.title}</h1>
+                <p className="text-xl text-gray-600 dark:text-gray-300 mb-4">by {book?.author}</p>
                 
                 {book?.category && (
                   <div className="mb-4">
@@ -232,23 +235,23 @@ function BookDetailsPage() {
 
                 {book?.description && (
                   <div className="mb-6">
-                    <h3 className="text-lg font-semibold text-gray-900 mb-2">Description</h3>
-                    <p className="text-gray-700 leading-relaxed">{book.description}</p>
+                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">Description</h3>
+                    <p className="text-gray-700 dark:text-gray-300 leading-relaxed">{book.description}</p>
                   </div>
                 )}
 
                 <div className="mb-6">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">Book Information</h3>
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">Book Information</h3>
                   <dl className="grid grid-cols-1 gap-x-4 gap-y-2 sm:grid-cols-2">
                     <div>
-                      <dt className="text-sm font-medium text-gray-500">Added</dt>
-                      <dd className="text-sm text-gray-900">
+                      <dt className="text-sm font-medium text-gray-500 dark:text-gray-400">Added</dt>
+                      <dd className="text-sm text-gray-900 dark:text-gray-100">
                         {new Date(book?.createdAt).toLocaleDateString()}
                       </dd>
                     </div>
                     <div>
-                      <dt className="text-sm font-medium text-gray-500">Status</dt>
-                      <dd className="text-sm text-gray-900 capitalize">{book?.status}</dd>
+                      <dt className="text-sm font-medium text-gray-500 dark:text-gray-400">Status</dt>
+                      <dd className="text-sm text-gray-900 dark:text-gray-100 capitalize">{book?.status}</dd>
                     </div>
                   </dl>
                 </div>
@@ -268,7 +271,7 @@ function BookDetailsPage() {
                 
                 <Link
                   href="/library"
-                  className="flex-1 sm:flex-initial bg-gray-100 text-gray-700 px-6 py-3 rounded-md font-medium hover:bg-gray-200 transition-colors flex items-center justify-center"
+                  className="flex-1 sm:flex-initial bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-6 py-3 rounded-md font-medium hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors flex items-center justify-center"
                 >
                   <svg className="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />

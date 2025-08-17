@@ -4,6 +4,7 @@ import Link from 'next/link'
 import Head from 'next/head'
 import { toast } from 'react-hot-toast'
 import { useAuth } from '../contexts/AuthContext'
+import { CompactThemeToggle } from '../components/ThemeToggle'
 
 export default function Login() {
   const [formData, setFormData] = useState({
@@ -50,11 +51,14 @@ export default function Login() {
         <meta name='description' content='Login to BX Library' />
       </Head>
 
-      <div className='min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8'>
+      <div className='min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 py-12 px-4 sm:px-6 lg:px-8'>
         <div className='max-w-md w-full space-y-8'>
+          <div className='flex justify-end'>
+            <CompactThemeToggle />
+          </div>
           <div>
-            <h2 className='mt-6 text-center text-3xl font-extrabold text-gray-900'>
-              Sign in to BX Library
+            <h2 className='mt-6 text-center text-3xl font-extrabold text-gray-900 dark:text-white'>
+              Sign in to your account
             </h2>
             <p className='mt-2 text-center text-sm text-gray-600'>
               Access your digital library
@@ -73,7 +77,7 @@ export default function Login() {
                   type='email'
                   autoComplete='email'
                   required
-                  className='appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-primary-500 focus:border-primary-500 focus:z-10 sm:text-sm'
+                  className='appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-white bg-white dark:bg-gray-800 rounded-t-md focus:outline-none focus:ring-primary-500 focus:border-primary-500 focus:z-10 sm:text-sm'
                   placeholder='Email address'
                   value={formData.email}
                   onChange={handleChange}
@@ -90,7 +94,7 @@ export default function Login() {
                   type='password'
                   autoComplete='current-password'
                   required
-                  className='appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-primary-500 focus:border-primary-500 focus:z-10 sm:text-sm'
+                  className='appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-white bg-white dark:bg-gray-800 rounded-b-md focus:outline-none focus:ring-primary-500 focus:border-primary-500 focus:z-10 sm:text-sm'
                   placeholder='Password'
                   value={formData.password}
                   onChange={handleChange}
@@ -103,7 +107,7 @@ export default function Login() {
               <div className='text-sm'>
                 <Link
                   href='/forgot-password'
-                  className='font-medium text-primary-600 hover:text-primary-500'
+                  className='font-medium text-primary-600 dark:text-primary-400 hover:text-primary-500 dark:hover:text-primary-300'
                 >
                   Forgot your password?
                 </Link>
@@ -128,9 +132,9 @@ export default function Login() {
             </div>
 
             <div className='text-center'>
-              <p className='text-sm text-gray-600'>
+              <p className='text-sm text-gray-600 dark:text-gray-400'>
                 Don&apos;t have an account?{' '}
-                <span className='font-medium text-gray-900'>
+                <span className='font-medium text-gray-900 dark:text-white'>
                   Contact your administrator for an invitation.
                 </span>
               </p>
