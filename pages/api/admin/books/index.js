@@ -92,6 +92,7 @@ async function getBooks(req, res) {
       driveUrl: book.driveUrl,
       driveFileId: book.driveFileId,
       thumbnailUrl: book.thumbnailUrl,
+      images: book.images || [],
       category: book.category ? {
         id: book.category._id,
         name: book.category.name,
@@ -140,6 +141,7 @@ async function createBook(req, res) {
       description,
       driveUrl,
       categoryId,
+      images = [],
       status = 'published'
     } = req.body;
     const adminUserId = req.user._id;
@@ -171,6 +173,24 @@ async function createBook(req, res) {
 
     if (!['published', 'draft', 'archived'].includes(status)) {
       return res.status(400).json({ error: 'Invalid status' });
+    }
+
+    // Validate images array
+    if (images && !Array.isArray(images)) {
+      return res.status(400).json({ error: 'Images must be an array' });
+    }
+
+    if (images && images.length > 5) {
+      return res.status(400).json({ error: 'Maximum 5 images allowed' });
+    }
+
+    // Validate each image object
+    if (images && images.length > 0) {
+      for (const image of images) {
+        if (!image.url || typeof image.url !== 'string') {
+          return res.status(400).json({ error: 'Each image must have a valid URL' });
+        }
+      }
     }
 
     // Validate category (required)
@@ -233,6 +253,7 @@ async function createBook(req, res) {
       description: description?.trim() || '',
       driveUrl: canonicalUrl,
       driveFileId,
+      images: images || [],
       category: categoryId,
       status,
       isPublished: status === 'published',
@@ -261,6 +282,7 @@ async function createBook(req, res) {
       driveUrl: book.driveUrl,
       driveFileId: book.driveFileId,
       thumbnailUrl: book.thumbnailUrl,
+      images: book.images || [],
       category: book.category ? {
         id: book.category._id,
         name: book.category.name,

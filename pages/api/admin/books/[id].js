@@ -45,6 +45,7 @@ async function getBook(req, res, bookId) {
       driveUrl: book.driveUrl,
       driveFileId: book.driveFileId,
       thumbnailUrl: book.thumbnailUrl,
+      images: book.images || [],
       category: book.category ? {
         id: book.category._id,
         name: book.category.name,
@@ -79,6 +80,7 @@ async function updateBook(req, res, bookId) {
       description,
       driveUrl,
       categoryId,
+      images,
       status,
       action
     } = req.body;
@@ -151,6 +153,34 @@ async function updateBook(req, res, bookId) {
 
         book.description = description?.trim() || '';
         hasChanges = true;
+      }
+
+      // Update images
+      if (images !== undefined) {
+        // Validate images array
+        if (!Array.isArray(images)) {
+          return res.status(400).json({ error: 'Images must be an array' });
+        }
+
+        if (images.length > 5) {
+          return res.status(400).json({ error: 'Maximum 5 images allowed' });
+        }
+
+        // Validate each image object
+        for (const image of images) {
+          if (!image.url || typeof image.url !== 'string') {
+            return res.status(400).json({ error: 'Each image must have a valid URL' });
+          }
+        }
+
+        // Check if images have changed
+        const currentImages = JSON.stringify(book.images || []);
+        const newImages = JSON.stringify(images);
+        
+        if (currentImages !== newImages) {
+          book.images = images;
+          hasChanges = true;
+        }
       }
 
       // Update drive URL

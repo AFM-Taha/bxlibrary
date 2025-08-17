@@ -5,6 +5,8 @@ import { useAuth } from '../../contexts/AuthContext';
 import ProtectedRoute from '../../components/ProtectedRoute';
 import { toast } from 'react-hot-toast';
 import { CompactThemeToggle } from '../../components/ThemeToggle';
+import CloudinaryImageUpload from '../../components/CloudinaryImageUpload';
+import BookImageSlider from '../../components/BookImageSlider';
 
 function AdminBooks() {
   const { user } = useAuth();
@@ -20,7 +22,7 @@ function AdminBooks() {
     description: '',
     category: '',
     googleDriveFileId: '',
-    coverImage: '',
+    images: [],
     tags: '',
     isPublic: true
   });
@@ -237,7 +239,7 @@ function AdminBooks() {
       description: book.description || '',
       category: book.category?._id || book.category || '',
       googleDriveFileId: book.driveFileId || book.driveUrl || '',
-      coverImage: book.coverImage || '',
+      images: book.images || [],
       tags: book.tags ? book.tags.join(', ') : '',
       isPublic: book.isPublic !== false
     });
@@ -250,7 +252,7 @@ function AdminBooks() {
       description: '',
       category: '',
       googleDriveFileId: '',
-      coverImage: '',
+      images: [],
       tags: '',
       isPublic: true
     });
@@ -335,19 +337,12 @@ function AdminBooks() {
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="flex items-center">
                           <div className="flex-shrink-0 h-12 w-8">
-                            {book.coverImage ? (
-                              <img
-                                className="h-12 w-8 object-cover rounded"
-                                src={book.coverImage}
-                                alt={book.title}
-                              />
-                            ) : (
-                              <div className="h-12 w-8 bg-gray-200 rounded flex items-center justify-center">
-                                <svg className="h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                                </svg>
-                              </div>
-                            )}
+                            <BookImageSlider
+                              images={book.images || []}
+                              title={book.title}
+                              className="h-12 w-8 rounded"
+                              autoSlide={false}
+                            />
                           </div>
                           <div className="ml-4">
                             <div className="text-sm font-medium text-gray-900 dark:text-white">
@@ -505,15 +500,10 @@ function AdminBooks() {
                     </div>
                   </div>
                   <div className="mb-4">
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                      Cover Image URL
-                    </label>
-                    <input
-                      type="url"
-                      value={formData.coverImage}
-                      onChange={(e) => setFormData({ ...formData, coverImage: e.target.value })}
-                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-primary-500 focus:border-primary-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-                      placeholder="https://example.com/cover.jpg"
+                    <CloudinaryImageUpload
+                      images={formData.images}
+                      onChange={(images) => setFormData({ ...formData, images })}
+                      maxImages={5}
                     />
                   </div>
                   <div className="mb-4">

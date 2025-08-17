@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useAuth } from '../contexts/AuthContext';
 import ProtectedRoute from '../components/ProtectedRoute';
 import { CompactThemeToggle } from '../components/ThemeToggle';
+import BookImageSlider from '../components/BookImageSlider';
 
 function LibraryPage() {
   const { user, logout } = useAuth();
@@ -217,20 +218,14 @@ function LibraryPage() {
               {books.map((book) => (
                 <div key={book._id} className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 hover:shadow-md transition-shadow">
                   <Link href={`/books/${book._id}`}>
-                    <div className="aspect-[2/3] bg-gray-200 dark:bg-gray-700 rounded-t-lg overflow-hidden">
-                      {book.thumbnail ? (
-                        <img
-                          src={book.thumbnail}
-                          alt={book.title}
-                          className="w-full h-full object-cover"
-                        />
-                      ) : (
-                        <div className="w-full h-full flex items-center justify-center">
-                          <svg className="h-8 w-8 text-gray-400 dark:text-gray-500" fill="currentColor" viewBox="0 0 20 20">
-                            <path fillRule="evenodd" d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 0v12h8V4H6z" clipRule="evenodd" />
-                          </svg>
-                        </div>
-                      )}
+                    <div className="aspect-[2/3] rounded-t-lg overflow-hidden">
+                      <BookImageSlider
+                        images={book.images || []}
+                        title={book.title}
+                        className="w-full h-full"
+                        autoSlide={true}
+                        slideInterval={4000}
+                      />
                     </div>
                     <div className="p-2">
                       <h3 className="font-medium text-gray-900 dark:text-white text-xs mb-1 line-clamp-2 leading-tight">{book.title}</h3>

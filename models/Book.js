@@ -32,6 +32,34 @@ const BookSchema = new mongoose.Schema({
     required: true,
     trim: true
   },
+  // Multiple images for book covers (Cloudinary URLs)
+  images: {
+    type: [{
+      url: {
+        type: String,
+        required: true,
+        trim: true
+      },
+      publicId: {
+        type: String,
+        required: false,
+        trim: true
+      },
+      alt: {
+        type: String,
+        required: false,
+        trim: true
+      }
+    }],
+    default: [],
+    validate: {
+      validator: function(images) {
+        return images.length <= 5;
+      },
+      message: 'A book can have maximum 5 images'
+    }
+  },
+  // Legacy field for backward compatibility
   thumbnailUrl: {
     type: String,
     required: false

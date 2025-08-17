@@ -5,6 +5,7 @@ import { useAuth } from '../../contexts/AuthContext';
 import ProtectedRoute from '../../components/ProtectedRoute';
 import toast from 'react-hot-toast';
 import { CompactThemeToggle } from '../../components/ThemeToggle';
+import BookImageSlider from '../../components/BookImageSlider';
 
 function BookDetailsPage() {
   const { user, logout } = useAuth();
@@ -195,21 +196,14 @@ function BookDetailsPage() {
           <div className="md:flex">
             {/* Book Cover */}
             <div className="md:flex-shrink-0">
-              <div className="h-96 w-full md:w-64 bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
-                {book?.thumbnail ? (
-                  <img
-                    src={book.thumbnail}
-                    alt={book.title}
-                    className="h-full w-full object-cover"
-                  />
-                ) : (
-                  <div className="text-center">
-                    <svg className="mx-auto h-24 w-24 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 0v12h8V4H6z" clipRule="evenodd" />
-                    </svg>
-                    <p className="mt-2 text-sm text-gray-500">No cover available</p>
-                  </div>
-                )}
+              <div className="h-96 w-full md:w-64">
+                <BookImageSlider
+                  images={book?.images || []}
+                  title={book?.title || 'Book'}
+                  className="h-full w-full rounded-lg"
+                  autoSlide={true}
+                  slideInterval={5000}
+                />
               </div>
             </div>
 
