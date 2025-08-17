@@ -126,7 +126,7 @@ function ReaderPage() {
 
   const getDriveEmbedUrl = () => {
     if (!book?.driveFileId) return '';
-    return `https://drive.google.com/file/d/${book.driveFileId}/preview`;
+    return `https://drive.google.com/file/d/${book.driveFileId}/preview?usp=embed&chrome=false&toolbar=false`;
   };
 
   if (loading) {
@@ -279,7 +279,7 @@ function ReaderPage() {
       <div className="relative h-screen pt-16">
         {readerMode === 'drive_embed' ? (
           // Google Drive Embed Mode
-          <div className="h-full relative">
+          <div className="h-full relative drive-embed-container">
             <iframe
               ref={iframeRef}
               src={getDriveEmbedUrl()}

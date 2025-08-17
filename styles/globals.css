@@ -133,3 +133,42 @@
 .toast-container {
   @apply fixed top-4 right-4 z-50;
 }
+
+/* Hide Google Drive pop-out icon and toolbar */
+.drive-embed-container {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Hide the top toolbar area where the pop-out icon appears */
+.drive-embed-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 40px;
+  background: white;
+  z-index: 1000;
+  pointer-events: none;
+}
+
+/* Hide the pop-out icon specifically */
+.drive-embed-container::after {
+  content: '';
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 32px;
+  height: 32px;
+  background: white;
+  z-index: 1001;
+  pointer-events: none;
+  border-radius: 4px;
+}
+
+/* Additional CSS to hide Google Drive UI elements */
+iframe[src*="drive.google.com"] {
+  margin-top: -40px;
+  height: calc(100% + 40px);
+}
