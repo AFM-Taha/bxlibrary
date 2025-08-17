@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cloudinary Upload Test</title>
+</head>
+<body>
+    <h1>Cloudinary Upload Test</h1>
+    <input type="file" id="fileInput" accept="image/*">
+    <button onclick="testUpload()">Test Upload</button>
+    <div id="result"></div>
+
+    <script>
+        async function testUpload() {
+            const fileInput = document.getElementById('fileInput');
+            const file = fileInput.files[0];
+            
+            if (!file) {
+                alert('Please select a file first');
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('file', file);
+            formData.append('upload_preset', 'bx-library');
+            formData.append('folder', 'book-covers');
+
+            try {
+                console.log('Testing upload to Cloudinary...');
+                const response = await fetch(
+                    'https://api.cloudinary.com/v1_1/du67b7gez/image/upload',
+                    {
+                        method: 'POST',
+                        body: formData,
+                    }
+                );
+
+                console.log('Response status:', response.status);
+                console.log('Response headers:', response.headers);
+                
+                const data = await response.json();
+                console.log('Response data:', data);
+                
+                if (!response.ok) {
+                    document.getElementById('result').innerHTML = 
+                        `<p style="color: red;">Error: ${response.status} ${response.statusText}</p>
+                         <pre>${JSON.stringify(data, null, 2)}</pre>`;
+                } else {
+                    document.getElementById('result').innerHTML = 
+                        `<p style="color: green;">Success!</p>
+                         <img src="${data.secure_url}" style="max-width: 200px;">
+                         <pre>${JSON.stringify(data, null, 2)}</pre>`;
+                }
+            } catch (error) {
+                console.error('Upload error:', error);
+                document.getElementById('result').innerHTML = 
+                    `<p style="color: red;">Error: ${error.message}</p>`;
+            }
+        }
+    </script>
+</body>
+</html>
