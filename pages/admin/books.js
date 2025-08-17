@@ -115,6 +115,7 @@ function AdminBooks() {
         driveUrl: `https://drive.google.com/file/d/${fileId}/view`,
         categoryId: formData.category,
         status: formData.isPublic ? 'published' : 'draft',
+        images: formData.images,
         tags: formData.tags.split(',').map(tag => tag.trim()).filter(tag => tag)
       };
       
@@ -182,6 +183,7 @@ function AdminBooks() {
         driveUrl: `https://drive.google.com/file/d/${fileId}/view`,
         categoryId: formData.category,
         status: formData.isPublic ? 'published' : 'draft',
+        images: formData.images,
         tags: formData.tags.split(',').map(tag => tag.trim()).filter(tag => tag)
       };
 
