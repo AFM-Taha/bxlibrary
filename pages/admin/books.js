@@ -236,7 +236,7 @@ function AdminBooks() {
       author: book.author,
       description: book.description || '',
       category: book.category?._id || book.category || '',
-      googleDriveFileId: book.googleDriveFileId || '',
+      googleDriveFileId: book.driveFileId || book.driveUrl || '',
       coverImage: book.coverImage || '',
       tags: book.tags ? book.tags.join(', ') : '',
       isPublic: book.isPublic !== false
@@ -481,6 +481,19 @@ function AdminBooks() {
                       <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                         Google Drive URL or File ID
                       </label>
+                      {editingBook && editingBook.driveUrl && (
+                        <div className="mb-2 p-2 bg-gray-50 dark:bg-gray-700 rounded border">
+                          <p className="text-xs text-gray-600 dark:text-gray-400 mb-1">Current Drive URL:</p>
+                          <a 
+                            href={editingBook.driveUrl} 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className="text-xs text-blue-600 dark:text-blue-400 hover:underline break-all"
+                          >
+                            {editingBook.driveUrl}
+                          </a>
+                        </div>
+                      )}
                       <input
                         type="text"
                         value={formData.googleDriveFileId}
