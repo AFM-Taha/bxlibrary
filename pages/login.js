@@ -3,35 +3,26 @@ import { useRouter } from 'next/router'
 import Link from 'next/link'
 import Head from 'next/head'
 import { toast } from 'react-hot-toast'
+import { useAuth } from '../contexts/AuthContext'
 
 export default function Login() {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
   })
-  const [isLoading, setIsLoading] = useState(false)
+  const { user, isAuthenticated, isLoading, login } = useAuth()
   const router = useRouter()
 
   useEffect(() => {
-    // Check if user is already logged in
-    const checkAuth = async () => {
-      try {
-        const response = await fetch('/api/auth/me')
-        if (response.ok) {
-          const userData = await response.json()
-          // Redirect admin users to admin dashboard, regular users to library
-          if (userData.user && userData.user.role === 'admin') {
-            router.push('/admin')
-          } else {
-            router.push('/library')
-          }
-        }
-      } catch (error) {
-        // User not logged in, stay on login page
+    // Redirect if already authenticated
+    if (isAuthenticated && user) {
+      if (user.role === 'admin') {
+        router.push('/admin')
+      } else {
+        router.push('/library')
       }
     }
-    checkAuth()
-  }, [router])
+  }, [isAuthenticated, user, router])
 
   const handleChange = (e) => {
     setFormData({
@@ -42,51 +33,13 @@ export default function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    setIsLoading(true)
 
-    try {
-      const response = await fetch('/api/auth/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-        credentials: 'include'
-      })
-
-      const data = await response.json()
-
-      if (response.ok) {
-        toast.success('Login successful!')
-        
-        // Fetch user data to determine redirect destination
-        try {
-          const userResponse = await fetch('/api/auth/me', {
-            credentials: 'include'
-          })
-          if (userResponse.ok) {
-            const userData = await userResponse.json()
-            // Redirect admin users to admin dashboard, regular users to library
-            if (userData.user && userData.user.role === 'admin') {
-              router.push('/admin')
-            } else {
-              router.push('/library')
-            }
-          } else {
-            // Fallback to library if user data fetch fails
-            router.push('/library')
-          }
-        } catch (userError) {
-          // Fallback to library if user data fetch fails
-          router.push('/library')
-        }
-      } else {
-        toast.error(data.error || 'Login failed')
-      }
-    } catch (error) {
-      toast.error('Network error. Please try again.')
-    } finally {
-      setIsLoading(false)
+    const result = await login(formData.email, formData.password)
+    
+    if (result.success) {
+      // Redirect will be handled by useEffect when user state updates
+    } else {
+      toast.error(result.error || 'Login failed')
     }
   }
 
