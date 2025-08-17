@@ -23,7 +23,10 @@ async function handler(req, res) {
     const skip = (pageNum - 1) * limitNum;
 
     // Build query
-    const query = { status: 'published' };
+    const query = { 
+      status: 'published',
+      isDeleted: { $ne: true }
+    };
 
     // Add search filter
     if (search) {

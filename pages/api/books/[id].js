@@ -1,6 +1,5 @@
 import dbConnect from '../../../lib/mongodb';
 import Book from '../../../models/Book';
-import { withAuth } from '../../../lib/auth';
 import { isValidObjectId } from 'mongoose';
 
 async function handler(req, res) {
@@ -19,7 +18,8 @@ async function handler(req, res) {
 
       const book = await Book.findOne({
         _id: id,
-        status: 'published'
+        status: 'published',
+        isDeleted: { $ne: true }
       }).populate('category', 'name color').lean();
 
       if (!book) {
@@ -45,4 +45,4 @@ async function handler(req, res) {
   }
 }
 
-export default withAuth(handler);
+export default handler;
