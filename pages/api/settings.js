@@ -19,7 +19,7 @@ const handler = async (req, res) => {
         primaryColor: '#2563eb',
         secondaryColor: '#1e40af',
         sessionLength: 24,
-        readerMode: 'drive',
+        readerMode: 'drive_embed',
         allowDownload: false,
         showWatermark: true,
         emailTemplates: {

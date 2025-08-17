@@ -18,7 +18,7 @@ function ReaderPage() {
   const [showWatermark, setShowWatermark] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
-  const [readerMode, setReaderMode] = useState('drive'); // 'drive' or 'pdfjs'
+  const [readerMode, setReaderMode] = useState('drive_embed'); // 'drive_embed' or 'pdf_stream'
   const iframeRef = useRef(null);
 
   useEffect(() => {
@@ -61,7 +61,7 @@ function ReaderPage() {
       const response = await fetch('/api/settings');
       if (response.ok) {
         const data = await response.json();
-        setReaderMode(data.settings?.readerMode || 'drive');
+        setReaderMode(data.settings?.readerMode || 'drive_embed');
         setShowWatermark(data.settings?.showWatermark !== false);
       }
     } catch (error) {
@@ -185,7 +185,7 @@ function ReaderPage() {
           {/* Reader Controls */}
           <div className="flex items-center space-x-2">
             {/* Page Navigation */}
-            {readerMode === 'pdfjs' && (
+            {readerMode === 'pdf_stream' && (
               <div className="flex items-center space-x-2">
                 <button
                   onClick={() => handlePageChange(currentPage - 1)}
@@ -277,7 +277,7 @@ function ReaderPage() {
 
       {/* Reader Content */}
       <div className="relative h-screen pt-16">
-        {readerMode === 'drive' ? (
+        {readerMode === 'drive_embed' ? (
           // Google Drive Embed Mode
           <div className="h-full relative">
             <iframe
