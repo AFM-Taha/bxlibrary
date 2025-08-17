@@ -78,6 +78,20 @@ const BookSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
     required: false
+  },
+  // Soft delete fields
+  isDeleted: {
+    type: Boolean,
+    default: false
+  },
+  deletedAt: {
+    type: Date,
+    required: false
+  },
+  deletedBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: false
   }
 }, {
   timestamps: true
@@ -87,6 +101,7 @@ const BookSchema = new mongoose.Schema({
 BookSchema.index({ title: 'text' }); // Text search
 BookSchema.index({ category: 1 });
 BookSchema.index({ isPublished: 1 });
+BookSchema.index({ isDeleted: 1 });
 BookSchema.index({ createdAt: -1 });
 BookSchema.index({ readCount: -1 });
 

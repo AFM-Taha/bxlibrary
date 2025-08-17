@@ -168,11 +168,11 @@ export default function ResetPassword() {
                     value={formData.password}
                     onChange={handleChange}
                     disabled={isLoading}
-                    minLength={8}
+                    minLength={4}
                   />
                 </div>
                 <p className="mt-1 text-xs text-gray-500">
-                  Must be at least 8 characters long
+                  Must be at least 4 characters long
                 </p>
               </div>
 
@@ -192,7 +192,7 @@ export default function ResetPassword() {
                     value={formData.confirmPassword}
                     onChange={handleChange}
                     disabled={isLoading}
-                    minLength={8}
+                    minLength={4}
                   />
                 </div>
               </div>

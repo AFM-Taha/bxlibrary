@@ -213,11 +213,11 @@ function LibraryPage() {
           </div>
         ) : (
           <>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-8">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 mb-8">
               {books.map((book) => (
-                <div key={book._id} className="bg-white rounded-lg shadow-sm border hover:shadow-md transition-shadow">
+                <div key={book._id} className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 hover:shadow-md transition-shadow">
                   <Link href={`/books/${book._id}`}>
-                    <div className="aspect-[3/4] bg-gray-200 rounded-t-lg overflow-hidden">
+                    <div className="aspect-[2/3] bg-gray-200 dark:bg-gray-700 rounded-t-lg overflow-hidden">
                       {book.thumbnail ? (
                         <img
                           src={book.thumbnail}
@@ -226,17 +226,17 @@ function LibraryPage() {
                         />
                       ) : (
                         <div className="w-full h-full flex items-center justify-center">
-                          <svg className="h-16 w-16 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                          <svg className="h-8 w-8 text-gray-400 dark:text-gray-500" fill="currentColor" viewBox="0 0 20 20">
                             <path fillRule="evenodd" d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 0v12h8V4H6z" clipRule="evenodd" />
                           </svg>
                         </div>
                       )}
                     </div>
-                    <div className="p-4">
-                      <h3 className="font-semibold text-gray-900 mb-1 line-clamp-2">{book.title}</h3>
-                      <p className="text-sm text-gray-600 mb-2">{book.author}</p>
+                    <div className="p-2">
+                      <h3 className="font-medium text-gray-900 dark:text-white text-xs mb-1 line-clamp-2 leading-tight">{book.title}</h3>
+                      <p className="text-xs text-gray-600 dark:text-gray-400 mb-1 truncate">{book.author}</p>
                       {book.category && (
-                        <span className="inline-block px-2 py-1 text-xs font-medium bg-blue-100 text-blue-800 rounded-full">
+                        <span className="inline-block px-1.5 py-0.5 text-xs font-medium bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full truncate">
                           {book.category.name}
                         </span>
                       )}

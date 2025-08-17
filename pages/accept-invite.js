@@ -45,17 +45,8 @@ export default function AcceptInvite() {
 
   const validatePassword = (password) => {
     const errors = [];
-    if (password.length < 8) {
-      errors.push('At least 8 characters long');
-    }
-    if (!/[A-Z]/.test(password)) {
-      errors.push('At least one uppercase letter');
-    }
-    if (!/[a-z]/.test(password)) {
-      errors.push('At least one lowercase letter');
-    }
-    if (!/\d/.test(password)) {
-      errors.push('At least one number');
+    if (password.length < 4) {
+      errors.push('At least 4 characters long');
     }
     return errors;
   };
@@ -222,17 +213,11 @@ export default function AcceptInvite() {
                     value={formData.password}
                     onChange={handleChange}
                     disabled={isLoading}
-                    minLength={8}
+                    minLength={4}
                   />
                 </div>
                 <div className="mt-1 text-xs text-gray-500">
-                  <p>Password must contain:</p>
-                  <ul className="list-disc list-inside space-y-1">
-                    <li>At least 8 characters</li>
-                    <li>One uppercase letter</li>
-                    <li>One lowercase letter</li>
-                    <li>One number</li>
-                  </ul>
+                  <p>Password must be at least 4 characters long</p>
                 </div>
               </div>
 
@@ -252,7 +237,7 @@ export default function AcceptInvite() {
                     value={formData.confirmPassword}
                     onChange={handleChange}
                     disabled={isLoading}
-                    minLength={8}
+                    minLength={4}
                   />
                 </div>
               </div>

@@ -32,7 +32,7 @@ function AdminBooks() {
 
   const fetchBooks = async () => {
     try {
-      const response = await fetch('/api/books', {
+      const response = await fetch('/api/admin/books', {
         credentials: 'include'
       });
       if (response.ok) {

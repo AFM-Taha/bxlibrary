@@ -122,9 +122,9 @@ function AccountPage() {
 
   const getPasswordStrength = (password) => {
     if (password.length === 0) return { strength: 0, label: '', color: '' };
-    if (password.length < 6) return { strength: 1, label: 'Weak', color: 'bg-red-500' };
-    if (password.length < 8) return { strength: 2, label: 'Fair', color: 'bg-yellow-500' };
-    if (password.length < 12) return { strength: 3, label: 'Good', color: 'bg-blue-500' };
+    if (password.length < 4) return { strength: 1, label: 'Too Short', color: 'bg-red-500' };
+    if (password.length < 6) return { strength: 2, label: 'Weak', color: 'bg-yellow-500' };
+    if (password.length < 8) return { strength: 3, label: 'Good', color: 'bg-blue-500' };
     return { strength: 4, label: 'Strong', color: 'bg-green-500' };
   };
 
