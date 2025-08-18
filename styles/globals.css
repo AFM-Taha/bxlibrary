@@ -241,7 +241,7 @@
   top: 0;
   left: 0;
   right: 0;
-  height: 12px;
+  height: 0px;
   background: white;
   z-index: 1000;
   pointer-events: none;
@@ -265,19 +265,20 @@
   .drive-embed-container::after {
     content: '';
     position: absolute;
-    top: 8px;
-    right: 8px;
-    width: 32px;
-    height: 32px;
+    top: 12px;
+    right: 12px;
+    width: 42px;
+    height: 42px;
     background: white;
     z-index: 1001;
     pointer-events: none;
-    border-radius: 4px;
+    border-radius: 0 0 4px 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
 }
 
 /* Additional CSS to hide Google Drive UI elements */
 iframe[src*='drive.google.com'] {
-  margin-top: -40px;
+  /* margin-top: 100px; */
   height: calc(100% + 40px);
 }
