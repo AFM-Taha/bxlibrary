@@ -177,7 +177,7 @@ function ReaderPage() {
             darkMode
               ? 'bg-gray-800 text-white hover:bg-gray-700'
               : 'bg-white text-gray-600 hover:bg-gray-100'
-          } transition-all duration-200`}
+          } transition-all duration-300`}
           title={headerVisible ? 'Hide Header' : 'Show Header'}
         >
           <svg
@@ -203,9 +203,9 @@ function ReaderPage() {
         <div
           className={`${
             darkMode
-              ? 'bg-gray-800 border-gray-700'
+              ? 'bg-gray-800 border-gray-900'
               : 'bg-white border-gray-900'
-          } border-b px-4 py-3 transition-all duration-300`}
+          }  border-b-8 px-4 py-3 transition-all duration-300`}
         >
           <div className='flex  items-center justify-around'>
             <Link
@@ -350,14 +350,14 @@ function ReaderPage() {
       )}
 
       {/* Reader Content */}
-      <div className='relative h-screen pt-0'>
+      <div className='relative  h-screen pt-0'>
         {readerMode === 'drive_embed' ? (
           // Google Drive Embed Mode
-          <div className='h-full relative drive-embed-container'>
+          <div className='h-full  relative drive-embed-container'>
             <iframe
               ref={iframeRef}
               src={getDriveEmbedUrl()}
-              className='w-full h-full border-0'
+              className='w-full h-full'
               style={{
                 transform: `scale(${zoom / 100})`,
                 transformOrigin: 'top left',
