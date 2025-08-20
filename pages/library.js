@@ -20,6 +20,7 @@ function LibraryPage() {
   const [currentPage, setCurrentPage] = useState(1)
   const [totalPages, setTotalPages] = useState(1)
   const [totalBooks, setTotalBooks] = useState(0)
+  const [showFilters, setShowFilters] = useState(false)
 
   useEffect(() => {
     fetchCategories()
@@ -120,21 +121,14 @@ function LibraryPage() {
       </nav>
 
       <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8'>
-        {/* Header */}
-        <div className='mb-8'>
-          <h1 className='text-3xl font-bold text-gray-900 dark:text-white mb-2'>
-            Library
-          </h1>
-          <p className='text-gray-600 dark:text-gray-400'>
-            Discover and read from our collection of{' '}
-            {totalBooks.toLocaleString()} books
-          </p>
-        </div>
-
         {/* Search and Filters */}
-        <div className='bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6 mb-8'>
+        <div
+          className={`bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 px-4 pt-4 mb-8 ${
+            showFilters ? 'pb-4' : 'pb-0 md:pb-4'
+          }`}
+        >
           <form onSubmit={handleSearch} className='mb-4'>
-            <div className='flex gap-4'>
+            <div className='flex gap-2'>
               <div className='flex-1'>
                 <input
                   type='text'
@@ -146,14 +140,53 @@ function LibraryPage() {
               </div>
               <button
                 type='submit'
-                className='px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors'
+                className='px-3 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors flex items-center justify-center'
+                title='Search'
               >
-                Search
+                <svg
+                  className='w-5 h-5'
+                  fill='none'
+                  stroke='currentColor'
+                  viewBox='0 0 24 24'
+                  xmlns='http://www.w3.org/2000/svg'
+                >
+                  <path
+                    strokeLinecap='round'
+                    strokeLinejoin='round'
+                    strokeWidth={2}
+                    d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z'
+                  />
+                </svg>
+              </button>
+              <button
+                type='button'
+                onClick={() => setShowFilters(!showFilters)}
+                className='md:hidden px-3 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 transition-colors flex items-center justify-center'
+                title='Toggle Filters'
+              >
+                <svg
+                  className='w-5 h-5'
+                  fill='none'
+                  stroke='currentColor'
+                  viewBox='0 0 24 24'
+                  xmlns='http://www.w3.org/2000/svg'
+                >
+                  <path
+                    strokeLinecap='round'
+                    strokeLinejoin='round'
+                    strokeWidth={2}
+                    d='M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z'
+                  />
+                </svg>
               </button>
             </div>
           </form>
 
-          <div className='flex flex-wrap gap-4 items-center'>
+          <div
+            className={`flex flex-wrap gap-4 items-center ${
+              showFilters ? 'block' : 'hidden md:flex'
+            }`}
+          >
             {/* Category Filter */}
             <div className='flex items-center space-x-2'>
               <label className='text-sm font-medium text-gray-700 dark:text-gray-300'>
@@ -206,6 +239,17 @@ function LibraryPage() {
               </button>
             )}
           </div>
+        </div>
+
+        {/* Header */}
+        <div className='mb-8'>
+          <h1 className='text-3xl font-bold text-gray-900 dark:text-white mb-2'>
+            Library
+          </h1>
+          <p className='text-gray-600 dark:text-gray-400'>
+            Discover and read from our collection of{' '}
+            {totalBooks.toLocaleString()} books
+          </p>
         </div>
 
         {/* Books Grid */}
