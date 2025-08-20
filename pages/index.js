@@ -133,20 +133,12 @@ export default function Home() {
                   Go to Library
                 </Link>
               ) : (
-                <>
-                  <Link
-                    href="/login"
-                    className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 px-3 py-2 rounded-md text-sm font-medium transition-colors"
-                  >
-                    Sign In
-                  </Link>
-                  <Link
-                    href="/login"
-                    className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors"
-                  >
-                    Get Started
-                  </Link>
-                </>
+                <Link
+                  href="/login"
+                  className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors"
+                >
+                  Get Started
+                </Link>
               )}
             </div>
           </div>

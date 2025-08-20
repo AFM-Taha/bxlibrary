@@ -130,7 +130,7 @@ function LibraryPage() {
         </div>
 
         {/* Search and Filters */}
-        <div className='bg-white rounded-lg shadow-sm border p-6 mb-8'>
+        <div className='bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6 mb-8'>
           <form onSubmit={handleSearch} className='mb-4'>
             <div className='flex gap-4'>
               <div className='flex-1'>
@@ -139,7 +139,7 @@ function LibraryPage() {
                   placeholder='Search books by title or author...'
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className='w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent'
+                  className='w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white dark:placeholder-gray-400'
                 />
               </div>
               <button
@@ -154,13 +154,13 @@ function LibraryPage() {
           <div className='flex flex-wrap gap-4 items-center'>
             {/* Category Filter */}
             <div className='flex items-center space-x-2'>
-              <label className='text-sm font-medium text-gray-700'>
+              <label className='text-sm font-medium text-gray-700 dark:text-gray-300'>
                 Category:
               </label>
               <select
                 value={selectedCategory}
                 onChange={(e) => handleCategoryChange(e.target.value)}
-                className='px-3 py-1 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent'
+                className='px-3 py-1 border border-gray-300 dark:border-gray-600 rounded-md text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white'
               >
                 <option value=''>All Categories</option>
                 {categories.map((category) => (
@@ -173,13 +173,13 @@ function LibraryPage() {
 
             {/* Sort Options */}
             <div className='flex items-center space-x-2'>
-              <label className='text-sm font-medium text-gray-700'>
+              <label className='text-sm font-medium text-gray-700 dark:text-gray-300'>
                 Sort by:
               </label>
               <select
                 value={sortBy}
                 onChange={(e) => handleSortChange(e.target.value)}
-                className='px-3 py-1 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent'
+                className='px-3 py-1 border border-gray-300 dark:border-gray-600 rounded-md text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white'
               >
                 <option value='newest'>Newest First</option>
                 <option value='oldest'>Oldest First</option>
@@ -249,7 +249,7 @@ function LibraryPage() {
                         images={book.images || []}
                         title={book.title}
                         className='w-full h-full'
-                        autoSlide={true}
+                        autoSlide={false}
                         slideInterval={4000}
                       />
                     </div>

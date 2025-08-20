@@ -179,10 +179,10 @@ const BookImageSlider = ({
         />
       </div>
 
-      {/* Navigation arrows - always visible */}
+      {/* Navigation arrows - hidden on mobile */}
       <button
         onClick={goToPrevious}
-        className='absolute left-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full opacity-80 hover:opacity-100 transition-opacity duration-200 hover:bg-opacity-70'
+        className='absolute left-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full opacity-80 hover:opacity-100 transition-opacity duration-200 hover:bg-opacity-70 hidden md:block'
         aria-label='Previous image'
       >
         <svg
@@ -202,7 +202,7 @@ const BookImageSlider = ({
 
       <button
         onClick={goToNext}
-        className='absolute right-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full opacity-80 hover:opacity-100 transition-opacity duration-200 hover:bg-opacity-70'
+        className='absolute right-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full opacity-80 hover:opacity-100 transition-opacity duration-200 hover:bg-opacity-70 hidden md:block'
         aria-label='Next image'
       >
         <svg

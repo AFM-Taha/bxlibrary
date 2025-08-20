@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Head from 'next/head';
 import { toast } from 'react-hot-toast';
+import { LogIn } from 'lucide-react';
 
 export default function AcceptInvite() {
   const [formData, setFormData] = useState({
@@ -177,7 +178,7 @@ export default function AcceptInvite() {
           <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
             <div className="space-y-4">
               <div>
-                <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+                <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                   Full Name
                 </label>
                 <div className="mt-1">
@@ -187,7 +188,7 @@ export default function AcceptInvite() {
                     type="text"
                     autoComplete="name"
                     required
-                    className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm"
+                    className="appearance-none block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md placeholder-gray-400 dark:placeholder-gray-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm"
                     placeholder="Enter your full name"
                     value={formData.name}
                     onChange={handleChange}
@@ -198,7 +199,7 @@ export default function AcceptInvite() {
               </div>
 
               <div>
-                <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+                <label htmlFor="password" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                   Password
                 </label>
                 <div className="mt-1">
@@ -208,7 +209,7 @@ export default function AcceptInvite() {
                     type="password"
                     autoComplete="new-password"
                     required
-                    className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm"
+                    className="appearance-none block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md placeholder-gray-400 dark:placeholder-gray-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm"
                     placeholder="Create a password"
                     value={formData.password}
                     onChange={handleChange}
@@ -222,7 +223,7 @@ export default function AcceptInvite() {
               </div>
 
               <div>
-                <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700">
+                <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                   Confirm Password
                 </label>
                 <div className="mt-1">
@@ -232,7 +233,7 @@ export default function AcceptInvite() {
                     type="password"
                     autoComplete="new-password"
                     required
-                    className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm"
+                    className="appearance-none block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md placeholder-gray-400 dark:placeholder-gray-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm"
                     placeholder="Confirm your password"
                     value={formData.confirmPassword}
                     onChange={handleChange}
@@ -261,7 +262,8 @@ export default function AcceptInvite() {
             </div>
 
             <div className="text-center">
-              <Link href="/login" className="font-medium text-primary-600 hover:text-primary-500">
+              <Link href="/login" className="font-medium text-primary-600 hover:text-primary-500 flex items-center justify-center" title="Already have an account? Sign in">
+                <LogIn size={16} className="mr-1" />
                 Already have an account? Sign in
               </Link>
             </div>

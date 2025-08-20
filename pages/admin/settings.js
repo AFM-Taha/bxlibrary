@@ -206,27 +206,27 @@ function AdminSettings() {
                     {activeTab === 'general' && (
                       <div className="space-y-6">
                         <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-2">
+                          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                             Site Name
                           </label>
                           <input
                             type="text"
                             value={settings.siteName}
                             onChange={(e) => handleInputChange(null, 'siteName', e.target.value)}
-                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-primary-500 focus:border-primary-500"
+                            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-primary-500 focus:border-primary-500"
                             placeholder="BX Library"
                           />
                         </div>
                         
                         <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-2">
+                          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                             Site Description
                           </label>
                           <textarea
                             value={settings.siteDescription}
                             onChange={(e) => handleInputChange(null, 'siteDescription', e.target.value)}
                             rows={3}
-                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-primary-500 focus:border-primary-500"
+                            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-primary-500 focus:border-primary-500"
                             placeholder="A digital library management system"
                           />
                         </div>
@@ -239,7 +239,7 @@ function AdminSettings() {
                               onChange={(e) => handleInputChange(null, 'allowRegistration', e.target.checked)}
                               className="rounded border-gray-300 text-primary-600 shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50"
                             />
-                            <span className="ml-2 text-sm text-gray-700">Allow user registration</span>
+                            <span className="ml-2 text-sm text-gray-700 dark:text-gray-300">Allow user registration</span>
                           </label>
                         </div>
                         
@@ -251,7 +251,7 @@ function AdminSettings() {
                               onChange={(e) => handleInputChange(null, 'requireEmailVerification', e.target.checked)}
                               className="rounded border-gray-300 text-primary-600 shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50"
                             />
-                            <span className="ml-2 text-sm text-gray-700">Require email verification</span>
+                            <span className="ml-2 text-sm text-gray-700 dark:text-gray-300">Require email verification</span>
                           </label>
                         </div>
                       </div>
@@ -262,27 +262,27 @@ function AdminSettings() {
                       <div className="space-y-6">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                           <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-2">
+                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                               SMTP Host
                             </label>
                             <input
                               type="text"
                               value={settings.emailSettings.smtpHost}
                               onChange={(e) => handleInputChange('emailSettings', 'smtpHost', e.target.value)}
-                              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-primary-500 focus:border-primary-500"
+                              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-primary-500 focus:border-primary-500"
                               placeholder="smtp.gmail.com"
                             />
                           </div>
                           
                           <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-2">
+                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                               SMTP Port
                             </label>
                             <input
                               type="number"
                               value={settings.emailSettings.smtpPort}
                               onChange={(e) => handleInputChange('emailSettings', 'smtpPort', parseInt(e.target.value))}
-                              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-primary-500 focus:border-primary-500"
+                              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-primary-500 focus:border-primary-500"
                               placeholder="587"
                             />
                           </div>
@@ -290,27 +290,27 @@ function AdminSettings() {
                         
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                           <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-2">
+                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                               SMTP Username
                             </label>
                             <input
                               type="text"
                               value={settings.emailSettings.smtpUser}
                               onChange={(e) => handleInputChange('emailSettings', 'smtpUser', e.target.value)}
-                              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-primary-500 focus:border-primary-500"
+                              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-primary-500 focus:border-primary-500"
                               placeholder="your-email@gmail.com"
                             />
                           </div>
                           
                           <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-2">
+                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                               SMTP Password
                             </label>
                             <input
                               type="password"
                               value={settings.emailSettings.smtpPassword}
                               onChange={(e) => handleInputChange('emailSettings', 'smtpPassword', e.target.value)}
-                              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-primary-500 focus:border-primary-500"
+                              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-primary-500 focus:border-primary-500"
                               placeholder="••••••••"
                             />
                           </div>

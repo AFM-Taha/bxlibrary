@@ -5,6 +5,7 @@ import Head from 'next/head'
 import { toast } from 'react-hot-toast'
 import { useAuth } from '../contexts/AuthContext'
 import { CompactThemeToggle } from '../components/ThemeToggle'
+import { LogIn } from 'lucide-react'
 
 export default function Login() {
   const [formData, setFormData] = useState({
@@ -126,7 +127,10 @@ export default function Login() {
                     Signing in...
                   </div>
                 ) : (
-                  'Sign in'
+                  <div className="flex items-center justify-center">
+                    <LogIn size={18} className="mr-2" />
+                    Sign in
+                  </div>
                 )}
               </button>
             </div>

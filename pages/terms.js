@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { useAuth } from '../contexts/AuthContext'
 import { CompactThemeToggle } from '../components/ThemeToggle'
+import { LogIn } from 'lucide-react'
 
 export default function Terms() {
   const { user, isAuthenticated } = useAuth()
@@ -49,9 +50,10 @@ export default function Terms() {
                   </Link>
                   <Link
                     href='/login'
-                    className='bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors'
+                    className='bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors flex items-center justify-center'
+                    title='Sign In'
                   >
-                    Sign In
+                    <LogIn size={18} />
                   </Link>
                 </>
               )}
