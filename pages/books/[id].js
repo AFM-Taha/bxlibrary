@@ -215,6 +215,7 @@ function BookDetailsPage() {
   const [book, setBook] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
+  const [showFullDescription, setShowFullDescription] = useState(false)
 
   useEffect(() => {
     if (id) {
@@ -268,9 +269,6 @@ function BookDetailsPage() {
               <div className='flex items-center space-x-4'>
                 {user ? (
                   <>
-                    <span className='text-gray-700 dark:text-gray-300'>
-                      Welcome, {user?.name}
-                    </span>
                     <CompactThemeToggle />
                     <Link
                       href='/account'
@@ -329,9 +327,6 @@ function BookDetailsPage() {
               <div className='flex items-center space-x-4'>
                 {user ? (
                   <>
-                    <span className='text-gray-700 dark:text-gray-300'>
-                      Welcome, {user?.name}
-                    </span>
                     <CompactThemeToggle />
                     <Link
                       href='/account'
@@ -411,21 +406,44 @@ function BookDetailsPage() {
             <div className='flex items-center space-x-4'>
               {user ? (
                 <>
-                  <span className='text-gray-700 dark:text-gray-300'>
-                    Welcome, {user?.name}
-                  </span>
                   <CompactThemeToggle />
                   <Link
                     href='/account'
-                    className='text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 px-3 py-2 rounded-md text-sm font-medium transition-colors'
+                    className='text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 p-2 rounded-md transition-colors'
+                    title='Account'
                   >
-                    Account
+                    <svg
+                      className='w-5 h-5'
+                      fill='none'
+                      stroke='currentColor'
+                      viewBox='0 0 24 24'
+                    >
+                      <path
+                        strokeLinecap='round'
+                        strokeLinejoin='round'
+                        strokeWidth={2}
+                        d='M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z'
+                      />
+                    </svg>
                   </Link>
                   <button
                     onClick={handleLogout}
-                    className='text-gray-700 dark:text-gray-300 hover:text-red-600 dark:hover:text-red-400 px-3 py-2 rounded-md text-sm font-medium transition-colors'
+                    className='text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 p-2 rounded-md transition-colors'
+                    title='Sign Out'
                   >
-                    Sign Out
+                    <svg
+                      className='w-5 h-5'
+                      fill='none'
+                      stroke='currentColor'
+                      viewBox='0 0 24 24'
+                    >
+                      <path
+                        strokeLinecap='round'
+                        strokeLinejoin='round'
+                        strokeWidth={2}
+                        d='M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1'
+                      />
+                    </svg>
                   </button>
                 </>
               ) : (
@@ -534,35 +552,25 @@ function BookDetailsPage() {
                     <h3 className='text-lg font-semibold text-gray-900 dark:text-white mb-2'>
                       Description
                     </h3>
-                    <p className='text-gray-700 dark:text-gray-300 leading-relaxed'>
-                      {book.description}
-                    </p>
+                    <div className='text-gray-700 dark:text-gray-300 leading-relaxed'>
+                      <p className={showFullDescription ? '' : 'line-clamp-3'}>
+                        {book.description}
+                      </p>
+                      {book.description.length > 200 && (
+                        <button
+                          onClick={() =>
+                            setShowFullDescription(!showFullDescription)
+                          }
+                          className='mt-2 text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium text-sm transition-colors'
+                        >
+                          {showFullDescription ? 'Show less' : 'Show more'}
+                        </button>
+                      )}
+                    </div>
                   </div>
                 )}
 
-                <div className='mb-6'>
-                  <h3 className='text-lg font-semibold text-gray-900 dark:text-white mb-2'>
-                    Book Information
-                  </h3>
-                  <dl className='grid grid-cols-1 gap-x-4 gap-y-2 sm:grid-cols-2'>
-                    <div>
-                      <dt className='text-sm font-medium text-gray-500 dark:text-gray-400'>
-                        Added
-                      </dt>
-                      <dd className='text-sm text-gray-900 dark:text-gray-100'>
-                        {new Date(book?.createdAt).toLocaleDateString()}
-                      </dd>
-                    </div>
-                    <div>
-                      <dt className='text-sm font-medium text-gray-500 dark:text-gray-400'>
-                        Status
-                      </dt>
-                      <dd className='text-sm text-gray-900 dark:text-gray-100 capitalize'>
-                        {book?.status}
-                      </dd>
-                    </div>
-                  </dl>
-                </div>
+
               </div>
 
               {/* Action Buttons */}
