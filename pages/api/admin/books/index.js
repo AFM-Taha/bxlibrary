@@ -53,7 +53,7 @@ async function getBooks(req, res) {
 
     // Category filter
     if (category && mongoose.Types.ObjectId.isValid(category)) {
-      query.category = category;
+      query.categories = category;
     }
 
     // Status filter
@@ -72,7 +72,7 @@ async function getBooks(req, res) {
 
     // Get books with category information
     const books = await Book.find(query)
-      .populate('category', 'name color')
+      .populate('categories', 'name color')
       .populate('createdBy', 'name email')
       .sort(sortObj)
       .skip(skip)
@@ -93,11 +93,11 @@ async function getBooks(req, res) {
       driveFileId: book.driveFileId,
       thumbnailUrl: book.thumbnailUrl,
       images: book.images || [],
-      category: book.category ? {
-        id: book.category._id,
-        name: book.category.name,
-        color: book.category.color
-      } : null,
+      categories: book.categories ? book.categories.map(cat => ({
+        id: cat._id,
+        name: cat.name,
+        color: cat.color
+      })) : [],
       status: book.status,
       fileSize: book.fileSize,
       pageCount: book.pageCount,
@@ -141,6 +141,7 @@ async function createBook(req, res) {
       description,
       driveUrl,
       categoryId,
+      categoryIds,
       images = [],
       status = 'published'
     } = req.body;
@@ -193,18 +194,38 @@ async function createBook(req, res) {
       }
     }
 
-    // Validate category (required)
-    if (!categoryId) {
-      return res.status(400).json({ error: 'Category is required' });
-    }
-    
-    if (!mongoose.Types.ObjectId.isValid(categoryId)) {
-      return res.status(400).json({ error: 'Invalid category ID' });
+    // Handle both single category (backward compatibility) and multiple categories
+    let categories = [];
+    if (categoryIds && Array.isArray(categoryIds)) {
+      categories = categoryIds;
+    } else if (categoryId) {
+      categories = [categoryId];
     }
 
-    const category = await Category.findById(categoryId);
-    if (!category || category.isDeleted) {
-      return res.status(400).json({ error: 'Category not found' });
+    // Validate categories (at least one required)
+    if (!categories || categories.length === 0) {
+      return res.status(400).json({ error: 'At least one category is required' });
+    }
+
+    if (categories.length > 5) {
+      return res.status(400).json({ error: 'Maximum 5 categories allowed' });
+    }
+
+    // Validate each category ID
+    for (const catId of categories) {
+      if (!mongoose.Types.ObjectId.isValid(catId)) {
+        return res.status(400).json({ error: 'Invalid category ID format' });
+      }
+    }
+
+    // Check if all categories exist
+    const foundCategories = await Category.find({
+      _id: { $in: categories },
+      isDeleted: { $ne: true }
+    });
+
+    if (foundCategories.length !== categories.length) {
+      return res.status(400).json({ error: 'One or more categories not found' });
     }
 
     // Extract Google Drive file ID from URL
@@ -242,7 +263,7 @@ async function createBook(req, res) {
       description: description?.trim() || '',
       driveUrl: canonicalUrl,
       driveFileId,
-      category: categoryId,
+      categories: categories,
       status,
       isPublished: status === 'published',
       createdBy: adminUserId
@@ -254,7 +275,7 @@ async function createBook(req, res) {
       driveUrl: canonicalUrl,
       driveFileId,
       images: images || [],
-      category: categoryId,
+      categories: categories,
       status,
       isPublished: status === 'published',
       createdBy: adminUserId
@@ -264,8 +285,8 @@ async function createBook(req, res) {
     await book.save();
     console.log('Book saved successfully with ID:', book._id);
 
-    // Populate category for response
-    await book.populate('category', 'name color');
+    // Populate categories for response
+    await book.populate('categories', 'name color');
     await book.populate('createdBy', 'name email');
 
     // Try to fetch thumbnail (non-blocking)

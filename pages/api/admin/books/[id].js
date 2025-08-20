@@ -29,7 +29,7 @@ async function handler(req, res) {
 async function getBook(req, res, bookId) {
   try {
     const book = await Book.findById(bookId)
-      .populate('category', 'name color')
+      .populate('categories', 'name color')
       .populate('createdBy', 'name email')
       .lean();
 
@@ -46,11 +46,11 @@ async function getBook(req, res, bookId) {
       driveFileId: book.driveFileId,
       thumbnailUrl: book.thumbnailUrl,
       images: book.images || [],
-      category: book.category ? {
-        id: book.category._id,
-        name: book.category.name,
-        color: book.category.color
-      } : null,
+      categories: book.categories ? book.categories.map(cat => ({
+        id: cat._id,
+        name: cat.name,
+        color: cat.color
+      })) : [],
       status: book.status,
       fileSize: book.fileSize,
       pageCount: book.pageCount,
@@ -80,6 +80,7 @@ async function updateBook(req, res, bookId) {
       description,
       driveUrl,
       categoryId,
+      categoryIds,
       images,
       status,
       action
@@ -218,25 +219,50 @@ async function updateBook(req, res, bookId) {
         });
       }
 
-      // Update category
-      if (categoryId !== undefined) {
+      // Update categories (handle both single and multiple)
+      let categories = [];
+      if (categoryIds && Array.isArray(categoryIds)) {
+        categories = categoryIds;
+      } else if (categoryId !== undefined) {
         if (categoryId === null || categoryId === '') {
-          book.category = undefined;
-          hasChanges = true;
+          categories = [];
         } else {
-          if (!mongoose.Types.ObjectId.isValid(categoryId)) {
-            return res.status(400).json({ error: 'Invalid category ID' });
-          }
+          categories = [categoryId];
+        }
+      }
 
-          const category = await Category.findById(categoryId);
-          if (!category || category.isDeleted) {
-            return res.status(400).json({ error: 'Category not found' });
-          }
+      if (categories.length > 0 || categoryId !== undefined || categoryIds !== undefined) {
+        // Validate categories
+        if (categories.length > 5) {
+          return res.status(400).json({ error: 'Maximum 5 categories allowed' });
+        }
 
-          if (book.category?.toString() !== categoryId) {
-            book.category = categoryId;
-            hasChanges = true;
+        // Validate each category ID
+        for (const catId of categories) {
+          if (!mongoose.Types.ObjectId.isValid(catId)) {
+            return res.status(400).json({ error: 'Invalid category ID format' });
           }
+        }
+
+        // Check if all categories exist
+        if (categories.length > 0) {
+          const foundCategories = await Category.find({
+            _id: { $in: categories },
+            isDeleted: { $ne: true }
+          });
+
+          if (foundCategories.length !== categories.length) {
+            return res.status(400).json({ error: 'One or more categories not found' });
+          }
+        }
+
+        // Check if categories have changed
+        const currentCategories = (book.categories || []).map(cat => cat.toString()).sort();
+        const newCategories = categories.sort();
+        
+        if (JSON.stringify(currentCategories) !== JSON.stringify(newCategories)) {
+          book.categories = categories.length > 0 ? categories : undefined;
+          hasChanges = true;
         }
       }
 
@@ -259,7 +285,7 @@ async function updateBook(req, res, bookId) {
     await book.save();
 
     // Populate for response
-    await book.populate('category', 'name color');
+    await book.populate('categories', 'name color');
     await book.populate('createdBy', 'name email');
 
     // Return updated book data

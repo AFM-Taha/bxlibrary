@@ -38,7 +38,7 @@ async function handler(req, res) {
 
     // Add category filter
     if (category) {
-      query.category = category;
+      query.categories = category;
     }
 
     // Build sort object
@@ -69,7 +69,7 @@ async function handler(req, res) {
     // Execute queries
     const [books, total] = await Promise.all([
       Book.find(query)
-        .populate('category', 'name color')
+        .populate('categories', 'name color')
         .sort(sortObj)
         .skip(skip)
         .limit(limitNum)

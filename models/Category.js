@@ -56,7 +56,7 @@ CategorySchema.index({ isDeleted: 1 });
 CategorySchema.virtual('books', {
   ref: 'Book',
   localField: '_id',
-  foreignField: 'category',
+  foreignField: 'categories',
   match: { isPublished: true }
 });
 
@@ -64,7 +64,7 @@ CategorySchema.virtual('books', {
 CategorySchema.methods.updateBookCount = async function() {
   const Book = mongoose.model('Book');
   this.bookCount = await Book.countDocuments({ 
-    category: this._id, 
+    categories: this._id, 
     isPublished: true 
   });
   await this.save();

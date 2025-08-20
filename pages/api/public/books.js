@@ -43,7 +43,7 @@ export default async function handler(req, res) {
 
     // Fetch books with category population
     const books = await Book.find(query)
-      .populate('category', 'name color')
+      .populate('categories', 'name color')
       .sort(sortObj)
       .limit(limitNum)
       .lean();

@@ -20,7 +20,7 @@ function AdminBooks() {
     title: '',
     author: '',
     description: '',
-    category: '',
+    categories: [],
     googleDriveFileId: '',
     images: [],
     tags: '',
@@ -69,8 +69,13 @@ function AdminBooks() {
     e.preventDefault();
     
     // Client-side validation
-    if (!formData.category) {
-      toast.error('Please select a category');
+    if (!formData.categories || formData.categories.length === 0) {
+      toast.error('Please select at least one category');
+      return;
+    }
+    
+    if (formData.categories.length > 5) {
+      toast.error('Please select no more than 5 categories');
       return;
     }
     
@@ -113,7 +118,7 @@ function AdminBooks() {
         author: formData.author,
         description: formData.description,
         driveUrl: `https://drive.google.com/file/d/${fileId}/view`,
-        categoryId: formData.category,
+        categoryIds: formData.categories,
         status: formData.isPublic ? 'published' : 'draft',
         images: formData.images,
         tags: formData.tags.split(',').map(tag => tag.trim()).filter(tag => tag)
@@ -181,7 +186,7 @@ function AdminBooks() {
         author: formData.author,
         description: formData.description,
         driveUrl: `https://drive.google.com/file/d/${fileId}/view`,
-        categoryId: formData.category,
+        categoryIds: formData.categories,
         status: formData.isPublic ? 'published' : 'draft',
         images: formData.images,
         tags: formData.tags.split(',').map(tag => tag.trim()).filter(tag => tag)
@@ -239,7 +244,7 @@ function AdminBooks() {
       title: book.title,
       author: book.author,
       description: book.description || '',
-      category: book.category?._id || book.category || '',
+      categories: book.categories ? book.categories.map(cat => cat._id || cat) : [],
       googleDriveFileId: book.driveFileId || book.driveUrl || '',
       images: book.images || [],
       tags: book.tags ? book.tags.join(', ') : '',
@@ -252,7 +257,7 @@ function AdminBooks() {
       title: '',
       author: '',
       description: '',
-      category: '',
+      categories: [],
       googleDriveFileId: '',
       images: [],
       tags: '',
@@ -362,10 +367,20 @@ function AdminBooks() {
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-300">
                         {book.author}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <span className="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800">
-                          {book.category?.name || 'Uncategorized'}
-                        </span>
+                      <td className="px-6 py-4">
+                        <div className="flex flex-wrap gap-1">
+                          {book.categories && book.categories.length > 0 ? (
+                            book.categories.map((category, index) => (
+                              <span key={category._id || index} className="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800">
+                                {category.name}
+                              </span>
+                            ))
+                          ) : (
+                            <span className="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800">
+                              Uncategorized
+                            </span>
+                          )}
+                        </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
@@ -458,21 +473,38 @@ function AdminBooks() {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="mb-4">
                       <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                        Category
+                        Categories (Select 1-5)
                       </label>
-                      <select
-                        value={formData.category}
-                        onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                        className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-primary-500 focus:border-primary-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-                        required
-                      >
-                        <option value="">Select a category</option>
+                      <div className="space-y-2 max-h-40 overflow-y-auto border border-gray-300 dark:border-gray-600 rounded-md p-2 bg-white dark:bg-gray-700">
                         {categories.map((category) => (
-                          <option key={category._id} value={category._id}>
-                            {category.name}
-                          </option>
+                          <label key={category._id} className="flex items-center space-x-2 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-600 p-1 rounded">
+                            <input
+                              type="checkbox"
+                              checked={formData.categories.includes(category._id)}
+                              onChange={(e) => {
+                                if (e.target.checked) {
+                                  if (formData.categories.length < 5) {
+                                    setFormData({ 
+                                      ...formData, 
+                                      categories: [...formData.categories, category._id] 
+                                    });
+                                  }
+                                } else {
+                                  setFormData({ 
+                                    ...formData, 
+                                    categories: formData.categories.filter(id => id !== category._id) 
+                                  });
+                                }
+                              }}
+                              className="rounded border-gray-300 text-primary-600 focus:ring-primary-500"
+                            />
+                            <span className="text-sm text-gray-900 dark:text-white">{category.name}</span>
+                          </label>
                         ))}
-                      </select>
+                      </div>
+                      <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                        Selected: {formData.categories.length}/5
+                      </p>
                     </div>
                     <div className="mb-4">
                       <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">

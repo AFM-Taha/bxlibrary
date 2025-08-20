@@ -127,8 +127,8 @@ ReadingSessionSchema.statics.findOrCreateSession = async function(userId, bookId
 // Get recent reading sessions for a user
 ReadingSessionSchema.statics.getRecentSessions = async function(userId, limit = 10) {
   return this.find({ user: userId, isActive: true })
-    .populate('book', 'title thumbnailUrl category')
-    .populate('book.category', 'name')
+    .populate('book', 'title thumbnailUrl categories')
+        .populate('book.categories', 'name')
     .sort({ lastAccessedAt: -1 })
     .limit(limit);
 };

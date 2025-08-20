@@ -16,10 +16,18 @@ const BookSchema = new mongoose.Schema({
     required: false,
     trim: true
   },
-  category: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Category',
-    required: true
+  categories: {
+    type: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Category'
+    }],
+    required: true,
+    validate: {
+      validator: function(categories) {
+        return categories.length > 0;
+      },
+      message: 'A book must have at least one category'
+    }
   },
   // Google Drive integration
   driveUrl: {
@@ -127,18 +135,18 @@ const BookSchema = new mongoose.Schema({
 
 // Indexes for better performance
 BookSchema.index({ title: 'text' }); // Text search
-BookSchema.index({ category: 1 });
+BookSchema.index({ categories: 1 });
 BookSchema.index({ isPublished: 1 });
 BookSchema.index({ isDeleted: 1 });
 BookSchema.index({ createdAt: -1 });
 BookSchema.index({ readCount: -1 });
 
-// Virtual for category name
-BookSchema.virtual('categoryName', {
+// Virtual for category names
+BookSchema.virtual('categoryNames', {
   ref: 'Category',
-  localField: 'category',
+  localField: 'categories',
   foreignField: '_id',
-  justOne: true
+  justOne: false
 });
 
 // Extract Google Drive file ID from URL
@@ -203,22 +211,26 @@ BookSchema.pre('save', function(next) {
 
 // Update category book count after save
 BookSchema.post('save', async function() {
-  if (this.category) {
+  if (this.categories && this.categories.length > 0) {
     const Category = mongoose.model('Category');
-    const category = await Category.findById(this.category);
-    if (category) {
-      await category.updateBookCount();
+    for (const categoryId of this.categories) {
+      const category = await Category.findById(categoryId);
+      if (category) {
+        await category.updateBookCount();
+      }
     }
   }
 });
 
 // Update category book count after remove
 BookSchema.post('remove', async function() {
-  if (this.category) {
+  if (this.categories && this.categories.length > 0) {
     const Category = mongoose.model('Category');
-    const category = await Category.findById(this.category);
-    if (category) {
-      await category.updateBookCount();
+    for (const categoryId of this.categories) {
+      const category = await Category.findById(categoryId);
+      if (category) {
+        await category.updateBookCount();
+      }
     }
   }
 });
