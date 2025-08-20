@@ -5,6 +5,7 @@ import { useAuth } from '../../contexts/AuthContext'
 import toast from 'react-hot-toast'
 import { CompactThemeToggle } from '../../components/ThemeToggle'
 import BookImageSlider from '../../components/BookImageSlider'
+import { User, LogOut } from 'lucide-react'
 
 // PDF Reader Component
 function PDFReader({ book }) {
@@ -272,15 +273,17 @@ function BookDetailsPage() {
                     <CompactThemeToggle />
                     <Link
                       href='/account'
-                      className='text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 px-3 py-2 rounded-md text-sm font-medium transition-colors'
+                      className='text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center'
+                      title='Account'
                     >
-                      Account
+                      <User size={18} />
                     </Link>
                     <button
                       onClick={handleLogout}
-                      className='text-gray-700 dark:text-gray-300 hover:text-red-600 dark:hover:text-red-400 px-3 py-2 rounded-md text-sm font-medium transition-colors'
+                      className='text-gray-700 dark:text-gray-300 hover:text-red-600 dark:hover:text-red-400 px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center'
+                      title='Sign Out'
                     >
-                      Sign Out
+                      <LogOut size={18} />
                     </button>
                   </>
                 ) : (
@@ -330,15 +333,17 @@ function BookDetailsPage() {
                     <CompactThemeToggle />
                     <Link
                       href='/account'
-                      className='text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 px-3 py-2 rounded-md text-sm font-medium transition-colors'
+                      className='text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center'
+                      title='Account'
                     >
-                      Account
+                      <User size={18} />
                     </Link>
                     <button
                       onClick={handleLogout}
-                      className='text-gray-700 dark:text-gray-300 hover:text-red-600 dark:hover:text-red-400 px-3 py-2 rounded-md text-sm font-medium transition-colors'
+                      className='text-gray-700 dark:text-gray-300 hover:text-red-600 dark:hover:text-red-400 px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center'
+                      title='Sign Out'
                     >
-                      Sign Out
+                      <LogOut size={18} />
                     </button>
                   </>
                 ) : (
@@ -517,7 +522,7 @@ function BookDetailsPage() {
                   images={book?.images || []}
                   title={book?.title || 'Book'}
                   className='h-full w-full rounded-lg'
-                  autoSlide={true}
+                  autoSlide={false}
                   slideInterval={5000}
                 />
               </div>

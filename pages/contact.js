@@ -58,13 +58,14 @@ export default function Contact() {
                 href={isAuthenticated ? '/library' : '/'}
                 className='flex-shrink-0'
               >
-                <h1 className='text-2xl font-bold text-blue-600 dark:text-blue-400'>BX Library</h1>
+                <h1 className='text-2xl font-bold text-blue-600 dark:text-blue-400'>
+                  BX Library
+                </h1>
               </Link>
             </div>
             <div className='flex items-center space-x-4'>
               {isAuthenticated ? (
                 <>
-                  <span className='text-gray-700 dark:text-gray-300'>Welcome, {user?.name}</span>
                   <CompactThemeToggle />
                   <Link
                     href='/library'
@@ -103,7 +104,9 @@ export default function Contact() {
 
       <div className='max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12'>
         <div className='text-center mb-12'>
-          <h1 className='text-4xl font-bold text-gray-900 dark:text-white mb-4'>Contact Us</h1>
+          <h1 className='text-4xl font-bold text-gray-900 dark:text-white mb-4'>
+            Contact Us
+          </h1>
           <p className='text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto'>
             Have a question or need help? We&apos;d love to hear from you. Send
             us a message and we&apos;ll respond as soon as possible.
@@ -136,7 +139,9 @@ export default function Contact() {
                     </svg>
                   </div>
                   <div className='ml-3'>
-                    <p className='text-sm font-medium text-gray-900 dark:text-white'>Email</p>
+                    <p className='text-sm font-medium text-gray-900 dark:text-white'>
+                      Email
+                    </p>
                     <p className='text-sm text-gray-600 dark:text-gray-400'>
                       support@bxlibrary.com
                     </p>
@@ -160,8 +165,12 @@ export default function Contact() {
                     </svg>
                   </div>
                   <div className='ml-3'>
-                    <p className='text-sm font-medium text-gray-900 dark:text-white'>Phone</p>
-                    <p className='text-sm text-gray-600 dark:text-gray-400'>+1 (555) 123-4567</p>
+                    <p className='text-sm font-medium text-gray-900 dark:text-white'>
+                      Phone
+                    </p>
+                    <p className='text-sm text-gray-600 dark:text-gray-400'>
+                      +1 (555) 123-4567
+                    </p>
                   </div>
                 </div>
 
@@ -185,7 +194,9 @@ export default function Contact() {
                     <p className='text-sm font-medium text-gray-900 dark:text-white'>
                       Response Time
                     </p>
-                    <p className='text-sm text-gray-600 dark:text-gray-400'>Within 24 hours</p>
+                    <p className='text-sm text-gray-600 dark:text-gray-400'>
+                      Within 24 hours
+                    </p>
                   </div>
                 </div>
 
@@ -212,7 +223,9 @@ export default function Contact() {
                     </svg>
                   </div>
                   <div className='ml-3'>
-                    <p className='text-sm font-medium text-gray-900 dark:text-white'>Office</p>
+                    <p className='text-sm font-medium text-gray-900 dark:text-white'>
+                      Office
+                    </p>
                     <p className='text-sm text-gray-600 dark:text-gray-400'>
                       123 Library Street
                       <br />
@@ -386,7 +399,9 @@ export default function Contact() {
             <h2 className='text-2xl font-bold text-gray-900 dark:text-white mb-4'>
               Frequently Asked Questions
             </h2>
-            <p className='text-gray-600 dark:text-gray-400'>Quick answers to common questions</p>
+            <p className='text-gray-600 dark:text-gray-400'>
+              Quick answers to common questions
+            </p>
           </div>
 
           <div className='bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700'>

@@ -16,13 +16,14 @@ export default function Terms() {
                 href={isAuthenticated ? '/library' : '/'}
                 className='flex-shrink-0'
               >
-                <h1 className='text-2xl font-bold text-blue-600 dark:text-blue-400'>BX Library</h1>
+                <h1 className='text-2xl font-bold text-blue-600 dark:text-blue-400'>
+                  BX Library
+                </h1>
               </Link>
             </div>
             <div className='flex items-center space-x-4'>
               {isAuthenticated ? (
                 <>
-                  <span className='text-gray-700 dark:text-gray-300'>Welcome, {user?.name}</span>
                   <CompactThemeToggle />
                   <Link
                     href='/library'
@@ -65,7 +66,9 @@ export default function Terms() {
             <h1 className='text-3xl font-bold text-gray-900 dark:text-white mb-4'>
               Terms of Service
             </h1>
-            <p className='text-gray-600 dark:text-gray-400'>Last updated: January 17, 2025</p>
+            <p className='text-gray-600 dark:text-gray-400'>
+              Last updated: January 17, 2025
+            </p>
           </div>
 
           <div className='prose max-w-none'>
@@ -248,7 +251,9 @@ export default function Terms() {
               contact us at:
             </p>
             <div className='bg-gray-50 dark:bg-gray-700 p-4 rounded-md'>
-              <p className='text-gray-700 dark:text-gray-300'>Email: legal@bxlibrary.com</p>
+              <p className='text-gray-700 dark:text-gray-300'>
+                Email: legal@bxlibrary.com
+              </p>
               <p className='text-gray-700 dark:text-gray-300'>
                 Address: 123 Library Street, Digital City, DC 12345
               </p>

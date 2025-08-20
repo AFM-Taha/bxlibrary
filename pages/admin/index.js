@@ -5,6 +5,7 @@ import { useAuth } from '../../contexts/AuthContext';
 import ProtectedRoute from '../../components/ProtectedRoute';
 import { CompactThemeToggle } from '../../components/ThemeToggle';
 import { toast } from 'react-hot-toast';
+import { User } from 'lucide-react';
 
 function AdminDashboard() {
   const { user } = useAuth();
@@ -84,9 +85,10 @@ function AdminDashboard() {
                 </Link>
                 <Link
                   href="/account"
-                  className="btn-primary"
+                  className="btn-primary flex items-center"
+                  title="Account"
                 >
-                  Account
+                  <User size={18} />
                 </Link>
               </div>
             </div>
