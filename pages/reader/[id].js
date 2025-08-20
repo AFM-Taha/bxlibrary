@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 import { useAuth } from '../../contexts/AuthContext'
@@ -14,13 +14,11 @@ function ReaderPage() {
   const [error, setError] = useState(null)
   const [darkMode, setDarkMode] = useState(false)
   const [zoom, setZoom] = useState(100)
-  const [fitToWidth, setFitToWidth] = useState(false)
   const [showWatermark, setShowWatermark] = useState(true)
   const [currentPage, setCurrentPage] = useState(1)
   const [totalPages, setTotalPages] = useState(0)
   const [readerMode, setReaderMode] = useState('drive_embed') // 'drive_embed' or 'pdf_stream'
-  const [headerVisible, setHeaderVisible] = useState(true)
-  const iframeRef = useRef(null)
+  // Header is now always visible - removed toggle functionality
 
   useEffect(() => {
     if (id) {
@@ -94,34 +92,12 @@ function ReaderPage() {
     }
   }
 
-  const handleZoomIn = () => {
-    setZoom((prev) => Math.min(prev + 25, 200))
-  }
-
-  const handleZoomOut = () => {
-    setZoom((prev) => Math.max(prev - 25, 50))
-  }
-
-  const handleResetZoom = () => {
-    setZoom(100)
-  }
-
-  const toggleFitToWidth = () => {
-    setFitToWidth((prev) => !prev)
-  }
-
   const toggleDarkMode = () => {
     setDarkMode((prev) => !prev)
   }
 
-  const toggleHeader = () => {
-    setHeaderVisible(!headerVisible)
-  }
-
-  const handlePageChange = (newPage) => {
-    if (newPage >= 1 && newPage <= totalPages) {
-      setCurrentPage(newPage)
-    }
+  const goBack = () => {
+    router.back()
   }
 
   const getWatermarkText = () => {
@@ -169,21 +145,19 @@ function ReaderPage() {
 
   return (
     <div className={`min-h-screen ${darkMode ? 'bg-gray-900' : 'bg-gray-100'}`}>
-      {/* Toggle Arrow */}
-      <div className={`fixed top-2 right-2 z-50`}>
+      {/* Back Button */}
+      <div className='fixed bg-white z-50 flex items-center justify-center toggle-button-container'>
         <button
-          onClick={toggleHeader}
-          className={`p-2 rounded-full shadow-lg ${
+          onClick={goBack}
+          className={`p-1 rounded-full transition-all ${
             darkMode
-              ? 'bg-gray-800 text-white hover:bg-gray-700'
-              : 'bg-white text-gray-600 hover:bg-gray-100'
-          } transition-all duration-300`}
-          title={headerVisible ? 'Hide Header' : 'Show Header'}
+              ? 'text-gray-600 hover:text-gray-800'
+              : 'text-gray-600 hover:text-gray-800'
+          }`}
+          title='Go Back'
         >
           <svg
-            className={`h-4 w-4 transform transition-transform duration-200 ${
-              headerVisible ? 'rotate-180' : 'rotate-0'
-            }`}
+            className='h-4 w-4 transform transition-transform duration-200'
             fill='none'
             viewBox='0 0 24 24'
             stroke='currentColor'
@@ -192,32 +166,49 @@ function ReaderPage() {
               strokeLinecap='round'
               strokeLinejoin='round'
               strokeWidth={2}
-              d='M19 9l-7 7-7-7'
+              d='M10 19l-7-7m0 0l7-7m-7 7h18'
             />
           </svg>
         </button>
       </div>
 
-      {/* Reader Header */}
-      {headerVisible && (
-        <div
-          className={`${
-            darkMode
-              ? 'bg-gray-800 border-gray-900'
-              : 'bg-white border-gray-900'
-          }  border-b-8 px-4 py-3 transition-all duration-300`}
-        >
-          <div className='flex  items-center justify-around'>
-            <Link
-              href='/library'
-              className={`${
-                darkMode
-                  ? 'text-gray-300 hover:text-white'
-                  : 'text-gray-600 hover:text-gray-900'
-              } transition-colors`}
+      {/* Reader Header - Always Visible */}
+      <div
+        className={`${
+          darkMode ? 'bg-gray-900 border-gray-900' : 'bg-white border-gray-900'
+        }  border-b-[15px] px-5 py-3 transition-all duration-300`}
+      >
+        <div className='flex  items-center  justify-between'>
+          {/* Page Navigation */}
+          <div className='flex justify-between items-center'>
+            <h1
+              className={`text-lg  font-semibold ${
+                darkMode ? 'text-white' : 'text-gray-900'
+              }`}
             >
+              {book.title?.slice(0, 15)}
+            </h1>
+            <span
+              className={`text-xs ${
+                darkMode ? 'text-gray-400' : 'text-gray-600'
+              }`}
+            >
+              {'   '}
+              _by {book.author?.slice(0, 15)}
+            </span>
+          </div>
+          <button
+            onClick={toggleDarkMode}
+            className={`p-2 rounded ${
+              darkMode
+                ? 'bg-yellow-600 text-white'
+                : 'text-gray-600 hover:text-gray-900'
+            }`}
+            title='Toggle Dark Mode'
+          >
+            {darkMode ? (
               <svg
-                className='h-6 w-6'
+                className='h-5 w-5'
                 fill='none'
                 viewBox='0 0 24 24'
                 stroke='currentColor'
@@ -226,128 +217,27 @@ function ReaderPage() {
                   strokeLinecap='round'
                   strokeLinejoin='round'
                   strokeWidth={2}
-                  d='M10 19l-7-7m0 0l7-7m-7 7h18'
+                  d='M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z'
                 />
               </svg>
-            </Link>
-            {/* Page Navigation */}
-            {readerMode === 'pdf_stream' && (
-              <div className='flex items-center '>
-                <button
-                  onClick={() => handlePageChange(currentPage - 1)}
-                  disabled={currentPage <= 1}
-                  className={`p-2 rounded ${
-                    darkMode
-                      ? 'text-gray-300 hover:text-white disabled:text-gray-600'
-                      : 'text-gray-600 hover:text-gray-900 disabled:text-gray-400'
-                  } disabled:cursor-not-allowed`}
-                >
-                  <svg
-                    className='h-5 w-5'
-                    fill='none'
-                    viewBox='0 0 24 24'
-                    stroke='currentColor'
-                  >
-                    <path
-                      strokeLinecap='round'
-                      strokeLinejoin='round'
-                      strokeWidth={2}
-                      d='M15 19l-7-7 7-7'
-                    />
-                  </svg>
-                </button>
-                <span
-                  className={`text-sm ${
-                    darkMode ? 'text-gray-300' : 'text-gray-600'
-                  }`}
-                >
-                  {currentPage} / {totalPages}
-                </span>
-                <button
-                  onClick={() => handlePageChange(currentPage + 1)}
-                  disabled={currentPage >= totalPages}
-                  className={`p-2 rounded ${
-                    darkMode
-                      ? 'text-gray-300 hover:text-white disabled:text-gray-600'
-                      : 'text-gray-600 hover:text-gray-900 disabled:text-gray-400'
-                  } disabled:cursor-not-allowed`}
-                >
-                  <svg
-                    className='h-5 w-5'
-                    fill='none'
-                    viewBox='0 0 24 24'
-                    stroke='currentColor'
-                  >
-                    <path
-                      strokeLinecap='round'
-                      strokeLinejoin='round'
-                      strokeWidth={2}
-                      d='M9 5l7 7-7 7'
-                    />
-                  </svg>
-                </button>
-              </div>
+            ) : (
+              <svg
+                className='h-5 w-5'
+                fill='none'
+                viewBox='0 0 24 24'
+                stroke='currentColor'
+              >
+                <path
+                  strokeLinecap='round'
+                  strokeLinejoin='round'
+                  strokeWidth={2}
+                  d='M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z'
+                />
+              </svg>
             )}
-            {/*  */}
-            <div className='flex justify-between items-center'>
-              <h1
-                className={`text-lg  font-semibold ${
-                  darkMode ? 'text-white' : 'text-gray-900'
-                }`}
-              >
-                {book.title?.slice(0, 15)}
-              </h1>
-              <span
-                className={`text-xs ${
-                  darkMode ? 'text-gray-400' : 'text-gray-600'
-                }`}
-              >
-                {'   '}
-                _by {book.author?.slice(0, 15)}
-              </span>
-            </div>
-            <button
-              onClick={toggleDarkMode}
-              className={`p-2 rounded ${
-                darkMode
-                  ? 'bg-yellow-600 text-white'
-                  : 'text-gray-600 hover:text-gray-900'
-              }`}
-              title='Toggle Dark Mode'
-            >
-              {darkMode ? (
-                <svg
-                  className='h-5 w-5'
-                  fill='none'
-                  viewBox='0 0 24 24'
-                  stroke='currentColor'
-                >
-                  <path
-                    strokeLinecap='round'
-                    strokeLinejoin='round'
-                    strokeWidth={2}
-                    d='M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z'
-                  />
-                </svg>
-              ) : (
-                <svg
-                  className='h-5 w-5'
-                  fill='none'
-                  viewBox='0 0 24 24'
-                  stroke='currentColor'
-                >
-                  <path
-                    strokeLinecap='round'
-                    strokeLinejoin='round'
-                    strokeWidth={2}
-                    d='M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z'
-                  />
-                </svg>
-              )}
-            </button>
-          </div>
+          </button>
         </div>
-      )}
+      </div>
 
       {/* Reader Content */}
       <div className='relative  h-screen pt-0'>
@@ -355,7 +245,6 @@ function ReaderPage() {
           // Google Drive Embed Mode
           <div className='h-full  relative drive-embed-container'>
             <iframe
-              ref={iframeRef}
               src={getDriveEmbedUrl()}
               className='w-full h-full'
               style={{
