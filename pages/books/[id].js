@@ -512,7 +512,7 @@ function BookDetailsPage() {
           <div className='md:flex'>
             {/* Book Cover */}
             <div className='md:flex-shrink-0'>
-              <div className='h-96 w-full md:w-64'>
+              <div className='h-[30rem] w-full md:w-64'>
                 <BookImageSlider
                   images={book?.images || []}
                   title={book?.title || 'Book'}
@@ -569,8 +569,6 @@ function BookDetailsPage() {
                     </div>
                   </div>
                 )}
-
-
               </div>
 
               {/* Action Buttons */}
