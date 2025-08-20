@@ -5,15 +5,19 @@ const BookImageSlider = ({
   images = [],
   title = 'Book',
   className = '',
-  autoSlide = true,
+  autoSlide = false,
   slideInterval = 3000,
 }) => {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isHovered, setIsHovered] = useState(false)
+  const [isDragging, setIsDragging] = useState(false)
+  const [startX, setStartX] = useState(0)
+  const [currentX, setCurrentX] = useState(0)
+  const [dragOffset, setDragOffset] = useState(0)
 
   // Auto-slide functionality
   useEffect(() => {
-    if (!autoSlide || images.length <= 1 || isHovered) return
+    if (!autoSlide || images.length <= 1 || isHovered || isDragging) return
 
     const interval = setInterval(() => {
       setCurrentIndex((prevIndex) =>
@@ -22,7 +26,7 @@ const BookImageSlider = ({
     }, slideInterval)
 
     return () => clearInterval(interval)
-  }, [autoSlide, images.length, slideInterval, isHovered])
+  }, [autoSlide, images.length, slideInterval, isHovered, isDragging])
 
   // Handle manual navigation
   const goToSlide = (index) => {
@@ -36,6 +40,77 @@ const BookImageSlider = ({
   const goToNext = () => {
     setCurrentIndex(currentIndex === images.length - 1 ? 0 : currentIndex + 1)
   }
+
+  // Touch/Mouse drag handlers
+  const handleStart = (clientX) => {
+    setIsDragging(true)
+    setStartX(clientX)
+    setCurrentX(clientX)
+  }
+
+  const handleMove = (clientX) => {
+    if (!isDragging) return
+    setCurrentX(clientX)
+    setDragOffset(clientX - startX)
+  }
+
+  const handleEnd = () => {
+    if (!isDragging) return
+    
+    const threshold = 50 // Minimum distance to trigger slide
+    const dragDistance = currentX - startX
+    
+    if (Math.abs(dragDistance) > threshold) {
+      if (dragDistance > 0) {
+        goToPrevious()
+      } else {
+        goToNext()
+      }
+    }
+    
+    setIsDragging(false)
+    setDragOffset(0)
+  }
+
+  // Mouse events
+  const handleMouseDown = (e) => {
+    e.preventDefault()
+    handleStart(e.clientX)
+  }
+
+  const handleMouseMove = (e) => {
+    handleMove(e.clientX)
+  }
+
+  const handleMouseUp = () => {
+    handleEnd()
+  }
+
+  // Touch events
+  const handleTouchStart = (e) => {
+    handleStart(e.touches[0].clientX)
+  }
+
+  const handleTouchMove = (e) => {
+    handleMove(e.touches[0].clientX)
+  }
+
+  const handleTouchEnd = () => {
+    handleEnd()
+  }
+
+  // Add global mouse event listeners when dragging
+  useEffect(() => {
+    if (isDragging) {
+      document.addEventListener('mousemove', handleMouseMove)
+      document.addEventListener('mouseup', handleMouseUp)
+      
+      return () => {
+        document.removeEventListener('mousemove', handleMouseMove)
+        document.removeEventListener('mouseup', handleMouseUp)
+      }
+    }
+  }, [isDragging, currentX, startX])
 
   // If no images, show placeholder
   if (!images || images.length === 0) {
@@ -84,7 +159,17 @@ const BookImageSlider = ({
       onMouseLeave={() => setIsHovered(false)}
     >
       {/* Main image */}
-      <div className='relative w-full h-full overflow-hidden'>
+      <div 
+        className='relative w-full h-full overflow-hidden cursor-grab active:cursor-grabbing select-none'
+        onMouseDown={handleMouseDown}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+        style={{
+          transform: isDragging ? `translateX(${dragOffset}px)` : 'translateX(0)',
+          transition: isDragging ? 'none' : 'transform 0.3s ease'
+        }}
+      >
         <Image
           src={images[currentIndex].url}
           alt={`${title} - Image ${currentIndex + 1}`}
@@ -94,14 +179,14 @@ const BookImageSlider = ({
         />
       </div>
 
-      {/* Navigation arrows - only show on hover */}
+      {/* Navigation arrows - always visible */}
       <button
         onClick={goToPrevious}
-        className='absolute left-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200 hover:bg-opacity-70'
+        className='absolute left-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full opacity-80 hover:opacity-100 transition-opacity duration-200 hover:bg-opacity-70'
         aria-label='Previous image'
       >
         <svg
-          className='w-4 h-4'
+          className='w-5 h-5'
           fill='none'
           stroke='currentColor'
           viewBox='0 0 24 24'
@@ -117,11 +202,11 @@ const BookImageSlider = ({
 
       <button
         onClick={goToNext}
-        className='absolute right-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200 hover:bg-opacity-70'
+        className='absolute right-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full opacity-80 hover:opacity-100 transition-opacity duration-200 hover:bg-opacity-70'
         aria-label='Next image'
       >
         <svg
-          className='w-4 h-4'
+          className='w-5 h-5'
           fill='none'
           stroke='currentColor'
           viewBox='0 0 24 24'
@@ -136,15 +221,15 @@ const BookImageSlider = ({
       </button>
 
       {/* Dots indicator */}
-      <div className='absolute bottom-2 left-1/2 transform -translate-x-1/2 flex space-x-1'>
+      <div className='absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2'>
         {images.map((_, index) => (
           <button
             key={index}
             onClick={() => goToSlide(index)}
-            className={`w-2 h-2 rounded-full transition-all duration-200 ${
+            className={`w-3 h-3 rounded-full transition-all duration-200 border border-white ${
               index === currentIndex
                 ? 'bg-white'
-                : 'bg-white bg-opacity-50 hover:bg-opacity-75'
+                : 'bg-transparent hover:bg-white hover:bg-opacity-50'
             }`}
             aria-label={`Go to image ${index + 1}`}
           />
