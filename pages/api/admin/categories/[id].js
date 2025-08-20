@@ -19,6 +19,12 @@ async function handler(req, res) {
       return await getCategory(req, res, id);
     case 'PUT':
       return await updateCategory(req, res, id);
+    case 'POST':
+      // Handle restore action
+      if (req.body.action === 'restore') {
+        return await restoreCategory(req, res, id);
+      }
+      return res.status(400).json({ error: 'Invalid action' });
     case 'DELETE':
       return await deleteCategory(req, res, id);
     default:
@@ -179,21 +185,21 @@ async function deleteCategory(req, res, categoryId) {
     }
 
     if (force === 'true') {
-      // Hard delete - remove category completely
+      // Hard delete - remove category completely from database
       // First, remove category reference from all books
       await Book.updateMany(
         { category: categoryId },
         { $unset: { category: 1 }, updatedBy: adminUserId }
       );
 
-      // Delete the category
+      // Delete the category permanently
       await Category.findByIdAndDelete(categoryId);
 
       res.status(200).json({ 
-        message: 'Category permanently deleted and removed from all books' 
+        message: 'Category permanently deleted from database' 
       });
     } else {
-      // Soft delete
+      // Soft delete - mark as deleted
       category.isDeleted = true;
       category.deletedAt = new Date();
       category.deletedBy = adminUserId;
@@ -205,6 +211,54 @@ async function deleteCategory(req, res, categoryId) {
     }
   } catch (error) {
     console.error('Delete category error:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+}
+
+async function restoreCategory(req, res, categoryId) {
+  try {
+    const adminUserId = req.user._id;
+
+    // Find deleted category
+    const category = await Category.findById(categoryId);
+    if (!category) {
+      return res.status(404).json({ error: 'Category not found' });
+    }
+
+    if (!category.isDeleted) {
+      return res.status(400).json({ error: 'Category is not deleted' });
+    }
+
+    // Check for name conflicts with active categories
+    const existingCategory = await Category.findOne({
+      name: { $regex: `^${category.name}$`, $options: 'i' },
+      _id: { $ne: categoryId },
+      isDeleted: { $ne: true }
+    });
+
+    if (existingCategory) {
+      return res.status(400).json({ 
+        error: 'Cannot restore: A category with this name already exists' 
+      });
+    }
+
+    // Restore category
+    category.isDeleted = false;
+    category.deletedAt = undefined;
+    category.deletedBy = undefined;
+    await category.save();
+
+    res.status(200).json({ 
+      message: 'Category restored successfully',
+      category: {
+        id: category._id,
+        name: category.name,
+        description: category.description,
+        color: category.color
+      }
+    });
+  } catch (error) {
+    console.error('Restore category error:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
 }

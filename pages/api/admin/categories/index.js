@@ -20,7 +20,7 @@ async function getCategories(req, res) {
   try {
     const {
       page = 1,
-      limit = 20,
+      limit = 1000,
       search = '',
       includeDeleted = false,
       sortBy = 'name',
@@ -42,8 +42,14 @@ async function getCategories(req, res) {
       ];
     }
 
-    // Include/exclude deleted categories
-    if (!includeDeleted || includeDeleted === 'false') {
+    // Filter deleted categories
+    if (includeDeleted === 'true') {
+      // Include all categories (both active and deleted)
+    } else if (includeDeleted === 'only') {
+      // Show only deleted categories
+      query.isDeleted = true;
+    } else {
+      // Default: show only active categories
       query.isDeleted = { $ne: true };
     }
 
@@ -76,7 +82,15 @@ async function getCategories(req, res) {
       },
       {
         $project: {
-          books: 0
+          _id: 1,
+          name: 1,
+          description: 1,
+          color: 1,
+          isActive: 1,
+          createdBy: 1,
+          bookCount: 1,
+          createdAt: 1,
+          updatedAt: 1
         }
       },
       { $sort: sortObj },
@@ -108,6 +122,8 @@ async function createCategory(req, res) {
   try {
     const { name, description, color } = req.body;
     const adminUserId = req.user._id;
+    
+
 
     // Validation
     if (!name || name.trim().length === 0) {
@@ -146,6 +162,8 @@ async function createCategory(req, res) {
     });
 
     await category.save();
+    
+
 
     // Return category data
     const categoryData = {

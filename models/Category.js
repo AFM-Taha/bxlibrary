@@ -12,6 +12,10 @@ const CategorySchema = new mongoose.Schema({
     required: false,
     trim: true
   },
+  color: {
+    type: String,
+    default: '#3B82F6'
+  },
   isActive: {
     type: Boolean,
     default: true
@@ -24,6 +28,20 @@ const CategorySchema = new mongoose.Schema({
   bookCount: {
     type: Number,
     default: 0
+  },
+  // Soft delete fields
+  isDeleted: {
+    type: Boolean,
+    default: false
+  },
+  deletedAt: {
+    type: Date,
+    required: false
+  },
+  deletedBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: false
   }
 }, {
   timestamps: true
@@ -32,6 +50,7 @@ const CategorySchema = new mongoose.Schema({
 // Index for faster searches
 CategorySchema.index({ name: 1 });
 CategorySchema.index({ isActive: 1 });
+CategorySchema.index({ isDeleted: 1 });
 
 // Virtual for getting active books in this category
 CategorySchema.virtual('books', {
