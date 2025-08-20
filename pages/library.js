@@ -13,6 +13,7 @@ function LibraryPage() {
   const [books, setBooks] = useState([])
   const [categories, setCategories] = useState([])
   const [loading, setLoading] = useState(true)
+  const [initialLoad, setInitialLoad] = useState(true)
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedCategory, setSelectedCategory] = useState('')
   const [sortBy, setSortBy] = useState('newest')
@@ -59,6 +60,7 @@ function LibraryPage() {
       console.error('Failed to fetch books:', error)
     } finally {
       setLoading(false)
+      setInitialLoad(false)
     }
   }
 
@@ -207,7 +209,7 @@ function LibraryPage() {
         </div>
 
         {/* Books Grid */}
-        {loading ? (
+        {loading || initialLoad ? (
           <div className='flex justify-center items-center py-12'>
             <div className='animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600'></div>
           </div>
@@ -226,10 +228,10 @@ function LibraryPage() {
                 d='M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253'
               />
             </svg>
-            <h3 className='text-lg font-medium text-gray-900 mb-2'>
+            <h3 className='text-lg font-medium text-gray-900 dark:text-white mb-2'>
               No books found
             </h3>
-            <p className='text-gray-500'>
+            <p className='text-gray-500 dark:text-gray-400'>
               {searchTerm || selectedCategory
                 ? 'Try adjusting your search criteria or filters.'
                 : 'No books are available at the moment.'}
@@ -277,7 +279,7 @@ function LibraryPage() {
                 <button
                   onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
                   disabled={currentPage === 1}
-                  className='px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed'
+                  className='px-3 py-2 text-sm font-medium text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed'
                 >
                   Previous
                 </button>
@@ -302,7 +304,7 @@ function LibraryPage() {
                         className={`px-3 py-2 text-sm font-medium rounded-md ${
                           currentPage === pageNum
                             ? 'bg-blue-600 text-white'
-                            : 'text-gray-700 bg-white border border-gray-300 hover:bg-gray-50'
+                            : 'text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700'
                         }`}
                       >
                         {pageNum}
@@ -316,7 +318,7 @@ function LibraryPage() {
                     setCurrentPage(Math.min(totalPages, currentPage + 1))
                   }
                   disabled={currentPage === totalPages}
-                  className='px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed'
+                  className='px-3 py-2 text-sm font-medium text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed'
                 >
                   Next
                 </button>
