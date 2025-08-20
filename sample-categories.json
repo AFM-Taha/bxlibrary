@@ -1,0 +1,217 @@
+[
+  {
+    "name": "Anthology",
+    "description": "Curated collections of writings (essays, interviews, or excerpts) assembled around a theme or series, often from multiple contributors.",
+    "color": "#607D8B"
+  },
+  {
+    "name": "Automotive",
+    "description": "Guides on owning, buying, maintaining, and repairing vehicles; diagnostics, DIY upkeep, safety, and tips to reduce ownership costs.",
+    "color": "#F57C00"
+  },
+  {
+    "name": "Behavioral Economics",
+    "description": "How psychology shapes financial choices and markets; biases, heuristics, nudges, and ways to make better money decisions.",
+    "color": "#FFA000"
+  },
+  {
+    "name": "Behavioral Psychology",
+    "description": "How environment, rewards, and habits drive behavior; tools for behavior change, habit design, and overcoming self-defeating patterns.",
+    "color": "#7E57C2"
+  },
+  {
+    "name": "Budgeting",
+    "description": "Systems for planning income, tracking expenses, prioritizing needs, and building savings; methods like zero-based budgeting and automation.",
+    "color": "#CDDC39"
+  },
+  {
+    "name": "Business Growth",
+    "description": "Tactics to scale a company: acquisition, pricing, retention, product expansion, and the metrics that guide sustainable growth.",
+    "color": "#1976D2"
+  },
+  {
+    "name": "Communication",
+    "description": "Skills for speaking, listening, writing, and persuading; feedback, storytelling, negotiation, and conflict resolution.",
+    "color": "#03A9F4"
+  },
+  {
+    "name": "Consumer Guide",
+    "description": "Practical buying advice with checklists, comparisons, and consumer rights to avoid costly mistakes and choose well.",
+    "color": "#9E9E9E"
+  },
+  {
+    "name": "Culture",
+    "description": "Explorations of traditions, values, and social norms within communities and how they shape identity, aspiration, and outcomes.",
+    "color": "#FFC107"
+  },
+  {
+    "name": "Digital Strategy",
+    "description": "Planning and executing an effective online presence: content, SEO, social, email, paid media, analytics, and conversion funnels.",
+    "color": "#0288D1"
+  },
+  {
+    "name": "DIY",
+    "description": "Hands-on, step-by-step projects and repairs you can do yourself with common tools: home, auto, crafts, and basic tech fixes.",
+    "color": "#795548"
+  },
+  {
+    "name": "Entrepreneurship",
+    "description": "Starting and running new ventures: idea validation, business models, funding, customer discovery, and execution under uncertainty.",
+    "color": "#FF5722"
+  },
+  {
+    "name": "Fitness",
+    "description": "Training programs for strength, mobility, endurance, and functional movement with an emphasis on safe technique and progression.",
+    "color": "#4CAF50"
+  },
+  {
+    "name": "Health",
+    "description": "Science-based guidance for overall wellbeing: sleep, stress, prevention, lifestyle medicine, and healthy daily routines.",
+    "color": "#81C784"
+  },
+  {
+    "name": "Innovation",
+    "description": "Methods for creating novel products and processes: design thinking, experimentation, R&D, and protecting breakthrough ideas.",
+    "color": "#00BCD4"
+  },
+  {
+    "name": "Inspiration",
+    "description": "Uplifting stories and reflections that encourage gratitude, resilience, and perspective; designed for brief, reflective reading.",
+    "color": "#EC407A"
+  },
+  {
+    "name": "Interpersonal Skills",
+    "description": "Social abilities that build strong relationships: empathy, rapport, collaboration, and navigating difficult conversations.",
+    "color": "#64B5F6"
+  },
+  {
+    "name": "Investing",
+    "description": "Strategies for allocating capital; risk and return, diversification, valuation, and long-term portfolio management.",
+    "color": "#388E3C"
+  },
+  {
+    "name": "Leadership",
+    "description": "Guiding people and organizations through vision, ethics, influence, and decision-making while building culture and accountability.",
+    "color": "#3F51B5"
+  },
+  {
+    "name": "Management",
+    "description": "Coordinating work and resources: hiring, operations, processes, performance management, and project execution.",
+    "color": "#455A64"
+  },
+  {
+    "name": "Marketing",
+    "description": "Creating demand and communicating value; research, positioning, branding, messaging, channel selection, and measurement.",
+    "color": "#E91E63"
+  },
+  {
+    "name": "Memoir",
+    "description": "First-person life narratives that offer context, emotion, and lessons learned from real experiences.",
+    "color": "#5D4037"
+  },
+  {
+    "name": "Mindfulness",
+    "description": "Present-moment awareness practices: meditation, breathwork, and non-judgmental observation to reduce stress and increase clarity.",
+    "color": "#009688"
+  },
+  {
+    "name": "Motivation",
+    "description": "Mindsets and techniques to sustain drive and discipline: goal setting, habit formation, and overcoming setbacks.",
+    "color": "#F44336"
+  },
+  {
+    "name": "Nutrition",
+    "description": "Evidence-based information on diet, macro/micronutrients, and meal patterns to support health and performance.",
+    "color": "#AFB42B"
+  },
+  {
+    "name": "Parenting",
+    "description": "Guidance on raising children: development, communication, boundaries, education, and building practical life skills.",
+    "color": "#BA68C8"
+  },
+  {
+    "name": "Performance",
+    "description": "Optimizing physical and cognitive output with training cycles, routines, and recovery protocols; measuring and refining results.",
+    "color": "#FF9800"
+  },
+  {
+    "name": "Personal Development",
+    "description": "Skill-building for self-improvement: productivity, communication, leadership, and decision-making with actionable exercises.",
+    "color": "#2196F3"
+  },
+  {
+    "name": "Personal Growth",
+    "description": "Inner transformation focused on identity, values, purpose, and emotional awareness; more reflective than skills-based guides.",
+    "color": "#8BC34A"
+  },
+  {
+    "name": "Philosophy",
+    "description": "Inquiry into ethics, knowledge, and meaning; builds critical thinking and rigorous reasoning about life's big questions.",
+    "color": "#9C27B0"
+  },
+  {
+    "name": "Productivity",
+    "description": "Methods to do more of what matters: prioritization, time-blocking, automation, and focused work habits.",
+    "color": "#00796B"
+  },
+  {
+    "name": "Psychology",
+    "description": "The science of mind and behavior: cognition, emotion, personality, and research-grounded frameworks for everyday life.",
+    "color": "#7B1FA2"
+  },
+  {
+    "name": "Real Estate",
+    "description": "Buying, financing, managing, and selling property; market analysis, landlording, and building equity over time.",
+    "color": "#689F38"
+  },
+  {
+    "name": "Recovery",
+    "description": "Restorative practices after stress or exertion: sleep, mobility, rehabilitation, injury prevention, and periodization.",
+    "color": "#0097A7"
+  },
+  {
+    "name": "Self-Help",
+    "description": "Accessible, practical advice for improving wellbeing, habits, relationships, or career through step-by-step actions.",
+    "color": "#7986CB"
+  },
+  {
+    "name": "Social Psychology",
+    "description": "How people think and act in groups: conformity, persuasion, norms, identity, and power dynamics.",
+    "color": "#673AB7"
+  },
+  {
+    "name": "Spirituality",
+    "description": "Exploration of inner life, purpose, and transcendence; practices like contemplation, meditation, and ethical living.",
+    "color": "#4DD0E1"
+  },
+  {
+    "name": "Startups",
+    "description": "Building early-stage companies: rapid iteration, product-market fit, fundraising, and scaling from zero to sustainable growth.",
+    "color": "#E64A19"
+  },
+  {
+    "name": "Strategy",
+    "description": "Long-term choices that create advantage: goal setting, resource allocation, competitive analysis, and smart trade-offs.",
+    "color": "#303F9F"
+  },
+  {
+    "name": "Success",
+    "description": "Principles and mindsets associated with achievement: resilience, deliberate practice, and learning from failure.",
+    "color": "#FBC02D"
+  },
+  {
+    "name": "Time Management",
+    "description": "Planning and protecting your time: scheduling, estimating, batching, and eliminating distractions.",
+    "color": "#FFEB3B"
+  },
+  {
+    "name": "Wealth Building",
+    "description": "Long-term plans to grow net worth: saving rate, asset allocation, tax efficiency, and multiple income streams.",
+    "color": "#2E7D32"
+  },
+  {
+    "name": "Youth Education",
+    "description": "Resources for teaching children and teens: curricula, pedagogy, and tools that build knowledge and practical skills.",
+    "color": "#29B6F6"
+  }
+]

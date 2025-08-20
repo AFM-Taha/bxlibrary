@@ -14,6 +14,10 @@ function AdminCategories() {
   const [showCreateModal, setShowCreateModal] = useState(false)
   const [editingCategory, setEditingCategory] = useState(null)
   const [showDeleted, setShowDeleted] = useState(false)
+  const [showBulkImportModal, setShowBulkImportModal] = useState(false)
+  const [bulkImportFile, setBulkImportFile] = useState(null)
+  const [bulkImportLoading, setBulkImportLoading] = useState(false)
+  const [bulkImportResults, setBulkImportResults] = useState(null)
   const [formData, setFormData] = useState({
     name: '',
     description: '',
@@ -163,6 +167,52 @@ function AdminCategories() {
     }
   }
 
+  const handleBulkImport = async () => {
+    if (!bulkImportFile) {
+      toast.error('Please select a JSON file')
+      return
+    }
+
+    setBulkImportLoading(true)
+    setBulkImportResults(null)
+
+    try {
+      const formData = new FormData()
+      formData.append('file', bulkImportFile)
+
+      const response = await fetch('/api/admin/categories/bulk-import', {
+        method: 'POST',
+        credentials: 'include',
+        body: formData,
+      })
+
+      const data = await response.json()
+
+      if (response.ok) {
+        setBulkImportResults(data.results)
+        toast.success(`Bulk import completed: ${data.results.created} created, ${data.results.updated} updated`)
+        // Refresh categories list
+        fetchCategories()
+      } else {
+        toast.error(data.error || 'Failed to import categories')
+      }
+    } catch (error) {
+      console.error('Error importing categories:', error)
+      toast.error('Failed to import categories')
+    } finally {
+      setBulkImportLoading(false)
+    }
+  }
+
+
+
+  const resetBulkImportModal = () => {
+    setShowBulkImportModal(false)
+    setBulkImportFile(null)
+    setBulkImportResults(null)
+    setBulkImportLoading(false)
+  }
+
   const openEditModal = (category) => {
     setEditingCategory(category)
     setFormData({
@@ -236,13 +286,22 @@ function AdminCategories() {
                   {showDeleted ? 'Show Active' : 'Show Deleted'}
                 </button>
                 {!showDeleted && (
-                  <button
-                    onClick={() => setShowCreateModal(true)}
-                    className='bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-md text-sm font-medium'
-                  >
-                    Add Category
-                  </button>
+                  <>
+                    <button
+                      onClick={() => setShowCreateModal(true)}
+                      className='bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-md text-sm font-medium'
+                    >
+                      Add Category
+                    </button>
+                    <button
+                      onClick={() => setShowBulkImportModal(true)}
+                      className='bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md text-sm font-medium'
+                    >
+                      Bulk Import
+                    </button>
+                  </>
                 )}
+
               </div>
             </div>
           </div>
@@ -446,6 +505,103 @@ function AdminCategories() {
                     </button>
                   </div>
                 </form>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Bulk Import Modal */}
+        {showBulkImportModal && (
+          <div className='fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50'>
+            <div className='bg-white dark:bg-gray-800 rounded-lg shadow-xl max-w-md w-full max-h-[90vh] overflow-y-auto'>
+              <div className='p-6'>
+                <div className='flex justify-between items-center mb-4'>
+                  <h2 className='text-xl font-semibold text-gray-900 dark:text-white'>
+                    Bulk Import Categories
+                  </h2>
+                  <button
+                    onClick={resetBulkImportModal}
+                    className='text-gray-400 hover:text-gray-600 dark:hover:text-gray-300'
+                  >
+                    ✕
+                  </button>
+                </div>
+
+                <div className='mb-4'>
+                  <p className='text-sm text-gray-600 dark:text-gray-400 mb-3'>
+                    Upload a JSON file with category data. Categories will be matched by name (case-insensitive). 
+                    Existing categories will be updated, new ones will be created.
+                  </p>
+                  
+                  <div className='mb-3'>
+                    <label className='block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2'>
+                      JSON File
+                    </label>
+                    <input
+                      type='file'
+                      accept='.json'
+                      onChange={(e) => setBulkImportFile(e.target.files[0])}
+                      className='w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-primary-500 focus:border-primary-500'
+                    />
+                  </div>
+
+                  <div className='bg-gray-50 dark:bg-gray-700 p-3 rounded-md'>
+                    <p className='text-xs text-gray-600 dark:text-gray-400 font-medium mb-2'>Expected JSON format:</p>
+                    <pre className='text-xs text-gray-600 dark:text-gray-400 overflow-x-auto'>
+{`[
+  {
+    "name": "Fiction",
+    "description": "Fictional books",
+    "color": "#FF5733"
+  },
+  {
+    "name": "Science",
+    "description": "Scientific literature",
+    "color": "#33FF57"
+  }
+]`}
+                    </pre>
+                  </div>
+                </div>
+
+                {bulkImportResults && (
+                  <div className='mb-4 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-md'>
+                    <h3 className='text-sm font-medium text-blue-800 dark:text-blue-300 mb-2'>Import Results:</h3>
+                    <div className='text-sm text-blue-700 dark:text-blue-400'>
+                      <p>Total processed: {bulkImportResults.total}</p>
+                      <p>Created: {bulkImportResults.created}</p>
+                      <p>Updated: {bulkImportResults.updated}</p>
+                      {bulkImportResults.errors.length > 0 && (
+                        <div className='mt-2'>
+                          <p className='text-red-600 dark:text-red-400'>Errors: {bulkImportResults.errors.length}</p>
+                          <div className='max-h-20 overflow-y-auto mt-1'>
+                            {bulkImportResults.errors.map((error, index) => (
+                              <p key={index} className='text-xs text-red-600 dark:text-red-400'>
+                                Row {error.index + 1}: {error.error}
+                              </p>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )}
+
+                <div className='flex justify-end space-x-3'>
+                  <button
+                    onClick={resetBulkImportModal}
+                    className='px-4 py-2 text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-600 hover:bg-gray-200 dark:hover:bg-gray-500 rounded-md text-sm font-medium'
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    onClick={handleBulkImport}
+                    disabled={!bulkImportFile || bulkImportLoading}
+                    className='px-4 py-2 bg-green-600 hover:bg-green-700 disabled:bg-gray-400 text-white rounded-md text-sm font-medium'
+                  >
+                    {bulkImportLoading ? 'Importing...' : 'Import Categories'}
+                  </button>
+                </div>
               </div>
             </div>
           </div>
