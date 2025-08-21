@@ -20,6 +20,12 @@ function AdminBooks() {
   const [bulkUploadFile, setBulkUploadFile] = useState(null);
   const [bulkUploadLoading, setBulkUploadLoading] = useState(false);
   const [bulkUploadResults, setBulkUploadResults] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [totalBooks, setTotalBooks] = useState(0);
+  const [booksPerPage] = useState(20);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTimeout, setSearchTimeout] = useState(null);
   const [formData, setFormData] = useState({
     title: '',
     author: '',
@@ -36,14 +42,18 @@ function AdminBooks() {
     fetchCategories();
   }, []);
 
-  const fetchBooks = async () => {
+  const fetchBooks = async (page = 1, search = '') => {
     try {
-      const response = await fetch('/api/admin/books', {
+      const searchParam = search ? `&search=${encodeURIComponent(search)}` : '';
+      const response = await fetch(`/api/admin/books?page=${page}&limit=${booksPerPage}${searchParam}`, {
         credentials: 'include'
       });
       if (response.ok) {
         const data = await response.json();
         setBooks(data.books || []);
+        setTotalPages(data.pagination?.totalPages || 1);
+        setTotalBooks(data.pagination?.totalCount || 0);
+        setCurrentPage(page);
       } else {
         toast.error('Failed to fetch books');
       }
@@ -68,6 +78,32 @@ function AdminBooks() {
       console.error('Error fetching categories:', error);
     }
   };
+
+  const handleSearch = (value) => {
+    setSearchTerm(value);
+    
+    // Clear existing timeout
+    if (searchTimeout) {
+      clearTimeout(searchTimeout);
+    }
+    
+    // Set new timeout for debounced search
+    const newTimeout = setTimeout(() => {
+      setCurrentPage(1); // Reset to first page when searching
+      fetchBooks(1, value);
+    }, 500);
+    
+    setSearchTimeout(newTimeout);
+  };
+
+  // Effect to handle search term changes
+  useEffect(() => {
+    return () => {
+      if (searchTimeout) {
+        clearTimeout(searchTimeout);
+      }
+    };
+  }, [searchTimeout]);
 
   const handleCreateBook = async (e) => {
     e.preventDefault();
@@ -149,7 +185,7 @@ function AdminBooks() {
         toast.success('Book created successfully');
         setShowCreateModal(false);
         resetForm();
-        fetchBooks();
+        fetchBooks(currentPage, searchTerm);
       } else {
         const data = await response.json();
         toast.error(data.message || 'Failed to create book');
@@ -215,7 +251,7 @@ function AdminBooks() {
         toast.success('Book updated successfully');
         setEditingBook(null);
         resetForm();
-        fetchBooks();
+        fetchBooks(currentPage, searchTerm);
       } else {
         const data = await response.json();
         toast.error(data.message || 'Failed to update book');
@@ -237,7 +273,9 @@ function AdminBooks() {
 
       if (response.ok) {
         toast.success('Book deleted successfully');
-        fetchBooks();
+        // If we're on the last page and it becomes empty, go to previous page
+        const newCurrentPage = books.length === 1 && currentPage > 1 ? currentPage - 1 : currentPage;
+        fetchBooks(newCurrentPage, searchTerm);
       } else {
         const data = await response.json();
         toast.error(data.message || 'Failed to delete book');
@@ -297,7 +335,7 @@ function AdminBooks() {
       if (response.ok) {
         setBulkUploadResults(result.results);
         toast.success(`Bulk upload completed! Created: ${result.results.created}, Updated: ${result.results.updated}`);
-        fetchBooks(); // Refresh the books list
+        fetchBooks(currentPage, searchTerm); // Refresh the books list
       } else {
         toast.error(result.error || 'Bulk upload failed');
       }
@@ -369,6 +407,30 @@ function AdminBooks() {
 
         {/* Main Content */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          {/* Search Bar */}
+          <div className="mb-6">
+            <div className="max-w-md">
+              <label htmlFor="search" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                Search Books
+              </label>
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <svg className="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                    <path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd" />
+                  </svg>
+                </div>
+                <input
+                  type="text"
+                  id="search"
+                  value={searchTerm}
+                  onChange={(e) => handleSearch(e.target.value)}
+                  placeholder="Search by title, author, or description..."
+                  className="block w-full pl-10 pr-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md leading-5 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-primary-500 focus:border-primary-500"
+                />
+              </div>
+            </div>
+          </div>
+
           <div className="bg-white dark:bg-gray-800 shadow rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700">
             <div className="overflow-x-auto">
               <table className="min-w-full divide-y divide-gray-200">
@@ -409,11 +471,14 @@ function AdminBooks() {
                           </div>
                           <div className="ml-4">
                             <div className="text-sm font-medium text-gray-900 dark:text-white">
-                              {book.title}
+                              {book.title && book.title.length > 25
+                                ? `${book.title.substring(0, 25)}...`
+                                : book.title
+                              }
                             </div>
                             <div className="text-sm text-gray-500 dark:text-gray-400">
-                              {book.description && book.description.length > 50
-                                ? `${book.description.substring(0, 50)}...`
+                              {book.description && book.description.length > 35
+                                ? `${book.description.substring(0, 35)}...`
                                 : book.description
                               }
                             </div>
@@ -421,7 +486,10 @@ function AdminBooks() {
                         </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-300">
-                        {book.author}
+                        {book.author && book.author.length > 20
+                          ? `${book.author.substring(0, 20)}...`
+                          : book.author
+                        }
                       </td>
                       <td className="px-6 py-4">
                         <div className="flex flex-wrap gap-1">
@@ -454,21 +522,31 @@ function AdminBooks() {
                         <div className="flex justify-end space-x-2">
                           <Link
                             href={`/books/${book.id}`}
-                            className="text-blue-600 hover:text-blue-900"
+                            className="text-blue-600 hover:text-blue-900 p-1"
+                            title="View"
                           >
-                            View
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                            </svg>
                           </Link>
                           <button
                             onClick={() => openEditModal(book)}
-                            className="text-primary-600 hover:text-primary-900"
+                            className="text-primary-600 hover:text-primary-900 p-1"
+                            title="Edit"
                           >
-                            Edit
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                            </svg>
                           </button>
                           <button
                             onClick={() => handleDeleteBook(book.id)}
-                            className="text-red-600 hover:text-red-900"
+                            className="text-red-600 hover:text-red-900 p-1"
+                            title="Delete"
                           >
-                            Delete
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                            </svg>
                           </button>
                         </div>
                       </td>
@@ -477,6 +555,96 @@ function AdminBooks() {
                 </tbody>
               </table>
             </div>
+            
+            {/* Pagination Controls */}
+            {totalPages > 1 && (
+              <div className="bg-white dark:bg-gray-800 px-4 py-3 flex items-center justify-between border-t border-gray-200 dark:border-gray-700 sm:px-6">
+                <div className="flex-1 flex justify-between sm:hidden">
+                  <button
+                    onClick={() => fetchBooks(currentPage - 1)}
+                    disabled={currentPage === 1}
+                    className="relative inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    Previous
+                  </button>
+                  <button
+                    onClick={() => fetchBooks(currentPage + 1)}
+                    disabled={currentPage === totalPages}
+                    className="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    Next
+                  </button>
+                </div>
+                <div className="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+                  <div>
+                    <p className="text-sm text-gray-700 dark:text-gray-300">
+                      Showing{' '}
+                      <span className="font-medium">{(currentPage - 1) * booksPerPage + 1}</span>
+                      {' '}to{' '}
+                      <span className="font-medium">
+                        {Math.min(currentPage * booksPerPage, totalBooks)}
+                      </span>
+                      {' '}of{' '}
+                      <span className="font-medium">{totalBooks}</span>
+                      {' '}results
+                    </p>
+                  </div>
+                  <div>
+                    <nav className="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
+                      <button
+                        onClick={() => fetchBooks(currentPage - 1, searchTerm)}
+                        disabled={currentPage === 1}
+                        className="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-sm font-medium text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        <span className="sr-only">Previous</span>
+                        <svg className="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                          <path fillRule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clipRule="evenodd" />
+                        </svg>
+                      </button>
+                      
+                      {/* Page Numbers */}
+                      {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
+                        let pageNum;
+                        if (totalPages <= 5) {
+                          pageNum = i + 1;
+                        } else if (currentPage <= 3) {
+                          pageNum = i + 1;
+                        } else if (currentPage >= totalPages - 2) {
+                          pageNum = totalPages - 4 + i;
+                        } else {
+                          pageNum = currentPage - 2 + i;
+                        }
+                        
+                        return (
+                          <button
+                            key={pageNum}
+                            onClick={() => fetchBooks(pageNum, searchTerm)}
+                            className={`relative inline-flex items-center px-4 py-2 border text-sm font-medium ${
+                              pageNum === currentPage
+                                ? 'z-10 bg-primary-50 dark:bg-primary-900 border-primary-500 text-primary-600 dark:text-primary-400'
+                                : 'bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-600'
+                            }`}
+                          >
+                            {pageNum}
+                          </button>
+                        );
+                      })}
+                      
+                      <button
+                        onClick={() => fetchBooks(currentPage + 1, searchTerm)}
+                        disabled={currentPage === totalPages}
+                        className="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-sm font-medium text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        <span className="sr-only">Next</span>
+                        <svg className="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                          <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
+                        </svg>
+                      </button>
+                    </nav>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         </div>
 

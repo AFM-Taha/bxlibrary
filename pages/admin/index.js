@@ -24,9 +24,9 @@ function AdminDashboard() {
   const fetchStats = async () => {
     try {
       const [usersRes, booksRes, categoriesRes] = await Promise.all([
-        fetch('/api/admin/users'),
-        fetch('/api/books'),
-        fetch('/api/categories')
+        fetch('/api/admin/users', { credentials: 'include' }),
+        fetch('/api/admin/books', { credentials: 'include' }),
+        fetch('/api/categories', { credentials: 'include' })
       ]);
 
       if (usersRes.ok && booksRes.ok && categoriesRes.ok) {
@@ -38,7 +38,7 @@ function AdminDashboard() {
 
         setStats({
           totalUsers: users.users?.length || 0,
-          totalBooks: books.books?.length || 0,
+          totalBooks: books.pagination?.totalCount || books.books?.length || 0,
           totalCategories: categories.categories?.length || 0,
           activeUsers: users.users?.filter(u => u.status === 'active').length || 0
         });
