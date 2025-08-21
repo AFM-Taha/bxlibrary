@@ -20,7 +20,7 @@ async function handler(req, res) {
         _id: id,
         status: 'published',
         isDeleted: { $ne: true }
-      }).populate('category', 'name color').lean();
+      }).populate('categories', 'name color').lean();
 
       if (!book) {
         return res.status(404).json({
