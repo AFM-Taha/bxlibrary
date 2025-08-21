@@ -506,7 +506,9 @@ function BookDetailsPage() {
                   ></path>
                 </svg>
                 <span className='ml-1 text-sm font-medium text-gray-500 dark:text-gray-400 md:ml-2'>
-                  {book?.title}
+                  {book?.title && book.title.length > 25
+                    ? `${book.title.substring(0, 25)}...`
+                    : book?.title}
                 </span>
               </div>
             </li>
@@ -517,7 +519,7 @@ function BookDetailsPage() {
           <div className='md:flex'>
             {/* Book Cover */}
             <div className='md:flex-shrink-0'>
-              <div className='h-[24rem] w-full md:w-80'>
+              <div className='h-[28rem] w-full md:w-80'>
                 <BookImageSlider
                   images={book?.images || []}
                   title={book?.title || 'Book'}
