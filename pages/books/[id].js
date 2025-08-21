@@ -517,7 +517,7 @@ function BookDetailsPage() {
           <div className='md:flex'>
             {/* Book Cover */}
             <div className='md:flex-shrink-0'>
-              <div className='h-[30rem] w-full md:w-64'>
+              <div className='h-[24rem] w-full md:w-80'>
                 <BookImageSlider
                   images={book?.images || []}
                   title={book?.title || 'Book'}
@@ -531,10 +531,10 @@ function BookDetailsPage() {
             {/* Book Details */}
             <div className='p-8 flex-1'>
               <div className='mb-6'>
-                <h1 className='text-3xl font-bold text-gray-900 dark:text-white mb-2'>
+                <h1 className='text-xl md:text-3xl font-bold text-gray-900 dark:text-white mb-2'>
                   {book?.title}
                 </h1>
-                <p className='text-xl text-gray-600 dark:text-gray-300 mb-4'>
+                <p className='text-md md:text-xl text-gray-600 dark:text-gray-300 mb-4'>
                   by {book?.author}
                 </p>
 
