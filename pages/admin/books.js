@@ -159,8 +159,7 @@ function AdminBooks() {
         description: formData.description,
         categoryIds: formData.categories,
         status: formData.isPublic ? 'published' : 'draft',
-        images: formData.images,
-        tags: formData.tags.split(',').map(tag => tag.trim()).filter(tag => tag)
+        images: formData.images
       };
 
       // Only include driveUrl if fileId exists
@@ -234,9 +233,10 @@ function AdminBooks() {
         driveUrl: `https://drive.google.com/file/d/${fileId}/view`,
         categoryIds: formData.categories,
         status: formData.isPublic ? 'published' : 'draft',
-        images: formData.images,
-        tags: formData.tags.split(',').map(tag => tag.trim()).filter(tag => tag)
+        images: formData.images
       };
+      
+
 
       const response = await fetch(`/api/admin/books/${editingBook.id}`, {
         method: 'PUT',
@@ -288,14 +288,24 @@ function AdminBooks() {
 
   const openEditModal = (book) => {
     setEditingBook(book);
+    
+    // Ensure categories are always extracted as IDs
+    const categoryIds = book.categories ? book.categories.map(cat => {
+      if (typeof cat === 'string') return cat;
+      if (cat.id) return cat.id;
+      if (cat._id) return cat._id;
+      return cat;
+    }) : [];
+    
+
+    
     setFormData({
       title: book.title,
       author: book.author,
       description: book.description || '',
-      categories: book.categories ? book.categories.map(cat => cat._id || cat) : [],
+      categories: categoryIds,
       googleDriveFileId: book.driveFileId || book.driveUrl || '',
       images: book.images || [],
-      tags: book.tags ? book.tags.join(', ') : '',
       isPublic: book.isPublic !== false
     });
   };
@@ -308,7 +318,6 @@ function AdminBooks() {
       categories: [],
       googleDriveFileId: '',
       images: [],
-      tags: '',
       isPublic: true
     });
   };
@@ -764,18 +773,7 @@ function AdminBooks() {
                       maxImages={5}
                     />
                   </div>
-                  <div className="mb-4">
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                      Tags (comma-separated)
-                    </label>
-                    <input
-                      type="text"
-                      value={formData.tags}
-                      onChange={(e) => setFormData({ ...formData, tags: e.target.value })}
-                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-primary-500 focus:border-primary-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-                      placeholder="fiction, mystery, bestseller"
-                    />
-                  </div>
+
                   <div className="mb-6">
                     <label className="flex items-center">
                       <input
