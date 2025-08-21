@@ -180,13 +180,13 @@ function ReaderPage() {
       >
         <div className='flex  items-center  justify-between'>
           {/* Page Navigation */}
-          <div className='flex justify-between items-center'>
+          <div className=''>
             <h1
               className={`text-lg  font-semibold ${
                 darkMode ? 'text-white' : 'text-gray-900'
               }`}
             >
-              {book.title?.slice(0, 15)}
+              {book.title && book.title.length > 20 ? `${book.title.slice(0, 20)}...` : book.title}
             </h1>
             <span
               className={`text-xs ${
@@ -194,7 +194,7 @@ function ReaderPage() {
               }`}
             >
               {'   '}
-              _by {book.author?.slice(0, 15)}
+              _by {book.author && book.author.length > 20 ? `${book.author.slice(0, 20)}...` : book.author}
             </span>
           </div>
           <button

@@ -251,8 +251,8 @@
 
 /* Toggle button container styles - replaces ::after pseudo-element */
 .toggle-button-container {
-  top: 82px;
-  right: 14px;
+  top: 96px;
+  right: 11px;
   width: 48px;
   height: 48px;
   border-radius: 5%;
