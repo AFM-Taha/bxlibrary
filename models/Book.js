@@ -32,12 +32,12 @@ const BookSchema = new mongoose.Schema({
   // Google Drive integration
   driveUrl: {
     type: String,
-    required: true,
+    required: false,
     trim: true
   },
   driveFileId: {
     type: String,
-    required: true,
+    required: false,
     trim: true
   },
   // Multiple images for book covers (Cloudinary URLs)
@@ -195,10 +195,15 @@ BookSchema.methods.incrementReadCount = async function() {
 // Pre-save middleware to extract file ID
 BookSchema.pre('save', function(next) {
   if (this.isModified('driveUrl')) {
-    try {
-      this.driveFileId = this.constructor.extractFileId(this.driveUrl);
-    } catch (error) {
-      return next(error);
+    if (this.driveUrl && this.driveUrl.trim()) {
+      try {
+        this.driveFileId = this.constructor.extractFileId(this.driveUrl);
+      } catch (error) {
+        return next(error);
+      }
+    } else {
+      // If driveUrl is empty or undefined, clear driveFileId as well
+      this.driveFileId = undefined;
     }
   }
   

@@ -29,7 +29,9 @@ function LibraryPage() {
 
   const fetchCategories = async () => {
     try {
-      const response = await fetch('/api/categories')
+      const response = await fetch('/api/categories', {
+        credentials: 'include'
+      })
       if (response.ok) {
         const data = await response.json()
         setCategories(data.categories || [])
@@ -50,7 +52,9 @@ function LibraryPage() {
         sort: sortBy,
       })
 
-      const response = await fetch(`/api/books?${params}`)
+      const response = await fetch(`/api/books?${params}`, {
+        credentials: 'include'
+      })
       if (response.ok) {
         const data = await response.json()
         setBooks(data.books || [])

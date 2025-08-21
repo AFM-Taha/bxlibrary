@@ -1,0 +1,83 @@
+[
+  {
+    "title": "This Nonviolent Stuff'll Get You Killed: How Guns Made the Civil Rights Movement Possible",
+    "author": "Charles E. Cobb Jr.",
+    "description": "A ground‑level history showing how armed self‑defense and community protection supported nonviolent protest and advanced the civil rights movement.",
+    "categories": ["History", "Civil Rights", "Politics"],
+    "driveUrl": "",
+    "isPublished": true,
+    "status": "published"
+  },
+  {
+    "title": "This Is Why You're Broke",
+    "author": "Unknown",
+    "description": "A straight‑talking guide to fixing money leaks—budgeting, debt payoff, credit repair, and smarter spending habits to get back in control of your finances.",
+    "categories": ["Personal Finance", "Budgeting", "Money Management"],
+    "driveUrl": "",
+    "isPublished": true,
+    "status": "published"
+  },
+  {
+    "title": "Tribe of Mentors: Short Life Advice from the Best in the World",
+    "author": "Tim Ferriss",
+    "description": "Tactical advice, routines, and career wisdom from world‑class performers—covering productivity, decision‑making, health, and entrepreneurship.",
+    "categories": ["Self-Help", "Career", "Productivity"],
+    "driveUrl": "",
+    "isPublished": true,
+    "status": "published"
+  },
+  {
+    "title": "The Unfair Advantage: How You Already Have What It Takes to Succeed",
+    "author": "Ash Ali and Hasan Kubba",
+    "description": "Discover and leverage your unique assets—insights, networks, location, and background—to build a startup or career edge competitors can’t copy.",
+    "categories": ["Entrepreneurship", "Business", "Career"],
+    "driveUrl": "",
+    "isPublished": true,
+    "status": "published"
+  },
+  {
+    "title": "Way of the Wolf: Straight Line Selling",
+    "author": "Jordan Belfort",
+    "description": "The Straight Line System for sales—build rapport fast, control the conversation, handle objections, and close with certainty and ethics.",
+    "categories": ["Sales", "Persuasion", "Business"],
+    "driveUrl": "",
+    "isPublished": true,
+    "status": "published"
+  },
+  {
+    "title": "What to Say When You Talk to Yourself",
+    "author": "Shad Helmstetter, Ph.D.",
+    "description": "Change your self‑talk to rewire beliefs and habits—scripts and techniques to eliminate negative programming and build confidence.",
+    "categories": ["Self-Help", "Psychology", "Mindset"],
+    "driveUrl": "",
+    "isPublished": true,
+    "status": "published"
+  },
+  {
+    "title": "You Were Born Rich",
+    "author": "Bob Proctor",
+    "description": "A prosperity classic that blends mindset, visualization, and action steps to unlock your potential and create wealth.",
+    "categories": ["Personal Development", "Wealth Building", "Motivation"],
+    "driveUrl": "",
+    "isPublished": true,
+    "status": "published"
+  },
+  {
+    "title": "You Are a Badass at Making Money",
+    "author": "Jen Sincero",
+    "description": "A fun, no‑fluff guide to transforming your money mindset, breaking income blocks, and taking bold action to earn more.",
+    "categories": ["Personal Finance", "Self-Help", "Motivation"],
+    "driveUrl": "",
+    "isPublished": true,
+    "status": "published"
+  },
+  {
+    "title": "Zero to One: Notes on Startups, or How to Build the Future",
+    "author": "Peter Thiel with Blake Masters",
+    "description": "How to create valuable companies that go from zero to one—monopoly thinking, contrarian insights, and scalable innovation.",
+    "categories": ["Entrepreneurship", "Business", "Startups"],
+    "driveUrl": "",
+    "isPublished": true,
+    "status": "published"
+  }
+]

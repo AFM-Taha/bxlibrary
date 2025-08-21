@@ -184,39 +184,49 @@ async function updateBook(req, res, bookId) {
         }
       }
 
-      // Update drive URL
-      if (driveUrl && driveUrl.trim() !== book.driveUrl) {
-        const driveFileId = extractDriveFileId(driveUrl.trim());
-        if (!driveFileId) {
-          return res.status(400).json({ error: 'Invalid Google Drive URL format' });
+      // Update drive URL (now optional)
+      if (driveUrl !== undefined && driveUrl !== book.driveUrl) {
+        if (driveUrl && driveUrl.trim()) {
+          const driveFileId = extractDriveFileId(driveUrl.trim());
+          if (!driveFileId) {
+            return res.status(400).json({ error: 'Invalid Google Drive URL format' });
+          }
+
+          // Check for duplicate drive URL (excluding current book)
+          const existingBook = await Book.findOne({
+            driveFileId,
+            _id: { $ne: bookId },
+            isDeleted: { $ne: true }
+          });
+
+          if (existingBook) {
+            return res.status(400).json({ error: 'A book with this Google Drive file already exists' });
+          }
+
+          const canonicalUrl = `https://drive.google.com/file/d/${driveFileId}/view`;
+          book.driveUrl = canonicalUrl;
+          book.driveFileId = driveFileId;
+          
+          // Reset file metadata when URL changes
+          book.fileSize = undefined;
+          book.pageCount = undefined;
+          book.thumbnailUrl = undefined;
+          
+          hasChanges = true;
+
+          // Fetch new thumbnail (non-blocking)
+          fetchThumbnail(bookId, driveFileId).catch(err => {
+            console.error('Failed to fetch thumbnail:', err);
+          });
+        } else {
+          // Clear drive URL and file ID if empty
+          book.driveUrl = null;
+          book.driveFileId = null;
+          book.fileSize = undefined;
+          book.pageCount = undefined;
+          book.thumbnailUrl = undefined;
+          hasChanges = true;
         }
-
-        // Check for duplicate drive URL (excluding current book)
-        const existingBook = await Book.findOne({
-          driveFileId,
-          _id: { $ne: bookId },
-          isDeleted: { $ne: true }
-        });
-
-        if (existingBook) {
-          return res.status(400).json({ error: 'A book with this Google Drive file already exists' });
-        }
-
-        const canonicalUrl = `https://drive.google.com/file/d/${driveFileId}/view`;
-        book.driveUrl = canonicalUrl;
-        book.driveFileId = driveFileId;
-        
-        // Reset file metadata when URL changes
-        book.fileSize = undefined;
-        book.pageCount = undefined;
-        book.thumbnailUrl = undefined;
-        
-        hasChanges = true;
-
-        // Fetch new thumbnail (non-blocking)
-        fetchThumbnail(bookId, driveFileId).catch(err => {
-          console.error('Failed to fetch thumbnail:', err);
-        });
       }
 
       // Update categories (handle both single and multiple)

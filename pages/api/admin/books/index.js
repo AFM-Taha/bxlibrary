@@ -164,9 +164,7 @@ async function createBook(req, res) {
       return res.status(400).json({ error: 'Author must be less than 100 characters' });
     }
 
-    if (!driveUrl || driveUrl.trim().length === 0) {
-      return res.status(400).json({ error: 'Google Drive URL is required' });
-    }
+    // driveUrl is now optional
 
     if (description && description.length > 1000) {
       return res.status(400).json({ error: 'Description must be less than 1000 characters' });
@@ -228,33 +226,39 @@ async function createBook(req, res) {
       return res.status(400).json({ error: 'One or more categories not found' });
     }
 
-    // Extract Google Drive file ID from URL
-    console.log('driveUrl received:', driveUrl);
-    const driveFileId = extractDriveFileId(driveUrl.trim());
-    console.log('extracted driveFileId:', driveFileId);
-    console.log('=== driveFileId extraction completed successfully ===');
-    if (!driveFileId) {
-      console.log('Failed to extract file ID from:', driveUrl.trim());
-      return res.status(400).json({ error: 'Invalid Google Drive URL format' });
+    // Extract Google Drive file ID from URL (optional)
+    let driveFileId = null;
+    let canonicalUrl = null;
+    
+    if (driveUrl && driveUrl.trim().length > 0) {
+      console.log('driveUrl received:', driveUrl);
+      driveFileId = extractDriveFileId(driveUrl.trim());
+      console.log('extracted driveFileId:', driveFileId);
+      console.log('=== driveFileId extraction completed successfully ===');
+      
+      if (!driveFileId) {
+        console.log('Failed to extract file ID from:', driveUrl.trim());
+        return res.status(400).json({ error: 'Invalid Google Drive URL format' });
+      }
+
+      // Check for duplicate drive URL
+      console.log('=== Starting duplicate check ===');
+      console.log('Checking for duplicate driveFileId:', driveFileId);
+      const existingBook = await Book.findOne({
+        driveFileId,
+        isDeleted: { $ne: true }
+      });
+      console.log('=== Duplicate check completed ===');
+      console.log('Existing book found:', existingBook ? 'Yes' : 'No');
+
+      if (existingBook) {
+        console.log('Duplicate book found, returning error');
+        return res.status(400).json({ error: 'A book with this Google Drive file already exists' });
+      }
+
+      // Create canonical Drive URL
+      canonicalUrl = `https://drive.google.com/file/d/${driveFileId}/view`;
     }
-
-    // Check for duplicate drive URL
-    console.log('=== Starting duplicate check ===');
-    console.log('Checking for duplicate driveFileId:', driveFileId);
-    const existingBook = await Book.findOne({
-      driveFileId,
-      isDeleted: { $ne: true }
-    });
-    console.log('=== Duplicate check completed ===');
-    console.log('Existing book found:', existingBook ? 'Yes' : 'No');
-
-    if (existingBook) {
-      console.log('Duplicate book found, returning error');
-      return res.status(400).json({ error: 'A book with this Google Drive file already exists' });
-    }
-
-    // Create canonical Drive URL
-    const canonicalUrl = `https://drive.google.com/file/d/${driveFileId}/view`;
 
     // Create book
     console.log('Creating book with data:', {
@@ -273,7 +277,7 @@ async function createBook(req, res) {
       author: author.trim(),
       description: description?.trim() || '',
       driveUrl: canonicalUrl,
-      driveFileId,
+      driveFileId: driveFileId,
       images: images || [],
       categories: categories,
       status,

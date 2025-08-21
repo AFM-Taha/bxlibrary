@@ -15,7 +15,11 @@ function AdminBooks() {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showCreateModal, setShowCreateModal] = useState(false);
+  const [showBulkUploadModal, setShowBulkUploadModal] = useState(false);
   const [editingBook, setEditingBook] = useState(null);
+  const [bulkUploadFile, setBulkUploadFile] = useState(null);
+  const [bulkUploadLoading, setBulkUploadLoading] = useState(false);
+  const [bulkUploadResults, setBulkUploadResults] = useState(null);
   const [formData, setFormData] = useState({
     title: '',
     author: '',
@@ -117,12 +121,18 @@ function AdminBooks() {
         title: formData.title,
         author: formData.author,
         description: formData.description,
-        driveUrl: `https://drive.google.com/file/d/${fileId}/view`,
         categoryIds: formData.categories,
         status: formData.isPublic ? 'published' : 'draft',
         images: formData.images,
         tags: formData.tags.split(',').map(tag => tag.trim()).filter(tag => tag)
       };
+
+      // Only include driveUrl if fileId exists
+      if (fileId) {
+        bookData.driveUrl = `https://drive.google.com/file/d/${fileId}/view`;
+      } else {
+        bookData.driveUrl = null;
+      }
       
       console.log('Sending book data:', bookData);
 
@@ -265,6 +275,46 @@ function AdminBooks() {
     });
   };
 
+  const handleBulkUpload = async () => {
+    if (!bulkUploadFile) {
+      toast.error('Please select a JSON file');
+      return;
+    }
+
+    setBulkUploadLoading(true);
+    const formData = new FormData();
+    formData.append('file', bulkUploadFile);
+
+    try {
+      const response = await fetch('/api/admin/books/bulk-import', {
+        method: 'POST',
+        body: formData,
+        credentials: 'include'
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        setBulkUploadResults(result.results);
+        toast.success(`Bulk upload completed! Created: ${result.results.created}, Updated: ${result.results.updated}`);
+        fetchBooks(); // Refresh the books list
+      } else {
+        toast.error(result.error || 'Bulk upload failed');
+      }
+    } catch (error) {
+      console.error('Bulk upload error:', error);
+      toast.error('Failed to upload books');
+    } finally {
+      setBulkUploadLoading(false);
+    }
+  };
+
+  const resetBulkUpload = () => {
+    setBulkUploadFile(null);
+    setBulkUploadResults(null);
+    setShowBulkUploadModal(false);
+  };
+
   const closeModal = () => {
     setShowCreateModal(false);
     setEditingBook(null);
@@ -301,12 +351,18 @@ function AdminBooks() {
               <div className="flex items-center space-x-4">
                 <CompactThemeToggle />
                 <button
-                onClick={() => setShowCreateModal(true)}
-                className="bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-md text-sm font-medium"
+                  onClick={() => setShowBulkUploadModal(true)}
+                  className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md text-sm font-medium"
                 >
-                   Add Book
-                 </button>
-               </div>
+                  Bulk Upload
+                </button>
+                <button
+                  onClick={() => setShowCreateModal(true)}
+                  className="bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-md text-sm font-medium"
+                >
+                  Add Book
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -579,6 +635,147 @@ function AdminBooks() {
                     </button>
                   </div>
                 </form>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Bulk Upload Modal */}
+        {showBulkUploadModal && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+              <div className="p-6">
+                <div className="flex justify-between items-center mb-6">
+                  <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
+                    Bulk Upload Books
+                  </h2>
+                  <button
+                    onClick={resetBulkUpload}
+                    className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+                  >
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
+                </div>
+
+                <div className="space-y-6">
+                  {/* File Upload Section */}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                      Upload JSON File
+                    </label>
+                    <div className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-6">
+                      <div className="text-center">
+                        <svg className="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48">
+                          <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
+                        <div className="mt-4">
+                          <label htmlFor="bulk-file-upload" className="cursor-pointer">
+                            <span className="mt-2 block text-sm font-medium text-gray-900 dark:text-white">
+                              {bulkUploadFile ? bulkUploadFile.name : 'Choose JSON file or drag and drop'}
+                            </span>
+                            <input
+                              id="bulk-file-upload"
+                              type="file"
+                              accept=".json"
+                              onChange={(e) => setBulkUploadFile(e.target.files[0])}
+                              className="sr-only"
+                            />
+                          </label>
+                          <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                            JSON files up to 10MB
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* JSON Format Example */}
+                  <div>
+                    <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                      Expected JSON Format:
+                    </h3>
+                    <p className="text-xs text-gray-500 dark:text-gray-400 mb-2">
+                      Note: driveUrl is optional. Books can be created without Google Drive links.
+                    </p>
+                    <pre className="bg-gray-100 dark:bg-gray-700 p-3 rounded text-xs overflow-x-auto">
+{`[
+  {
+    "title": "Book Title",
+    "author": "Author Name",
+    "description": "Book description (optional)",
+    "categories": ["Category Name 1", "Category Name 2"],
+    "driveUrl": "https://drive.google.com/file/d/FILE_ID/view",
+    "isPublished": true
+  },
+  {
+    "title": "Another Book",
+    "author": "Another Author",
+    "description": "Book without drive URL",
+    "categories": ["Category Name"],
+    "isPublished": false
+  }
+]`}
+                    </pre>
+                  </div>
+
+                  {/* Upload Results */}
+                  {bulkUploadResults && (
+                    <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+                      <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        Upload Results:
+                      </h3>
+                      <div className="text-sm space-y-1">
+                        <p className="text-green-600 dark:text-green-400">
+                          ✓ Created: {bulkUploadResults.created} books
+                        </p>
+                        <p className="text-blue-600 dark:text-blue-400">
+                          ↻ Updated: {bulkUploadResults.updated} books
+                        </p>
+                        <p className="text-gray-600 dark:text-gray-400">
+                          Total processed: {bulkUploadResults.total} books
+                        </p>
+                        {bulkUploadResults.errors.length > 0 && (
+                          <div className="mt-2">
+                            <p className="text-red-600 dark:text-red-400">
+                              ✗ Errors: {bulkUploadResults.errors.length}
+                            </p>
+                            <div className="mt-1 max-h-32 overflow-y-auto">
+                              {bulkUploadResults.errors.slice(0, 5).map((error, index) => (
+                                <p key={index} className="text-xs text-red-500 dark:text-red-400">
+                                  Row {error.index + 1}: {error.error}
+                                </p>
+                              ))}
+                              {bulkUploadResults.errors.length > 5 && (
+                                <p className="text-xs text-gray-500 dark:text-gray-400">
+                                  ... and {bulkUploadResults.errors.length - 5} more errors
+                                </p>
+                              )}
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Action Buttons */}
+                  <div className="flex justify-end space-x-3 pt-4 border-t border-gray-200 dark:border-gray-600">
+                    <button
+                      onClick={resetBulkUpload}
+                      className="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-600 hover:bg-gray-200 dark:hover:bg-gray-500 rounded-md"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      onClick={handleBulkUpload}
+                      disabled={!bulkUploadFile || bulkUploadLoading}
+                      className="px-4 py-2 text-sm font-medium text-white bg-green-600 hover:bg-green-700 disabled:bg-gray-400 disabled:cursor-not-allowed rounded-md"
+                    >
+                      {bulkUploadLoading ? 'Uploading...' : 'Upload Books'}
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
