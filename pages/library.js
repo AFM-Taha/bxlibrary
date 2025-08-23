@@ -46,7 +46,7 @@ function LibraryPage() {
     try {
       const params = new URLSearchParams({
         page: currentPage,
-        limit: 12,
+        limit: 16,
         ...(searchTerm && { search: searchTerm }),
         ...(selectedCategory && { category: selectedCategory }),
         sort: sortBy,
