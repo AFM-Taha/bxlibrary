@@ -261,7 +261,7 @@ function BookDetailsPage() {
           <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
             <div className='flex justify-between h-16'>
               <div className='flex items-center'>
-                <Link href={user ? '/library' : '/'} className='flex-shrink-0'>
+                <Link href={user ? '/' : '/'} className='flex-shrink-0'>
                   <h1 className='text-2xl font-bold text-blue-600 dark:text-blue-400'>
                     BX Library
                   </h1>
@@ -321,7 +321,7 @@ function BookDetailsPage() {
           <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
             <div className='flex justify-between h-16'>
               <div className='flex items-center'>
-                <Link href={user ? '/library' : '/'} className='flex-shrink-0'>
+                <Link href={user ? '/' : '/'} className='flex-shrink-0'>
                   <h1 className='text-2xl font-bold text-blue-600 dark:text-blue-400'>
                     BX Library
                   </h1>
@@ -384,7 +384,7 @@ function BookDetailsPage() {
             </svg>
             <h3 className='text-lg font-medium text-gray-900 mb-2'>{error}</h3>
             <Link
-              href='/library'
+              href='/'
               className='text-blue-600 hover:text-blue-800 underline'
             >
               Return to Library
@@ -402,7 +402,7 @@ function BookDetailsPage() {
         <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
           <div className='flex justify-between h-16'>
             <div className='flex items-center'>
-              <Link href={user ? '/library' : '/'} className='flex-shrink-0'>
+              <Link href={user ? '/' : '/'} className='flex-shrink-0'>
                 <h1 className='text-2xl font-bold text-blue-600 dark:text-blue-400'>
                   BX Library
                 </h1>
@@ -479,7 +479,7 @@ function BookDetailsPage() {
           <ol className='inline-flex items-center space-x-1 md:space-x-3'>
             <li className='inline-flex items-center'>
               <Link
-                href={user ? '/library' : '/'}
+                href={user ? '/' : '/'}
                 className='inline-flex items-center text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400'
               >
                 <svg
@@ -603,7 +603,7 @@ function BookDetailsPage() {
                     </button>
 
                     <Link
-                      href='/library'
+                      href='/'
                       className='flex-1 sm:flex-initial bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-6 py-3 rounded-md font-medium hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors flex items-center justify-center'
                     >
                       <svg

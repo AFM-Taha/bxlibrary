@@ -133,7 +133,7 @@ function ReaderPage() {
             {error || 'The requested book could not be found.'}
           </p>
           <Link
-            href='/library'
+            href='/'
             className='bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md transition-colors'
           >
             Back to Library
@@ -186,7 +186,9 @@ function ReaderPage() {
                 darkMode ? 'text-white' : 'text-gray-900'
               }`}
             >
-              {book.title && book.title.length > 20 ? `${book.title.slice(0, 20)}...` : book.title}
+              {book.title && book.title.length > 20
+                ? `${book.title.slice(0, 20)}...`
+                : book.title}
             </h1>
             <span
               className={`text-xs ${
@@ -194,7 +196,10 @@ function ReaderPage() {
               }`}
             >
               {'   '}
-              _by {book.author && book.author.length > 20 ? `${book.author.slice(0, 20)}...` : book.author}
+              _by{' '}
+              {book.author && book.author.length > 20
+                ? `${book.author.slice(0, 20)}...`
+                : book.author}
             </span>
           </div>
           <button

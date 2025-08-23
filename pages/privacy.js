@@ -14,7 +14,7 @@ export default function Privacy() {
           <div className='flex justify-between h-16'>
             <div className='flex items-center'>
               <Link
-                href={isAuthenticated ? '/library' : '/'}
+                href={isAuthenticated ? '/' : '/'}
                 className='flex-shrink-0'
               >
                 <h1 className='text-2xl font-bold text-blue-600 dark:text-blue-400'>
@@ -27,7 +27,7 @@ export default function Privacy() {
                 <>
                   <CompactThemeToggle />
                   <Link
-                    href='/library'
+                    href='/'
                     className='text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 px-3 py-2 rounded-md text-sm font-medium transition-colors'
                   >
                     Library
@@ -369,7 +369,7 @@ export default function Privacy() {
               Contact Us
             </Link>
             <Link
-              href={isAuthenticated ? '/library' : '/'}
+              href={isAuthenticated ? '/' : '/'}
               className='text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 underline'
             >
               {isAuthenticated ? 'Back to Library' : 'Back to Home'}

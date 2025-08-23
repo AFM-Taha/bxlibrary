@@ -21,7 +21,7 @@ export default function Login() {
       if (user.role === 'admin') {
         router.push('/admin')
       } else {
-        router.push('/library')
+        router.push('/')
       }
     }
   }, [isAuthenticated, user, router])
@@ -37,7 +37,7 @@ export default function Login() {
     e.preventDefault()
 
     const result = await login(formData.email, formData.password)
-    
+
     if (result.success) {
       // Redirect will be handled by useEffect when user state updates
     } else {
@@ -127,8 +127,8 @@ export default function Login() {
                     Signing in...
                   </div>
                 ) : (
-                  <div className="flex items-center justify-center">
-                    <LogIn size={18} className="mr-2" />
+                  <div className='flex items-center justify-center'>
+                    <LogIn size={18} className='mr-2' />
                     Sign in
                   </div>
                 )}

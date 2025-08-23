@@ -141,7 +141,7 @@ function AccountPage() {
         <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
           <div className='flex justify-between h-16'>
             <div className='flex items-center'>
-              <Link href='/library' className='flex-shrink-0'>
+              <Link href='/' className='flex-shrink-0'>
                 <h1 className='text-2xl font-bold text-blue-600 dark:text-blue-400'>
                   BX Library
                 </h1>
@@ -150,7 +150,7 @@ function AccountPage() {
             <div className='flex items-center space-x-4'>
               <CompactThemeToggle />
               <Link
-                href='/library'
+                href='/'
                 className='text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 px-3 py-2 rounded-md text-sm font-medium transition-colors'
               >
                 Library
@@ -463,7 +463,9 @@ function AccountPage() {
                         <dt className='text-sm font-medium text-gray-500 dark:text-gray-400'>
                           Email
                         </dt>
-                        <dd className='text-sm text-gray-900 dark:text-white'>{user?.email}</dd>
+                        <dd className='text-sm text-gray-900 dark:text-white'>
+                          {user?.email}
+                        </dd>
                       </div>
                       <div>
                         <dt className='text-sm font-medium text-gray-500 dark:text-gray-400'>
@@ -493,7 +495,7 @@ function AccountPage() {
                   </h3>
                   <div className='flex space-x-4'>
                     <Link
-                      href='/library'
+                      href='/'
                       className='px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors'
                     >
                       Go to Library
