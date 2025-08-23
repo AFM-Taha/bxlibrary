@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 import { useAuth } from '../contexts/AuthContext'
@@ -22,12 +22,7 @@ function LibraryPage() {
   const [totalBooks, setTotalBooks] = useState(0)
   const [showFilters, setShowFilters] = useState(false)
 
-  useEffect(() => {
-    fetchCategories()
-    fetchBooks()
-  }, [searchTerm, selectedCategory, sortBy, currentPage])
-
-  const fetchCategories = async () => {
+  const fetchCategories = useCallback(async () => {
     try {
       const response = await fetch('/api/categories', {
         credentials: 'include'
@@ -39,9 +34,13 @@ function LibraryPage() {
     } catch (error) {
       console.error('Failed to fetch categories:', error)
     }
-  }
+  }, [])
 
-  const fetchBooks = async () => {
+  useEffect(() => {
+    fetchCategories()
+  }, [fetchCategories])
+
+  const fetchBooks = useCallback(async () => {
     setLoading(true)
     try {
       const params = new URLSearchParams({
@@ -67,7 +66,11 @@ function LibraryPage() {
       setLoading(false)
       setInitialLoad(false)
     }
-  }
+  }, [currentPage, searchTerm, selectedCategory, sortBy])
+
+  useEffect(() => {
+    fetchBooks()
+  }, [fetchBooks])
 
   const handleSearch = (e) => {
     e.preventDefault()
