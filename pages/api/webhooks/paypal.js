@@ -1,5 +1,5 @@
 import crypto from 'crypto';
-import dbConnect from '../../../lib/dbConnect';
+import dbConnect from '../../../lib/mongodb';
 import Subscription from '../../../models/Subscription';
 import User from '../../../models/User';
 import PaymentConfig from '../../../models/PaymentConfig';
