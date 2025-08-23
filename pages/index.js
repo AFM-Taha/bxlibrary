@@ -5,7 +5,7 @@ import { useAuth } from '../contexts/AuthContext'
 import ProtectedRoute from '../components/ProtectedRoute'
 import { CompactThemeToggle } from '../components/ThemeToggle'
 import BookImageSlider from '../components/BookImageSlider'
-import { User, LogOut } from 'lucide-react'
+import { User, LogOut, LogIn } from 'lucide-react'
 
 function LibraryPage() {
   const { user, logout } = useAuth()
@@ -108,20 +108,34 @@ function LibraryPage() {
             </div>
             <div className='flex items-center space-x-4'>
               <CompactThemeToggle />
-              <Link
-                href='/account'
-                className='text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center'
-                title='Account'
-              >
-                <User size={18} />
-              </Link>
-              <button
-                onClick={handleLogout}
-                className='text-gray-700 dark:text-gray-300 hover:text-red-600 dark:hover:text-red-400 px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center'
-                title='Sign Out'
-              >
-                <LogOut size={18} />
-              </button>
+              {user ? (
+                <>
+                  <Link
+                    href='/account'
+                    className='text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center'
+                    title='Account'
+                  >
+                    <User size={18} />
+                  </Link>
+                  <button
+                    onClick={handleLogout}
+                    className='text-gray-700 dark:text-gray-300 hover:text-red-600 dark:hover:text-red-400 px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center'
+                    title='Log Out'
+                  >
+                    <LogOut size={18} />
+                    <span className='ml-2'>Log Out</span>
+                  </button>
+                </>
+              ) : (
+                <Link
+                  href='/login'
+                  className='text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center'
+                  title='Log In'
+                >
+                  <LogIn size={18} />
+                  <span className='ml-2'>Log In</span>
+                </Link>
+              )}
             </div>
           </div>
         </div>
