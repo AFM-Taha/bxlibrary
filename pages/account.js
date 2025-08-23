@@ -487,8 +487,8 @@ function AccountPage() {
                   </div>
                 </div>
 
-                <div className='border-t pt-6'>
-                  <h3 className='text-lg font-medium text-gray-900 mb-4'>
+                <div className='border-t dark:border-gray-700 pt-6'>
+                  <h3 className='text-lg font-medium text-gray-900 dark:text-white mb-4'>
                     Account Actions
                   </h3>
                   <div className='flex space-x-4'>

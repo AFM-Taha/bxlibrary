@@ -1,116 +1,36 @@
-import { useState, useEffect } from 'react'
+import React, { useRef, useEffect } from 'react'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import { Autoplay, Pagination, Navigation } from 'swiper/modules'
 import Image from 'next/image'
+
+// Import Swiper styles
+import 'swiper/css'
+import 'swiper/css/pagination'
+import 'swiper/css/navigation'
 
 const BookImageSlider = ({
   images = [],
   title = 'Book',
   className = '',
-  autoSlide = false,
-  slideInterval = 3000,
+  slideInterval = 1000,
 }) => {
-  const [currentIndex, setCurrentIndex] = useState(0)
-  const [isHovered, setIsHovered] = useState(false)
-  const [isDragging, setIsDragging] = useState(false)
-  const [startX, setStartX] = useState(0)
-  const [currentX, setCurrentX] = useState(0)
-  const [dragOffset, setDragOffset] = useState(0)
+  const swiperRef = useRef(null)
 
-  // Auto-slide functionality
-  useEffect(() => {
-    if (!autoSlide || images.length <= 1 || isHovered || isDragging) return
-
-    const interval = setInterval(() => {
-      setCurrentIndex((prevIndex) =>
-        prevIndex === images.length - 1 ? 0 : prevIndex + 1
-      )
-    }, slideInterval)
-
-    return () => clearInterval(interval)
-  }, [autoSlide, images.length, slideInterval, isHovered, isDragging])
-
-  // Handle manual navigation
-  const goToSlide = (index) => {
-    setCurrentIndex(index)
-  }
-
-  const goToPrevious = () => {
-    setCurrentIndex(currentIndex === 0 ? images.length - 1 : currentIndex - 1)
-  }
-
-  const goToNext = () => {
-    setCurrentIndex(currentIndex === images.length - 1 ? 0 : currentIndex + 1)
-  }
-
-  // Touch/Mouse drag handlers
-  const handleStart = (clientX) => {
-    setIsDragging(true)
-    setStartX(clientX)
-    setCurrentX(clientX)
-  }
-
-  const handleMove = (clientX) => {
-    if (!isDragging) return
-    setCurrentX(clientX)
-    setDragOffset(clientX - startX)
-  }
-
-  const handleEnd = () => {
-    if (!isDragging) return
-    
-    const threshold = 50 // Minimum distance to trigger slide
-    const dragDistance = currentX - startX
-    
-    if (Math.abs(dragDistance) > threshold) {
-      if (dragDistance > 0) {
-        goToPrevious()
-      } else {
-        goToNext()
-      }
+  const handleMouseEnter = () => {
+    if (swiperRef.current && swiperRef.current.swiper) {
+      // Configure autoplay settings and start
+      swiperRef.current.swiper.autoplay.delay = slideInterval
+      swiperRef.current.swiper.autoplay.start()
     }
-    
-    setIsDragging(false)
-    setDragOffset(0)
   }
 
-  // Mouse events
-  const handleMouseDown = (e) => {
-    e.preventDefault()
-    handleStart(e.clientX)
-  }
-
-  const handleMouseMove = (e) => {
-    handleMove(e.clientX)
-  }
-
-  const handleMouseUp = () => {
-    handleEnd()
-  }
-
-  // Touch events
-  const handleTouchStart = (e) => {
-    handleStart(e.touches[0].clientX)
-  }
-
-  const handleTouchMove = (e) => {
-    handleMove(e.touches[0].clientX)
-  }
-
-  const handleTouchEnd = () => {
-    handleEnd()
-  }
-
-  // Add global mouse event listeners when dragging
-  useEffect(() => {
-    if (isDragging) {
-      document.addEventListener('mousemove', handleMouseMove)
-      document.addEventListener('mouseup', handleMouseUp)
-      
-      return () => {
-        document.removeEventListener('mousemove', handleMouseMove)
-        document.removeEventListener('mouseup', handleMouseUp)
-      }
+  const handleMouseLeave = () => {
+    if (swiperRef.current && swiperRef.current.swiper) {
+      swiperRef.current.swiper.autoplay.stop()
+      // Reset to first slide
+      swiperRef.current.swiper.slideTo(0)
     }
-  }, [isDragging, currentX, startX])
+  }
 
   // If no images, show placeholder
   if (!images || images.length === 0) {
@@ -151,95 +71,79 @@ const BookImageSlider = ({
     )
   }
 
-  // Multiple images - full slider
+  // Multiple images - Swiper slider
   return (
     <div
-      className={`relative group ${className}`}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
+      className={`book-image-slider ${className}`}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
     >
-      {/* Main image */}
-      <div 
-        className='relative w-full h-full overflow-hidden cursor-grab active:cursor-grabbing select-none'
-        onMouseDown={handleMouseDown}
-        onTouchStart={handleTouchStart}
-        onTouchMove={handleTouchMove}
-        onTouchEnd={handleTouchEnd}
-        style={{
-          transform: isDragging ? `translateX(${dragOffset}px)` : 'translateX(0)',
-          transition: isDragging ? 'none' : 'transform 0.3s ease'
+      <Swiper
+        ref={swiperRef}
+        modules={[Autoplay, Pagination, Navigation]}
+        spaceBetween={0}
+        slidesPerView={1}
+        autoplay={false}
+        pagination={{
+          clickable: true,
+          dynamicBullets: true,
         }}
+        navigation={false}
+        loop={true}
+        speed={800}
+        effect='slide'
+        className='h-full w-full'
+        allowTouchMove={true}
       >
-        <Image
-          src={images[currentIndex].url}
-          alt={`${title} - Image ${currentIndex + 1}`}
-          fill
-          className='object-cover transition-opacity duration-300'
-          sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
-        />
-      </div>
-
-      {/* Navigation arrows - hidden on mobile */}
-      <button
-        onClick={goToPrevious}
-        className='absolute left-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full opacity-80 hover:opacity-100 transition-opacity duration-200 hover:bg-opacity-70 hidden md:block'
-        aria-label='Previous image'
-      >
-        <svg
-          className='w-5 h-5'
-          fill='none'
-          stroke='currentColor'
-          viewBox='0 0 24 24'
-        >
-          <path
-            strokeLinecap='round'
-            strokeLinejoin='round'
-            strokeWidth={2}
-            d='M15 19l-7-7 7-7'
-          />
-        </svg>
-      </button>
-
-      <button
-        onClick={goToNext}
-        className='absolute right-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full opacity-80 hover:opacity-100 transition-opacity duration-200 hover:bg-opacity-70 hidden md:block'
-        aria-label='Next image'
-      >
-        <svg
-          className='w-5 h-5'
-          fill='none'
-          stroke='currentColor'
-          viewBox='0 0 24 24'
-        >
-          <path
-            strokeLinecap='round'
-            strokeLinejoin='round'
-            strokeWidth={2}
-            d='M9 5l7 7-7 7'
-          />
-        </svg>
-      </button>
-
-      {/* Dots indicator */}
-      <div className='absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2'>
-        {images.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => goToSlide(index)}
-            className={`w-3 h-3 rounded-full transition-all duration-200 border border-white ${
-              index === currentIndex
-                ? 'bg-white'
-                : 'bg-transparent hover:bg-white hover:bg-opacity-50'
-            }`}
-            aria-label={`Go to image ${index + 1}`}
-          />
+        {images.map((image, index) => (
+          <SwiperSlide key={index} className='relative'>
+            <div className='relative w-full h-full overflow-hidden'>
+              <Image
+                src={image.url}
+                alt={`${title} - Image ${index + 1}`}
+                fill
+                className='object-cover transition-transform duration-300 hover:scale-105'
+                sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
+                priority={index === 0}
+              />
+            </div>
+          </SwiperSlide>
         ))}
-      </div>
+      </Swiper>
 
-      {/* Image counter */}
-      <div className='absolute top-2 right-2 bg-black bg-opacity-50 text-white text-xs px-2 py-1 rounded'>
-        {currentIndex + 1} / {images.length}
-      </div>
+      <style jsx global>{`
+        .book-image-slider .swiper-pagination {
+          bottom: 16px;
+          z-index: 10;
+        }
+
+        .book-image-slider .swiper-pagination-bullet {
+          background: rgba(255, 255, 255, 0.5);
+          opacity: 1;
+          width: 12px;
+          height: 12px;
+          border: 2px solid white;
+        }
+
+        .book-image-slider .swiper-pagination-bullet-active {
+          background: white;
+        }
+
+        .book-image-slider .swiper-button-next,
+        .book-image-slider .swiper-button-prev {
+          color: white;
+          background: rgba(0, 0, 0, 0.3);
+          border-radius: 50%;
+          width: 40px;
+          height: 40px;
+          margin-top: -20px;
+        }
+
+        .book-image-slider .swiper-button-next:after,
+        .book-image-slider .swiper-button-prev:after {
+          font-size: 16px;
+        }
+      `}</style>
     </div>
   )
 }
