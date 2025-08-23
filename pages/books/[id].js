@@ -5,7 +5,7 @@ import { useAuth } from '../../contexts/AuthContext'
 import toast from 'react-hot-toast'
 import { CompactThemeToggle } from '../../components/ThemeToggle'
 import BookImageSlider from '../../components/BookImageSlider'
-import { User, LogOut } from 'lucide-react'
+import { User, LogOut, LogIn } from 'lucide-react'
 
 // PDF Reader Component
 function PDFReader({ book }) {
@@ -281,9 +281,10 @@ function BookDetailsPage() {
                     <button
                       onClick={handleLogout}
                       className='text-gray-700 dark:text-gray-300 hover:text-red-600 dark:hover:text-red-400 px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center'
-                      title='Sign Out'
+                      title='Log Out'
                     >
                       <LogOut size={18} />
+                      <span className='ml-2'>Log Out</span>
                     </button>
                   </>
                 ) : (
@@ -291,15 +292,11 @@ function BookDetailsPage() {
                     <CompactThemeToggle />
                     <Link
                       href='/login'
-                      className='text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 px-3 py-2 rounded-md text-sm font-medium transition-colors'
+                      className='text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center'
+                      title='Log In'
                     >
-                      Login
-                    </Link>
-                    <Link
-                      href='/register'
-                      className='bg-blue-600 text-white hover:bg-blue-700 px-4 py-2 rounded-md text-sm font-medium transition-colors'
-                    >
-                      Sign Up
+                      <LogIn size={18} />
+                      <span className='ml-2'>Log In</span>
                     </Link>
                   </>
                 )}
@@ -351,15 +348,11 @@ function BookDetailsPage() {
                     <CompactThemeToggle />
                     <Link
                       href='/login'
-                      className='text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 px-3 py-2 rounded-md text-sm font-medium transition-colors'
+                      className='text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center'
+                      title='Log In'
                     >
-                      Login
-                    </Link>
-                    <Link
-                      href='/register'
-                      className='bg-blue-600 text-white hover:bg-blue-700 px-4 py-2 rounded-md text-sm font-medium transition-colors'
-                    >
-                      Sign Up
+                      <LogIn size={18} />
+                      <span className='ml-2'>Log In</span>
                     </Link>
                   </>
                 )}
@@ -456,15 +449,11 @@ function BookDetailsPage() {
                   <CompactThemeToggle />
                   <Link
                     href='/login'
-                    className='text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 px-3 py-2 rounded-md text-sm font-medium transition-colors'
+                    className='text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center'
+                    title='Log In'
                   >
-                    Login
-                  </Link>
-                  <Link
-                    href='/register'
-                    className='bg-blue-600 text-white hover:bg-blue-700 px-4 py-2 rounded-md text-sm font-medium transition-colors'
-                  >
-                    Sign Up
+                    <LogIn size={18} />
+                    <span className='ml-2'>Log In</span>
                   </Link>
                 </>
               )}
