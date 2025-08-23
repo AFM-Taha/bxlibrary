@@ -8,13 +8,20 @@ function PricingSection() {
   const { user } = useAuth();
   const [pricingPlans, setPricingPlans] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [billingPeriod, setBillingPeriod] = useState('monthly');
+  const [billingPeriod, setBillingPeriod] = useState('');
   const [paymentConfigs, setPaymentConfigs] = useState({ stripe: null, paypal: null });
 
   useEffect(() => {
     fetchPricingPlans();
     fetchPaymentConfigs();
   }, []);
+
+  useEffect(() => {
+    if (pricingPlans.length > 0 && !billingPeriod) {
+      const availablePeriods = [...new Set(pricingPlans.map(plan => plan.billingPeriod))];
+      setBillingPeriod(availablePeriods[0]);
+    }
+  }, [pricingPlans, billingPeriod]);
 
   const fetchPaymentConfigs = async () => {
     try {
@@ -56,9 +63,7 @@ function PricingSection() {
     }
   };
 
-  const filteredPlans = pricingPlans.filter(plan => 
-    plan.billingPeriod === billingPeriod
-  );
+  const filteredPlans = pricingPlans;
 
   const availablePeriods = [...new Set(pricingPlans.map(plan => plan.billingPeriod))];
 
@@ -176,38 +181,14 @@ function PricingSection() {
           </p>
         </div>
 
-        {/* Billing Period Toggle */}
-        {availablePeriods.length > 1 && (
-          <div className="flex justify-center mb-8">
-            <div className="bg-white dark:bg-gray-800 rounded-lg p-1 shadow-sm border border-gray-200 dark:border-gray-700">
-              {availablePeriods.map((period) => (
-                <button
-                  key={period}
-                  onClick={() => setBillingPeriod(period)}
-                  className={`px-4 py-2 text-sm font-medium rounded-md transition-colors capitalize ${
-                    billingPeriod === period
-                      ? 'bg-primary-600 text-white'
-                      : 'text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white'
-                  }`}
-                >
-                  {period}
-                  {period === 'yearly' && (
-                    <span className="ml-1 text-xs bg-green-100 text-green-800 px-1.5 py-0.5 rounded">
-                      Save 20%
-                    </span>
-                  )}
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
+
 
         {/* Pricing Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        <div className="flex flex-wrap justify-center gap-8 max-w-6xl mx-auto">
           {filteredPlans.map((plan) => (
             <div
               key={plan._id}
-              className={`relative bg-white dark:bg-gray-800 rounded-2xl shadow-lg border-2 transition-all duration-200 hover:shadow-xl ${
+              className={`relative bg-white dark:bg-gray-800 rounded-2xl shadow-lg border-2 transition-all duration-200 hover:shadow-xl w-full max-w-sm ${
                 plan.isPopular
                   ? 'border-primary-500 ring-2 ring-primary-200 dark:ring-primary-800'
                   : 'border-gray-200 dark:border-gray-700 hover:border-primary-300 dark:hover:border-primary-600'
