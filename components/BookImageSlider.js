@@ -12,13 +12,15 @@ const BookImageSlider = ({
   images = [],
   title = 'Book',
   className = '',
-  slideInterval = 1000,
+  slideInterval = 500,
 }) => {
   const swiperRef = useRef(null)
 
   const handleMouseEnter = () => {
     if (swiperRef.current && swiperRef.current.swiper) {
-      // Configure autoplay settings and start
+      // Immediately slide to next image
+      swiperRef.current.swiper.slideNext()
+      // Configure autoplay settings and start with regular interval
       swiperRef.current.swiper.autoplay.delay = slideInterval
       swiperRef.current.swiper.autoplay.start()
     }
