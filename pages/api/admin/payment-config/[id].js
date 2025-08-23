@@ -97,12 +97,7 @@ async function updatePaymentConfig(req, res, id, user) {
     }
 
     if (config.provider === 'paypal') {
-      if (paypalClientId !== undefined && !paypalClientId) {
-        return res.status(400).json({ error: 'PayPal client ID cannot be empty' });
-      }
-      if (paypalClientSecret !== undefined && !paypalClientSecret) {
-        return res.status(400).json({ error: 'PayPal client secret cannot be empty' });
-      }
+      // PayPal credentials can be updated later
     }
 
     // If setting this config as active, deactivate others of the same provider

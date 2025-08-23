@@ -88,9 +88,7 @@ async function createPaymentConfig(req, res, user) {
     }
 
     if (provider === 'paypal') {
-      if (!paypalClientId || !paypalClientSecret) {
-        return res.status(400).json({ error: 'PayPal client ID and client secret are required' });
-      }
+      // PayPal credentials can be added later
     }
 
     // If setting this config as active, deactivate others of the same provider

@@ -25,12 +25,10 @@ const paymentConfigSchema = new mongoose.Schema({
   },
   // PayPal Configuration
   paypalClientId: {
-    type: String,
-    required: function() { return this.provider === 'paypal'; }
+    type: String
   },
   paypalClientSecret: {
-    type: String,
-    required: function() { return this.provider === 'paypal'; }
+    type: String
   },
   paypalWebhookId: {
     type: String

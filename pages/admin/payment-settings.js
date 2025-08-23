@@ -275,7 +275,6 @@ export default function PaymentSettings() {
                       value={formData.clientId}
                       onChange={(e) => setFormData({ ...formData, clientId: e.target.value })}
                       className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
-                      required
                     />
                   </div>
                   
@@ -288,7 +287,6 @@ export default function PaymentSettings() {
                       value={formData.clientSecret}
                       onChange={(e) => setFormData({ ...formData, clientSecret: e.target.value })}
                       className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
-                      required={!editingConfig}
                     />
                   </div>
                   
