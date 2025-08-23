@@ -180,14 +180,14 @@ function AccountPage() {
 
         <div className='card overflow-hidden'>
           {/* Tabs */}
-          <div className='border-b border-gray-200'>
+          <div className='border-b border-gray-200 dark:border-gray-700'>
             <nav className='-mb-px flex'>
               <button
                 onClick={() => setActiveTab('profile')}
                 className={`py-4 px-6 text-sm font-medium border-b-2 transition-colors ${
                   activeTab === 'profile'
-                    ? 'border-blue-500 text-blue-600'
-                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                    ? 'border-blue-500 text-blue-600 dark:text-blue-400'
+                    : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-600'
                 }`}
               >
                 Profile Information
@@ -196,8 +196,8 @@ function AccountPage() {
                 onClick={() => setActiveTab('password')}
                 className={`py-4 px-6 text-sm font-medium border-b-2 transition-colors ${
                   activeTab === 'password'
-                    ? 'border-blue-500 text-blue-600'
-                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                    ? 'border-blue-500 text-blue-600 dark:text-blue-400'
+                    : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-600'
                 }`}
               >
                 Change Password
@@ -206,8 +206,8 @@ function AccountPage() {
                 onClick={() => setActiveTab('info')}
                 className={`py-4 px-6 text-sm font-medium border-b-2 transition-colors ${
                   activeTab === 'info'
-                    ? 'border-blue-500 text-blue-600'
-                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                    ? 'border-blue-500 text-blue-600 dark:text-blue-400'
+                    : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-600'
                 }`}
               >
                 Account Info
@@ -222,7 +222,7 @@ function AccountPage() {
                 <div>
                   <label
                     htmlFor='name'
-                    className='block text-sm font-medium text-gray-700 mb-2'
+                    className='block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2'
                   >
                     Full Name
                   </label>
@@ -233,7 +233,7 @@ function AccountPage() {
                     onChange={(e) =>
                       setProfileForm({ ...profileForm, name: e.target.value })
                     }
-                    className='w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent'
+                    className='w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white'
                     required
                   />
                 </div>
@@ -241,7 +241,7 @@ function AccountPage() {
                 <div>
                   <label
                     htmlFor='email'
-                    className='block text-sm font-medium text-gray-700 mb-2'
+                    className='block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2'
                   >
                     Email Address
                   </label>
@@ -249,10 +249,10 @@ function AccountPage() {
                     type='email'
                     id='email'
                     value={profileForm.email}
-                    className='w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-50 text-gray-500'
+                    className='w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-gray-50 dark:bg-gray-800 text-gray-500 dark:text-gray-400'
                     disabled
                   />
-                  <p className='mt-1 text-sm text-gray-500'>
+                  <p className='mt-1 text-sm text-gray-500 dark:text-gray-400'>
                     Email address cannot be changed
                   </p>
                 </div>
@@ -260,7 +260,7 @@ function AccountPage() {
                 <div>
                   <label
                     htmlFor='phone'
-                    className='block text-sm font-medium text-gray-700 mb-2'
+                    className='block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2'
                   >
                     Phone Number
                   </label>
@@ -271,7 +271,7 @@ function AccountPage() {
                     onChange={(e) =>
                       setProfileForm({ ...profileForm, phone: e.target.value })
                     }
-                    className='w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent'
+                    className='w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white'
                   />
                 </div>
 
@@ -293,7 +293,7 @@ function AccountPage() {
                 <div>
                   <label
                     htmlFor='currentPassword'
-                    className='block text-sm font-medium text-gray-700 mb-2'
+                    className='block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2'
                   >
                     Current Password
                   </label>
@@ -307,7 +307,7 @@ function AccountPage() {
                         currentPassword: e.target.value,
                       })
                     }
-                    className='w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent'
+                    className='w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white'
                     required
                   />
                 </div>
@@ -315,7 +315,7 @@ function AccountPage() {
                 <div>
                   <label
                     htmlFor='newPassword'
-                    className='block text-sm font-medium text-gray-700 mb-2'
+                    className='block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2'
                   >
                     New Password
                   </label>
@@ -329,13 +329,13 @@ function AccountPage() {
                         newPassword: e.target.value,
                       })
                     }
-                    className='w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent'
+                    className='w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white'
                     required
                   />
                   {passwordForm.newPassword && (
                     <div className='mt-2'>
                       <div className='flex items-center space-x-2'>
-                        <div className='flex-1 bg-gray-200 rounded-full h-2'>
+                        <div className='flex-1 bg-gray-200 dark:bg-gray-600 rounded-full h-2'>
                           <div
                             className={`h-2 rounded-full transition-all duration-300 ${passwordStrength.color}`}
                             style={{
@@ -345,7 +345,7 @@ function AccountPage() {
                             }}
                           ></div>
                         </div>
-                        <span className='text-sm text-gray-600'>
+                        <span className='text-sm text-gray-600 dark:text-gray-400'>
                           {passwordStrength.label}
                         </span>
                       </div>
@@ -356,7 +356,7 @@ function AccountPage() {
                 <div>
                   <label
                     htmlFor='confirmPassword'
-                    className='block text-sm font-medium text-gray-700 mb-2'
+                    className='block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2'
                   >
                     Confirm New Password
                   </label>
@@ -370,13 +370,13 @@ function AccountPage() {
                         confirmPassword: e.target.value,
                       })
                     }
-                    className='w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent'
+                    className='w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white'
                     required
                   />
                   {passwordForm.confirmPassword &&
                     passwordForm.newPassword !==
                       passwordForm.confirmPassword && (
-                      <p className='mt-1 text-sm text-red-600'>
+                      <p className='mt-1 text-sm text-red-600 dark:text-red-400'>
                         Passwords do not match
                       </p>
                     )}
@@ -402,20 +402,20 @@ function AccountPage() {
               <div className='space-y-6'>
                 <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
                   <div>
-                    <h3 className='text-lg font-medium text-gray-900 mb-4'>
+                    <h3 className='text-lg font-medium text-gray-900 dark:text-white mb-4'>
                       Account Status
                     </h3>
                     <dl className='space-y-3'>
                       <div>
-                        <dt className='text-sm font-medium text-gray-500'>
+                        <dt className='text-sm font-medium text-gray-500 dark:text-gray-400'>
                           Status
                         </dt>
-                        <dd className='text-sm text-gray-900'>
+                        <dd className='text-sm text-gray-900 dark:text-white'>
                           <span
                             className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
                               user?.status === 'active'
-                                ? 'bg-green-100 text-green-800'
-                                : 'bg-red-100 text-red-800'
+                                ? 'bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200'
+                                : 'bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200'
                             }`}
                           >
                             {user?.status?.charAt(0).toUpperCase() +
@@ -424,18 +424,18 @@ function AccountPage() {
                         </dd>
                       </div>
                       <div>
-                        <dt className='text-sm font-medium text-gray-500'>
+                        <dt className='text-sm font-medium text-gray-500 dark:text-gray-400'>
                           Role
                         </dt>
-                        <dd className='text-sm text-gray-900 capitalize'>
+                        <dd className='text-sm text-gray-900 dark:text-white capitalize'>
                           {user?.role}
                         </dd>
                       </div>
                       <div>
-                        <dt className='text-sm font-medium text-gray-500'>
+                        <dt className='text-sm font-medium text-gray-500 dark:text-gray-400'>
                           Member Since
                         </dt>
-                        <dd className='text-sm text-gray-900'>
+                        <dd className='text-sm text-gray-900 dark:text-white'>
                           {user?.createdAt
                             ? new Date(user.createdAt).toLocaleDateString()
                             : 'N/A'}
@@ -443,10 +443,10 @@ function AccountPage() {
                       </div>
                       {user?.expiryDate && (
                         <div>
-                          <dt className='text-sm font-medium text-gray-500'>
+                          <dt className='text-sm font-medium text-gray-500 dark:text-gray-400'>
                             Account Expires
                           </dt>
-                          <dd className='text-sm text-gray-900'>
+                          <dd className='text-sm text-gray-900 dark:text-white'>
                             {new Date(user.expiryDate).toLocaleDateString()}
                           </dd>
                         </div>
@@ -455,29 +455,29 @@ function AccountPage() {
                   </div>
 
                   <div>
-                    <h3 className='text-lg font-medium text-gray-900 mb-4'>
+                    <h3 className='text-lg font-medium text-gray-900 dark:text-white mb-4'>
                       Contact Information
                     </h3>
                     <dl className='space-y-3'>
                       <div>
-                        <dt className='text-sm font-medium text-gray-500'>
+                        <dt className='text-sm font-medium text-gray-500 dark:text-gray-400'>
                           Email
                         </dt>
-                        <dd className='text-sm text-gray-900'>{user?.email}</dd>
+                        <dd className='text-sm text-gray-900 dark:text-white'>{user?.email}</dd>
                       </div>
                       <div>
-                        <dt className='text-sm font-medium text-gray-500'>
+                        <dt className='text-sm font-medium text-gray-500 dark:text-gray-400'>
                           Phone
                         </dt>
-                        <dd className='text-sm text-gray-900'>
+                        <dd className='text-sm text-gray-900 dark:text-white'>
                           {user?.phone || 'Not provided'}
                         </dd>
                       </div>
                       <div>
-                        <dt className='text-sm font-medium text-gray-500'>
+                        <dt className='text-sm font-medium text-gray-500 dark:text-gray-400'>
                           Last Login
                         </dt>
-                        <dd className='text-sm text-gray-900'>
+                        <dd className='text-sm text-gray-900 dark:text-white'>
                           {user?.lastLogin
                             ? new Date(user.lastLogin).toLocaleString()
                             : 'N/A'}
