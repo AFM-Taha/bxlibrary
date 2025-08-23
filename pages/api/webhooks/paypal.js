@@ -3,6 +3,7 @@ import dbConnect from '../../../lib/mongodb';
 import Subscription from '../../../models/Subscription';
 import User from '../../../models/User';
 import PaymentConfig from '../../../models/PaymentConfig';
+import PaymentSession from '../../../models/PaymentSession';
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -118,13 +119,39 @@ async function verifyPayPalWebhook(req, paypalConfig) {
 async function handleSubscriptionActivated(event) {
   try {
     const subscriptionId = event.resource.id;
-    const customId = event.resource.custom_id; // Should contain userId and priceId
+    const customId = event.resource.custom_id; // Should contain userId and priceId or sessionId
     
     if (!customId) {
       console.error('No custom_id found in PayPal subscription');
       return;
     }
 
+    // Check if this is a payment session for new user signup (customId format: session_<sessionId>)
+    if (customId.startsWith('session_')) {
+      const sessionId = customId.replace('session_', '');
+      let paymentSession = await PaymentSession.findOne({
+        sessionId: sessionId,
+        provider: 'paypal'
+      });
+
+      if (paymentSession) {
+        // Update payment session status
+        paymentSession.status = 'completed';
+        paymentSession.subscriptionId = subscriptionId;
+        paymentSession.customerEmail = event.resource.subscriber?.email_address;
+        
+        // Generate signup token if not already generated
+        if (!paymentSession.signupToken) {
+          paymentSession.generateSignupToken();
+        }
+        
+        await paymentSession.save();
+        console.log('PayPal payment session updated for new user signup:', sessionId);
+        return;
+      }
+    }
+
+    // Existing user flow (customId format: userId|priceId)
     const [userId, priceId] = customId.split('|');
     
     if (!userId || !priceId) {
@@ -132,7 +159,7 @@ async function handleSubscriptionActivated(event) {
       return;
     }
 
-    // Find existing subscription or create new one
+    // Find existing subscription or create new one for existing users
     let subscription = await Subscription.findOne({
       paypalSubscriptionId: subscriptionId
     });
@@ -230,6 +257,31 @@ async function handlePaymentFailed(event) {
 async function handlePaymentCompleted(event) {
   try {
     const billingAgreementId = event.resource.billing_agreement_id;
+    const customId = event.resource.custom;
+    
+    // Check if this is a payment session for new user signup
+    if (customId && customId.startsWith('session_')) {
+      const sessionId = customId.replace('session_', '');
+      let paymentSession = await PaymentSession.findOne({
+        sessionId: sessionId,
+        provider: 'paypal'
+      });
+
+      if (paymentSession) {
+        // Update payment session status
+        paymentSession.status = 'completed';
+        paymentSession.paymentIntentId = event.resource.id;
+        
+        // Generate signup token if not already generated
+        if (!paymentSession.signupToken) {
+          paymentSession.generateSignupToken();
+        }
+        
+        await paymentSession.save();
+        console.log('PayPal payment completed for new user signup:', sessionId);
+        return;
+      }
+    }
     
     if (!billingAgreementId) {
       console.log('No billing agreement ID found in payment completed event');

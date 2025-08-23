@@ -61,10 +61,12 @@ export function AuthProvider({ children }) {
         const data = await response.json();
         dispatch({ type: 'SET_USER', payload: data.user });
       } else {
+        // Set loading to false only after logout to prevent race condition
         dispatch({ type: 'LOGOUT' });
       }
     } catch (error) {
       console.error('Auth check failed:', error);
+      // Set loading to false only after logout to prevent race condition
       dispatch({ type: 'LOGOUT' });
     }
   };

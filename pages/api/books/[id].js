@@ -1,5 +1,6 @@
 import dbConnect from '../../../lib/mongodb';
 import Book from '../../../models/Book';
+import { withAuth } from '../../../lib/auth';
 import { isValidObjectId } from 'mongoose';
 
 async function handler(req, res) {

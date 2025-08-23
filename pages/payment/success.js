@@ -1,38 +1,83 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
+import Head from 'next/head'
+import { CheckCircle, ArrowRight, Home, User, BookOpen, UserPlus } from 'lucide-react'
 import { toast } from 'react-hot-toast'
 import { useAuth } from '../../contexts/AuthContext'
 
 export default function PaymentSuccess() {
   const router = useRouter()
   const { user } = useAuth()
-  const [loading, setLoading] = useState(true)
+  const [paymentData, setPaymentData] = useState(null)
+  const [isLoading, setIsLoading] = useState(true)
+  const [error, setError] = useState(null)
+  const [signupToken, setSignupToken] = useState(null)
   const [subscription, setSubscription] = useState(null)
   const { session_id, subscription_id, provider } = router.query
 
   useEffect(() => {
-    if (session_id || subscription_id) {
+    const verifyPayment = async () => {
+      const { session_id, subscription_id } = router.query
+      
+      if (!session_id && !subscription_id) {
+        setError('No payment session found')
+        setIsLoading(false)
+        return
+      }
+
+      try {
+        const response = await fetch('/api/payment/verify', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            sessionId: session_id,
+            subscriptionId: subscription_id,
+          }),
+        })
+
+        const data = await response.json()
+
+        if (response.ok) {
+          setPaymentData(data)
+          // Store payment session and generate signup token
+          if (data.success && !data.userExists) {
+            const sessionResponse = await fetch('/api/payment/create-session', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                sessionId: session_id,
+                subscriptionId: subscription_id,
+                paymentData: data,
+              }),
+            })
+            
+            const sessionData = await sessionResponse.json()
+            if (sessionResponse.ok && sessionData.signupToken) {
+              setSignupToken(sessionData.signupToken)
+            }
+          }
+        } else {
+          setError(data.error || 'Payment verification failed')
+        }
+      } catch (error) {
+        console.error('Payment verification error:', error)
+        setError('Failed to verify payment')
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    if (router.isReady) {
       verifyPayment()
     }
-  }, [session_id, subscription_id, provider])
+  }, [router.isReady, router.query])
 
-  const verifyPayment = async () => {
-    try {
-      // For now, we'll just show success. In a real app, you might want to verify the payment
-      // by calling your backend to check the subscription status
-      setLoading(false)
-      toast.success('Payment successful! Your subscription is now active.')
-    } catch (error) {
-      console.error('Error verifying payment:', error)
-      setLoading(false)
-      toast.error(
-        'There was an issue verifying your payment. Please contact support.'
-      )
-    }
-  }
-
-  if (loading) {
+  if (isLoading) {
     return (
       <div className='min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center'>
         <div className='text-center'>
@@ -112,20 +157,43 @@ export default function PaymentSuccess() {
 
           {/* Action Buttons */}
           <div className='space-y-3'>
-            <Link href='/'>
-              <button className='w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-lg transition-colors'>
-                Access Library
-              </button>
-            </Link>
+            {signupToken ? (
+              <>
+                <Link
+                  href={`/signup?token=${signupToken}`}
+                  className='w-full bg-green-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-green-700 transition-colors flex items-center justify-center gap-2'
+                >
+                  <UserPlus className='w-5 h-5' />
+                  Create Your Account
+                </Link>
+                
+                <div className='bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4'>
+                  <p className='text-sm text-blue-800 dark:text-blue-200'>
+                    <strong>Next Step:</strong> Create your account to access your purchased plan and start using the library.
+                  </p>
+                </div>
+              </>
+            ) : (
+              <>
+                <Link href='/'>
+                  <button className='w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-lg transition-colors flex items-center justify-center gap-2'>
+                    <BookOpen className='w-5 h-5' />
+                    Access Library
+                  </button>
+                </Link>
 
-            <Link href='/account'>
-              <button className='w-full bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-900 dark:text-white font-medium py-3 px-4 rounded-lg transition-colors'>
-                View Account
-              </button>
-            </Link>
+                <Link href='/account'>
+                  <button className='w-full bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-900 dark:text-white font-medium py-3 px-4 rounded-lg transition-colors flex items-center justify-center gap-2'>
+                    <User className='w-5 h-5' />
+                    View Account
+                  </button>
+                </Link>
+              </>
+            )}
 
             <Link href='/'>
-              <button className='w-full text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 font-medium py-2 transition-colors'>
+              <button className='w-full text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 font-medium py-2 transition-colors flex items-center justify-center gap-2'>
+                <Home className='w-5 h-5' />
                 Return to Home
               </button>
             </Link>

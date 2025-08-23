@@ -4,6 +4,7 @@ import dbConnect from '../../../lib/mongodb';
 import Subscription from '../../../models/Subscription';
 import User from '../../../models/User';
 import PaymentConfig from '../../../models/PaymentConfig';
+import PaymentSession from '../../../models/PaymentSession';
 
 // Disable body parsing for webhooks
 export const config = {
@@ -87,15 +88,39 @@ export default async function handler(req, res) {
 
 async function handleCheckoutCompleted(session) {
   try {
-    const { customer, subscription: stripeSubscriptionId, metadata } = session;
+    const { customer, subscription: stripeSubscriptionId, metadata, customer_email } = session;
     const { userId, priceId, billingPeriod } = metadata;
 
+    // Check if this is a payment session for new user signup
+    let paymentSession = await PaymentSession.findOne({
+      sessionId: session.id,
+      provider: 'stripe'
+    });
+
+    if (paymentSession) {
+      // Update payment session status
+      paymentSession.status = 'completed';
+      paymentSession.subscriptionId = stripeSubscriptionId;
+      paymentSession.customerEmail = customer_email;
+      paymentSession.paymentIntentId = session.payment_intent;
+      
+      // Generate signup token if not already generated
+      if (!paymentSession.signupToken) {
+        paymentSession.generateSignupToken();
+      }
+      
+      await paymentSession.save();
+      console.log('Payment session updated for new user signup:', session.id);
+      return;
+    }
+
+    // Existing user flow
     if (!userId || !priceId) {
       console.error('Missing metadata in checkout session');
       return;
     }
 
-    // Find or create subscription record
+    // Find or create subscription record for existing users
     let subscription = await Subscription.findOne({
       user: userId,
       stripeSubscriptionId

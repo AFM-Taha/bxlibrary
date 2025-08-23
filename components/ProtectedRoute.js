@@ -1,46 +1,54 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { useAuth } from '../contexts/AuthContext'
 
 const ProtectedRoute = ({ children, requireAdmin = false }) => {
   const { user, isAuthenticated, isLoading, isAdmin } = useAuth()
   const router = useRouter()
+  const [isRedirecting, setIsRedirecting] = useState(false)
 
   useEffect(() => {
     if (!isLoading) {
       if (!isAuthenticated) {
         // Redirect to login if not authenticated
-        router.push('/login')
+        setIsRedirecting(true)
+        router.replace('/login')
         return
       }
 
       if (requireAdmin && !isAdmin()) {
         // Redirect to library if user is not admin but admin access is required
-        router.push('/')
+        setIsRedirecting(true)
+        router.replace('/')
         return
       }
 
       // Check if user account is still valid
       if (user && user.status !== 'active') {
-        router.push('/login')
+        setIsRedirecting(true)
+        router.replace('/login')
         return
       }
 
       // Check if user account has expired
       if (user && user.expiryDate && new Date(user.expiryDate) < new Date()) {
-        router.push('/login')
+        setIsRedirecting(true)
+        router.replace('/login')
         return
       }
+      
+      // If we reach here, user is authenticated and authorized
+      setIsRedirecting(false)
     }
   }, [isAuthenticated, isLoading, user, requireAdmin, router, isAdmin])
 
-  // Show loading spinner while checking authentication
-  if (isLoading) {
+  // Show loading spinner while checking authentication or redirecting
+  if (isLoading || isRedirecting) {
     return (
       <div className='min-h-screen flex items-center justify-center bg-gray-50'>
         <div className='flex flex-col items-center space-y-4'>
           <div className='animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600'></div>
-          <p className='text-sm text-gray-600'>Loading...</p>
+          <p className='text-sm text-gray-600'>{isLoading ? 'Loading...' : 'Redirecting...'}</p>
         </div>
       </div>
     )

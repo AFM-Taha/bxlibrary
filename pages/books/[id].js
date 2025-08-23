@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 import { useAuth } from '../../contexts/AuthContext'
+import ProtectedRoute from '../../components/ProtectedRoute'
 import toast from 'react-hot-toast'
 import { CompactThemeToggle } from '../../components/ThemeToggle'
 import BookImageSlider from '../../components/BookImageSlider'
@@ -193,12 +194,11 @@ The insights you gain from mastering this material will serve as powerful tools 
                 </Link>
                 <button
                   onClick={() => {
-                    toast.success('Redirecting to purchase...')
-                    window.open('#', '_blank')
+                    window.location.href = '/pricing'
                   }}
                   className='bg-green-600 text-white px-4 py-2 rounded-md font-medium hover:bg-green-700 transition-colors'
                 >
-                  Purchase
+                  Get Full Access
                 </button>
               </div>
             </div>
@@ -246,7 +246,11 @@ function BookDetailsPage() {
   }
 
   const handleReadBook = () => {
-    router.push(`/reader/${id}`)
+    if (user) {
+      router.push(`/reader/${id}`)
+    } else {
+      router.push('/login')
+    }
   }
 
   const handleLogout = async () => {
@@ -645,9 +649,7 @@ function BookDetailsPage() {
 
                     <button
                       onClick={() => {
-                        toast.success('Redirecting to purchase...')
-                        // Here you would integrate with your payment system
-                        window.open('#', '_blank')
+                        window.location.href = '/pricing'
                       }}
                       className='flex-1 bg-blue-600 text-white px-6 py-3 rounded-md font-medium hover:bg-blue-700 transition-colors flex items-center justify-center'
                     >
@@ -664,7 +666,7 @@ function BookDetailsPage() {
                           d='M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-2.5 5M7 13l2.5 5m0 0h8m-8 0a2 2 0 100 4 2 2 0 000-4zm8 0a2 2 0 100 4 2 2 0 000-4z'
                         />
                       </svg>
-                      Buy Now
+                      Get Full Access
                     </button>
 
                     <Link
@@ -739,13 +741,11 @@ function BookDetailsPage() {
                   </Link>
                   <button
                     onClick={() => {
-                      toast.success('Redirecting to purchase...')
-                      // Here you would integrate with your payment system
-                      window.open('#', '_blank')
+                      window.location.href = '/pricing'
                     }}
                     className='bg-green-600 text-white px-6 py-2 rounded-md font-medium hover:bg-green-700 transition-colors'
                   >
-                    Purchase Full Access
+                    Get Full Access
                   </button>
                 </div>
               </div>

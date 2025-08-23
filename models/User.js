@@ -49,6 +49,56 @@ const UserSchema = new mongoose.Schema({
     type: Date,
     required: false
   },
+  emailVerified: {
+    type: Boolean,
+    default: false
+  },
+  emailVerificationToken: {
+    type: String,
+    required: false
+  },
+  emailVerificationExpiry: {
+    type: Date,
+    required: false
+  },
+  subscription: {
+    planId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Pricing',
+      required: false
+    },
+    planName: {
+      type: String,
+      required: false
+    },
+    status: {
+      type: String,
+      enum: ['active', 'inactive', 'cancelled', 'expired'],
+      default: 'inactive'
+    },
+    startDate: {
+      type: Date,
+      required: false
+    },
+    endDate: {
+      type: Date,
+      required: false
+    },
+    paymentProvider: {
+      type: String,
+      enum: ['stripe', 'paypal'],
+      required: false
+    },
+    paymentSessionId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'PaymentSession',
+      required: false
+    },
+    subscriptionId: {
+      type: String,
+      required: false
+    }
+  },
   expiryDate: {
     type: Date,
     required: false // Optional expiry date for user access
@@ -61,6 +111,40 @@ const UserSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
     required: false
+  },
+  audit: {
+    createdBy: {
+      type: String,
+      required: false
+    },
+    createdAt: {
+      type: Date,
+      default: Date.now
+    },
+    createdReason: {
+      type: String,
+      required: false
+    },
+    createdMethod: {
+      type: String,
+      required: false
+    },
+    verifiedAt: {
+      type: Date,
+      required: false
+    },
+    verifiedBy: {
+      type: String,
+      required: false
+    },
+    verificationMethod: {
+      type: String,
+      required: false
+    },
+    lastVerificationEmailSent: {
+      type: Date,
+      required: false
+    }
   },
   auditTrail: [{
     action: String,
