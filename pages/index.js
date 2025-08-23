@@ -383,9 +383,5 @@ function LibraryPage() {
 }
 
 export default function Home() {
-  return (
-    <ProtectedRoute>
-      <LibraryPage />
-    </ProtectedRoute>
-  )
+  return <LibraryPage />
 }
