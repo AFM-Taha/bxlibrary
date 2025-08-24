@@ -62,13 +62,31 @@ export default function PaymentSettings() {
       
       const method = editingConfig ? 'PUT' : 'POST';
       
+      // Map form data to API field names
+      const apiData = {
+        provider: formData.provider,
+        environment: formData.environment,
+        isActive: formData.isActive
+      };
+
+      // Add provider-specific fields
+      if (formData.provider === 'stripe') {
+        apiData.stripePublishableKey = formData.publishableKey;
+        apiData.stripeSecretKey = formData.secretKey;
+        if (formData.webhookSecret) apiData.stripeWebhookSecret = formData.webhookSecret;
+      } else if (formData.provider === 'paypal') {
+        apiData.paypalClientId = formData.clientId;
+        apiData.paypalClientSecret = formData.clientSecret;
+        if (formData.webhookId) apiData.paypalWebhookId = formData.webhookId;
+      }
+      
       const response = await fetch(url, {
         method,
         headers: {
           'Content-Type': 'application/json'
         },
         credentials: 'include',
-        body: JSON.stringify(formData)
+        body: JSON.stringify(apiData)
       });
 
       const data = await response.json();
@@ -90,17 +108,29 @@ export default function PaymentSettings() {
 
   const handleEdit = (config) => {
     setEditingConfig(config);
-    setFormData({
+    
+    // Map API field names to form field names
+    const mappedFormData = {
       provider: config.provider,
       environment: config.environment,
-      clientId: config.clientId || '',
       clientSecret: '', // Don't populate for security
       secretKey: '', // Don't populate for security
-      publishableKey: config.publishableKey || '',
       webhookSecret: '', // Don't populate for security
-      webhookId: config.webhookId || '',
       isActive: config.isActive
-    });
+    };
+
+    // Map provider-specific fields
+    if (config.provider === 'stripe') {
+      mappedFormData.publishableKey = config.stripePublishableKey || '';
+      mappedFormData.clientId = '';
+      mappedFormData.webhookId = '';
+    } else if (config.provider === 'paypal') {
+      mappedFormData.clientId = config.paypalClientId || '';
+      mappedFormData.webhookId = config.paypalWebhookId || '';
+      mappedFormData.publishableKey = '';
+    }
+
+    setFormData(mappedFormData);
     setShowForm(true);
   };
 

@@ -10,6 +10,9 @@ function PricingSection() {
   const [loading, setLoading] = useState(true);
   const [billingPeriod, setBillingPeriod] = useState('');
   const [paymentConfigs, setPaymentConfigs] = useState({ stripe: null, paypal: null });
+  const [showEmailModal, setShowEmailModal] = useState(false);
+  const [emailInput, setEmailInput] = useState('');
+  const [pendingPayment, setPendingPayment] = useState(null);
 
   useEffect(() => {
     fetchPricingPlans();
@@ -25,18 +28,10 @@ function PricingSection() {
 
   const fetchPaymentConfigs = async () => {
     try {
-      const response = await fetch('/api/admin/payment-config', {
-        credentials: 'include'
-      });
+      const response = await fetch('/api/public/payment-config');
       if (response.ok) {
         const data = await response.json();
-        const configs = {};
-        data.configs.forEach(config => {
-          if (config.isActive) {
-            configs[config.provider] = config;
-          }
-        });
-        setPaymentConfigs(configs);
+        setPaymentConfigs(data.configs || {});
       }
     } catch (error) {
       console.error('Error fetching payment configs:', error);
@@ -68,31 +63,63 @@ function PricingSection() {
   const availablePeriods = [...new Set(pricingPlans.map(plan => plan.billingPeriod))];
 
   const handleGetStarted = (plan) => {
-    if (!user) {
-      toast.error('Please log in to subscribe');
-      return;
-    }
     // This will be handled by the payment buttons
     console.log('Selected plan:', plan);
   };
 
-  const handleStripePayment = async (plan) => {
-    if (!user) {
-      toast.error('Please log in to subscribe');
+  const handleEmailSubmit = async () => {
+    if (!emailInput) {
+      toast.error('Email is required to proceed with payment');
+      return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInput)) {
+      toast.error('Please enter a valid email address');
       return;
     }
 
+    setShowEmailModal(false);
+    
+    if (pendingPayment) {
+      if (pendingPayment.type === 'stripe') {
+        await processStripePayment(pendingPayment.plan, emailInput);
+      } else if (pendingPayment.type === 'paypal') {
+        await processPayPalPayment(pendingPayment.plan, emailInput);
+      }
+    }
+    
+    // Reset states
+    setEmailInput('');
+    setPendingPayment(null);
+  };
+
+  const handleEmailModalClose = () => {
+    setShowEmailModal(false);
+    setEmailInput('');
+    setPendingPayment(null);
+  };
+
+  const processStripePayment = async (plan, email = null) => {
     try {
-      const response = await fetch('/api/payments/stripe/create-checkout', {
+      const endpoint = user 
+        ? '/api/payments/stripe/create-checkout'
+        : '/api/payments/stripe/create-checkout-guest';
+      
+      const requestBody = {
+        priceId: plan._id,
+        billingPeriod: billingPeriod
+      };
+      
+      if (!user && email) {
+        requestBody.customerEmail = email;
+      }
+
+      const response = await fetch(endpoint, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         credentials: 'include',
-        body: JSON.stringify({
-          priceId: plan._id,
-          billingPeriod: billingPeriod
-        })
+        body: JSON.stringify(requestBody)
       });
 
       const data = await response.json();
@@ -107,23 +134,28 @@ function PricingSection() {
     }
   };
 
-  const handlePayPalPayment = async (plan) => {
-    if (!user) {
-      toast.error('Please log in to subscribe');
-      return;
-    }
-
+  const processPayPalPayment = async (plan, email = null) => {
     try {
-      const response = await fetch('/api/payments/paypal/create-subscription', {
+      const endpoint = user 
+        ? '/api/payments/paypal/create-subscription'
+        : '/api/payments/paypal/create-subscription-guest';
+      
+      const requestBody = {
+        priceId: plan._id,
+        billingPeriod: billingPeriod
+      };
+      
+      if (!user && email) {
+        requestBody.customerEmail = email;
+      }
+
+      const response = await fetch(endpoint, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         credentials: 'include',
-        body: JSON.stringify({
-          priceId: plan._id,
-          billingPeriod: billingPeriod
-        })
+        body: JSON.stringify(requestBody)
       });
 
       const data = await response.json();
@@ -135,6 +167,28 @@ function PricingSection() {
     } catch (error) {
       console.error('PayPal payment error:', error);
       toast.error('Failed to process payment');
+    }
+  };
+
+  const handleStripePayment = async (plan) => {
+    if (!user) {
+      // Show email modal for guest users
+      setPendingPayment({ type: 'stripe', plan });
+      setShowEmailModal(true);
+    } else {
+      // Process payment directly for logged-in users
+      await processStripePayment(plan);
+    }
+  };
+
+  const handlePayPalPayment = async (plan) => {
+    if (!user) {
+      // Show email modal for guest users
+      setPendingPayment({ type: 'paypal', plan });
+      setShowEmailModal(true);
+    } else {
+      // Process payment directly for logged-in users
+      await processPayPalPayment(plan);
     }
   };
 
@@ -281,48 +335,66 @@ function PricingSection() {
 
                 {/* Payment Buttons */}
                 <div className="space-y-3">
-                  {/* Stripe Payment Button */}
-                  {paymentConfigs.stripe && (
-                    <button
-                      onClick={() => handleStripePayment(plan)}
-                      className={`w-full py-3 px-4 rounded-lg font-medium text-sm transition-colors flex items-center justify-center space-x-2 ${
+                  {/* Custom button link takes priority */}
+                  {plan.buttonLink ? (
+                    <a
+                      href={plan.buttonLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={`w-full py-3 px-4 rounded-lg font-medium text-sm transition-colors flex items-center justify-center ${
                         plan.isPopular
                           ? 'bg-primary-600 hover:bg-primary-700 text-white'
                           : 'bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-900 dark:text-white'
                       }`}
                     >
-                      <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M13.976 9.15c-2.172-.806-3.356-1.426-3.356-2.409 0-.831.683-1.305 1.901-1.305 2.227 0 4.515.858 6.09 1.631l.89-5.494C18.252.975 15.697 0 12.165 0 9.667 0 7.589.654 6.104 1.872 4.56 3.147 3.757 4.992 3.757 7.218c0 4.039 2.467 5.76 6.476 7.219 2.585.92 3.445 1.574 3.445 2.583 0 .98-.84 1.545-2.354 1.545-1.875 0-4.965-.921-6.99-2.109l-.9 5.555C5.175 22.99 8.385 24 11.714 24c2.641 0 4.843-.624 6.328-1.813 1.664-1.305 2.525-3.236 2.525-5.732 0-4.128-2.524-5.851-6.591-7.305z"/>
-                      </svg>
-                      <span>Get Full Access</span>
-                    </button>
-                  )}
-                  
-                  {/* PayPal Payment Button */}
-                  {paymentConfigs.paypal && (
-                    <button
-                      onClick={() => handlePayPalPayment(plan)}
-                      className="w-full py-3 px-4 rounded-lg font-medium text-sm transition-colors flex items-center justify-center space-x-2 bg-yellow-500 text-white hover:bg-yellow-600 dark:bg-yellow-600 dark:hover:bg-yellow-700"
-                    >
-                      <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944.901C5.026.382 5.474 0 5.998 0h7.46c2.57 0 4.578.543 5.69 1.81 1.01 1.15 1.304 2.42 1.012 4.287-.023.143-.047.288-.077.437-.983 5.05-4.349 6.797-8.647 6.797h-2.19c-.524 0-.968.382-1.05.9l-1.12 7.106zm14.146-14.42a3.35 3.35 0 0 0-.607-.541c-.013.076-.026.175-.041.26-.93 4.778-4.005 6.405-7.974 6.405h-2.19c-.524 0-.968.382-1.05.9L8.24 20.047h2.65c.524 0 .968-.382 1.05-.9l.429-2.717c.082-.518.526-.9 1.05-.9h.659c3.745 0 6.675-1.52 7.53-5.918.285-1.47.126-2.696-.432-3.595z"/>
-                      </svg>
-                      <span>Get Full Access</span>
-                    </button>
-                  )}
-                  
-                  {/* Fallback button if no payment methods configured */}
-                  {!paymentConfigs.stripe && !paymentConfigs.paypal && (
-                    <button
-                      onClick={() => handleGetStarted(plan)}
-                      className={`w-full py-3 px-4 rounded-lg font-medium text-sm transition-colors ${
-                        plan.isPopular
-                          ? 'bg-primary-600 hover:bg-primary-700 text-white'
-                          : 'bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-900 dark:text-white'
-                      }`}
-                    >
-                      {plan.buttonText || 'Get Full Access'}
-                    </button>
+                      {plan.buttonText || 'Get Started'}
+                    </a>
+                  ) : (
+                    <>
+                      {/* Stripe Payment Button */}
+                      {paymentConfigs.stripe && (
+                        <button
+                          onClick={() => handleStripePayment(plan)}
+                          className={`w-full py-3 px-4 rounded-lg font-medium text-sm transition-colors flex items-center justify-center space-x-2 ${
+                            plan.isPopular
+                              ? 'bg-primary-600 hover:bg-primary-700 text-white'
+                              : 'bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-900 dark:text-white'
+                          }`}
+                        >
+                          <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M13.976 9.15c-2.172-.806-3.356-1.426-3.356-2.409 0-.831.683-1.305 1.901-1.305 2.227 0 4.515.858 6.09 1.631l.89-5.494C18.252.975 15.697 0 12.165 0 9.667 0 7.589.654 6.104 1.872 4.56 3.147 3.757 4.992 3.757 7.218c0 4.039 2.467 5.76 6.476 7.219 2.585.92 3.445 1.574 3.445 2.583 0 .98-.84 1.545-2.354 1.545-1.875 0-4.965-.921-6.99-2.109l-.9 5.555C5.175 22.99 8.385 24 11.714 24c2.641 0 4.843-.624 6.328-1.813 1.664-1.305 2.525-3.236 2.525-5.732 0-4.128-2.524-5.851-6.591-7.305z"/>
+                          </svg>
+                          <span>{plan.buttonText || 'Get Full Access'}</span>
+                        </button>
+                      )}
+                      
+                      {/* PayPal Payment Button */}
+                      {paymentConfigs.paypal && (
+                        <button
+                          onClick={() => handlePayPalPayment(plan)}
+                          className="w-full py-3 px-4 rounded-lg font-medium text-sm transition-colors flex items-center justify-center space-x-2 bg-yellow-500 text-white hover:bg-yellow-600 dark:bg-yellow-600 dark:hover:bg-yellow-700"
+                        >
+                          <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944.901C5.026.382 5.474 0 5.998 0h7.46c2.57 0 4.578.543 5.69 1.81 1.01 1.15 1.304 2.42 1.012 4.287-.023.143-.047.288-.077.437-.983 5.05-4.349 6.797-8.647 6.797h-2.19c-.524 0-.968.382-1.05.9l-1.12 7.106zm14.146-14.42a3.35 3.35 0 0 0-.607-.541c-.013.076-.026.175-.041.26-.93 4.778-4.005 6.405-7.974 6.405h-2.19c-.524 0-.968.382-1.05.9L8.24 20.047h2.65c.524 0 .968-.382 1.05-.9l.429-2.717c.082-.518.526-.9 1.05-.9h.659c3.745 0 6.675-1.52 7.53-5.918.285-1.47.126-2.696-.432-3.595z"/>
+                          </svg>
+                          <span>{plan.buttonText || 'Get Full Access'}</span>
+                        </button>
+                      )}
+                      
+                      {/* Fallback button if no payment methods configured */}
+                      {!paymentConfigs.stripe && !paymentConfigs.paypal && (
+                        <button
+                          onClick={() => handleGetStarted(plan)}
+                          className={`w-full py-3 px-4 rounded-lg font-medium text-sm transition-colors ${
+                            plan.isPopular
+                              ? 'bg-primary-600 hover:bg-primary-700 text-white'
+                              : 'bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-900 dark:text-white'
+                          }`}
+                        >
+                          {plan.buttonText || 'Get Full Access'}
+                        </button>
+                      )}
+                    </>
                   )}
                 </div>
               </div>
@@ -357,6 +429,42 @@ function PricingSection() {
           </div>
         </div>
       </div>
+
+      {/* Email Modal */}
+      {showEmailModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white dark:bg-gray-800 rounded-lg p-6 w-full max-w-md mx-4">
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+              Enter Your Email
+            </h3>
+            <p className="text-gray-600 dark:text-gray-400 mb-4">
+              Please enter your email address to continue with payment:
+            </p>
+            <input
+              type="email"
+              value={emailInput}
+              onChange={(e) => setEmailInput(e.target.value)}
+              placeholder="your@email.com"
+              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 dark:bg-gray-700 dark:text-white mb-4"
+              autoFocus
+            />
+            <div className="flex justify-end space-x-3">
+              <button
+                onClick={handleEmailModalClose}
+                className="px-4 py-2 text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleEmailSubmit}
+                className="px-4 py-2 bg-primary-600 text-white rounded-md hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500"
+              >
+                Continue
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
