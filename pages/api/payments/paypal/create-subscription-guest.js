@@ -34,9 +34,15 @@ export default async function handler(req, res) {
     }
 
     // Calculate price based on billing period
-    const price = billingPeriod === 'yearly' 
-      ? pricingPlan.price * 12 * 0.8 // 20% discount for yearly
-      : pricingPlan.price;
+    let price;
+    if (pricingPlan.billingPeriod === 'lifetime') {
+      // For lifetime plans, use the plan's price directly
+      price = pricingPlan.price;
+    } else if (billingPeriod === 'yearly') {
+      price = pricingPlan.price * 12 * 0.8; // 20% discount for yearly
+    } else {
+      price = pricingPlan.price;
+    }
 
     // Generate a unique session ID for tracking
     const sessionId = `guest_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
@@ -173,12 +179,12 @@ async function getOrCreatePayPalPlan(config, pricingPlan, billingPeriod, price, 
       billing_cycles: [
         {
           frequency: {
-            interval_unit: billingPeriod === 'yearly' ? 'YEAR' : 'MONTH',
+            interval_unit: pricingPlan.billingPeriod === 'lifetime' ? 'YEAR' : (billingPeriod === 'yearly' ? 'YEAR' : 'MONTH'),
             interval_count: 1
           },
           tenure_type: 'REGULAR',
           sequence: 1,
-          total_cycles: 0, // Infinite
+          total_cycles: pricingPlan.billingPeriod === 'lifetime' ? 99 : 0, // 99 years for lifetime, infinite for others
           pricing_scheme: {
             fixed_price: {
               value: price.toFixed(2),
@@ -223,7 +229,7 @@ async function getOrCreatePayPalProduct(config, pricingPlan, accessToken) {
   try {
     const productData = {
       name: pricingPlan.name,
-      description: pricingPlan.description,
+      description: pricingPlan.description || `${pricingPlan.name} subscription plan`,
       type: 'SERVICE',
       category: 'SOFTWARE'
     };
