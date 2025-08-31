@@ -1,5 +1,6 @@
 import dbConnect from '../../lib/mongodb';
 import Book from '../../models/Book';
+import Category from '../../models/Category';
 import { withAuth } from '../../lib/auth';
 
 async function handler(req, res) {
