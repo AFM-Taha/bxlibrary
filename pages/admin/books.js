@@ -602,6 +602,14 @@ function AdminBooks() {
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                             </svg>
                           </button>
+                          <Link
+                            href={`/admin/smart-book/${book.id}`}
+                            className="inline-flex items-center px-2 py-1 text-sm rounded-md bg-pink-100 text-pink-700 hover:bg-pink-200 focus:outline-none"
+                            title="Smart Book"
+                          >
+                            <span className="mr-1">✨</span>
+                            <span>Smart Book</span>
+                          </Link>
                         </div>
                       </td>
                     </tr>
