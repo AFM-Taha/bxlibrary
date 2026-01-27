@@ -16,7 +16,7 @@ function LibraryPage() {
   const [initialLoad, setInitialLoad] = useState(true)
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedCategory, setSelectedCategory] = useState('')
-  const [sortBy, setSortBy] = useState('newest')
+  const [sortBy, setSortBy] = useState('random')
   const [currentPage, setCurrentPage] = useState(1)
   const [totalPages, setTotalPages] = useState(1)
   const [totalBooks, setTotalBooks] = useState(0)
@@ -237,6 +237,7 @@ function LibraryPage() {
                 onChange={(e) => handleSortChange(e.target.value)}
                 className='px-3 py-1 border border-gray-300 dark:border-gray-600 rounded-md text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white'
               >
+                <option value='random'>Random</option>
                 <option value='newest'>Newest First</option>
                 <option value='oldest'>Oldest First</option>
                 <option value='title-asc'>Title A-Z</option>

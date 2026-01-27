@@ -68,15 +68,33 @@ async function handler(req, res) {
     }
 
     // Execute queries
-    const [books, total] = await Promise.all([
-      Book.find(query)
-        .populate('categories', 'name color')
-        .sort(sortObj)
-        .skip(skip)
-        .limit(limitNum)
-        .lean(),
-      Book.countDocuments(query)
-    ]);
+    let books;
+    let total;
+
+    if (sort === 'random') {
+      const pipeline = [
+        { $match: query },
+        { $sample: { size: limitNum } }
+      ];
+      
+      const [aggregatedBooks, count] = await Promise.all([
+        Book.aggregate(pipeline),
+        Book.countDocuments(query)
+      ]);
+      
+      books = await Book.populate(aggregatedBooks, { path: 'categories', select: 'name color' });
+      total = count;
+    } else {
+      [books, total] = await Promise.all([
+        Book.find(query)
+          .populate('categories', 'name color')
+          .sort(sortObj)
+          .skip(skip)
+          .limit(limitNum)
+          .lean(),
+        Book.countDocuments(query)
+      ]);
+    }
 
     const totalPages = Math.ceil(total / limitNum);
 
