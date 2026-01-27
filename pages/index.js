@@ -25,7 +25,7 @@ function LibraryPage() {
   const fetchCategories = useCallback(async () => {
     try {
       const response = await fetch('/api/categories', {
-        credentials: 'include'
+        credentials: 'include',
       })
       if (response.ok) {
         const data = await response.json()
@@ -52,7 +52,7 @@ function LibraryPage() {
       })
 
       const response = await fetch(`/api/books?${params}`, {
-        credentials: 'include'
+        credentials: 'include',
       })
       if (response.ok) {
         const data = await response.json()
@@ -96,7 +96,7 @@ function LibraryPage() {
   return (
     <div className='min-h-screen bg-gray-50 dark:bg-gray-900'>
       {/* Navigation */}
-      <nav className='bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700'>
+      <nav className='sticky top-0 z-50 bg-transparent backdrop-blur-md shadow-sm border-b border-gray-200 dark:border-gray-700'>
         <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
           <div className='flex justify-between h-16'>
             <div className='flex items-center'>
@@ -106,7 +106,7 @@ function LibraryPage() {
                 </h1>
               </Link>
             </div>
-            <div className='flex items-center space-x-4'>
+            <div className='flex items-center space-x-1 sm:space-x-4'>
               <CompactThemeToggle />
               {user ? (
                 <>
@@ -123,7 +123,7 @@ function LibraryPage() {
                     title='Log Out'
                   >
                     <LogOut size={18} />
-                    <span className='ml-2'>Log Out</span>
+                    <span className='hidden sm:inline ml-2'>Log Out</span>
                   </button>
                 </>
               ) : (
@@ -133,7 +133,7 @@ function LibraryPage() {
                   title='Log In'
                 >
                   <LogIn size={18} />
-                  <span className='ml-2'>Log In</span>
+                  <span className='hidden sm:inline ml-2'>Log In</span>
                 </Link>
               )}
             </div>

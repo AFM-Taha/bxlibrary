@@ -261,7 +261,7 @@ function BookDetailsPage() {
   if (loading) {
     return (
       <div className='min-h-screen bg-gray-50 dark:bg-gray-900'>
-        <nav className='bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700'>
+        <nav className='sticky top-0 z-50 bg-transparent backdrop-blur-md shadow-sm border-b border-gray-200 dark:border-gray-700'>
           <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
             <div className='flex justify-between h-16'>
               <div className='flex items-center'>
@@ -271,24 +271,24 @@ function BookDetailsPage() {
                   </h1>
                 </Link>
               </div>
-              <div className='flex items-center space-x-4'>
+              <div className='flex items-center space-x-1 sm:space-x-4'>
                 {user ? (
                   <>
                     <CompactThemeToggle />
                     <Link
                       href='/account'
-                      className='text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center'
+                      className='text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 p-2 rounded-md text-sm font-medium transition-colors flex items-center'
                       title='Account'
                     >
                       <User size={18} />
                     </Link>
                     <button
                       onClick={handleLogout}
-                      className='text-gray-700 dark:text-gray-300 hover:text-red-600 dark:hover:text-red-400 px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center'
+                      className='text-gray-700 dark:text-gray-300 hover:text-red-600 dark:hover:text-red-400 p-2 sm:px-3 sm:py-2 rounded-md text-sm font-medium transition-colors flex items-center'
                       title='Log Out'
                     >
                       <LogOut size={18} />
-                      <span className='ml-2'>Log Out</span>
+                      <span className='hidden sm:inline ml-2'>Log Out</span>
                     </button>
                   </>
                 ) : (
@@ -296,11 +296,11 @@ function BookDetailsPage() {
                     <CompactThemeToggle />
                     <Link
                       href='/login'
-                      className='text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center'
+                      className='text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 p-2 sm:px-3 sm:py-2 rounded-md text-sm font-medium transition-colors flex items-center'
                       title='Log In'
                     >
                       <LogIn size={18} />
-                      <span className='ml-2'>Log In</span>
+                      <span className='hidden sm:inline ml-2'>Log In</span>
                     </Link>
                   </>
                 )}
@@ -318,7 +318,7 @@ function BookDetailsPage() {
   if (error) {
     return (
       <div className='min-h-screen bg-gray-50 dark:bg-gray-900'>
-        <nav className='bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700'>
+        <nav className='sticky top-0 z-50 bg-transparent backdrop-blur-md shadow-sm border-b border-gray-200 dark:border-gray-700'>
           <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
             <div className='flex justify-between h-16'>
               <div className='flex items-center'>
@@ -328,20 +328,20 @@ function BookDetailsPage() {
                   </h1>
                 </Link>
               </div>
-              <div className='flex items-center space-x-4'>
+              <div className='flex items-center space-x-1 sm:space-x-4'>
                 {user ? (
                   <>
                     <CompactThemeToggle />
                     <Link
                       href='/account'
-                      className='text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center'
+                      className='text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 p-2 rounded-md text-sm font-medium transition-colors flex items-center'
                       title='Account'
                     >
                       <User size={18} />
                     </Link>
                     <button
                       onClick={handleLogout}
-                      className='text-gray-700 dark:text-gray-300 hover:text-red-600 dark:hover:text-red-400 px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center'
+                      className='text-gray-700 dark:text-gray-300 hover:text-red-600 dark:hover:text-red-400 p-2 rounded-md text-sm font-medium transition-colors flex items-center'
                       title='Sign Out'
                     >
                       <LogOut size={18} />
@@ -352,11 +352,11 @@ function BookDetailsPage() {
                     <CompactThemeToggle />
                     <Link
                       href='/login'
-                      className='text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center'
+                      className='text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 p-2 sm:px-3 sm:py-2 rounded-md text-sm font-medium transition-colors flex items-center'
                       title='Log In'
                     >
                       <LogIn size={18} />
-                      <span className='ml-2'>Log In</span>
+                      <span className='hidden sm:inline ml-2'>Log In</span>
                     </Link>
                   </>
                 )}
@@ -395,7 +395,7 @@ function BookDetailsPage() {
   return (
     <div className='min-h-screen bg-gray-50 dark:bg-gray-900'>
       {/* Navigation */}
-      <nav className='bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700'>
+      <nav className='sticky top-0 z-50 bg-transparent backdrop-blur-md shadow-sm border-b border-gray-200 dark:border-gray-700'>
         <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
           <div className='flex justify-between h-16'>
             <div className='flex items-center'>
@@ -405,7 +405,7 @@ function BookDetailsPage() {
                 </h1>
               </Link>
             </div>
-            <div className='flex items-center space-x-4'>
+            <div className='flex items-center space-x-1 sm:space-x-4'>
               {user ? (
                 <>
                   <CompactThemeToggle />
@@ -457,7 +457,7 @@ function BookDetailsPage() {
                     title='Log In'
                   >
                     <LogIn size={18} />
-                    <span className='ml-2'>Log In</span>
+                    <span className='hidden sm:inline ml-2'>Log In</span>
                   </Link>
                 </>
               )}
