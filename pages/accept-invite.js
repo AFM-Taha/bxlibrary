@@ -110,7 +110,7 @@ export default function AcceptInvite() {
 
   if (isValidToken === null) {
     return (
-      <div className='min-h-screen flex items-center justify-center bg-gray-50'>
+      <div className='min-h-screen flex items-center justify-center bg-secondary-50'>
         <div className='animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600'></div>
       </div>
     )
@@ -124,7 +124,7 @@ export default function AcceptInvite() {
           <meta name='description' content='Invalid invitation link' />
         </Head>
 
-        <div className='min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8'>
+        <div className='min-h-screen flex items-center justify-center bg-secondary-50 py-12 px-4 sm:px-6 lg:px-8'>
           <div className='max-w-md w-full space-y-8'>
             <div className='text-center'>
               <div className='mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-red-100'>
@@ -142,22 +142,22 @@ export default function AcceptInvite() {
                   />
                 </svg>
               </div>
-              <h2 className='mt-6 text-3xl font-extrabold text-gray-900'>
+              <h2 className='mt-6 text-3xl font-extrabold text-secondary-900'>
                 Invalid Invitation
               </h2>
-              <p className='mt-2 text-sm text-gray-600'>
+              <p className='mt-2 text-sm text-secondary-600'>
                 This invitation link is invalid or has expired.
               </p>
             </div>
 
             <div className='space-y-4'>
-              <p className='text-center text-sm text-gray-600'>
+              <p className='text-center text-sm text-secondary-600'>
                 Please contact your administrator for a new invitation.
               </p>
 
               <Link
                 href='/login'
-                className='w-full flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500'
+                className='w-full flex justify-center py-2 px-4 border border-secondary-300 rounded-md shadow-sm text-sm font-medium text-secondary-700 bg-white hover:bg-secondary-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500'
               >
                 Back to login
               </Link>
@@ -178,17 +178,17 @@ export default function AcceptInvite() {
         />
       </Head>
 
-      <div className='min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8'>
+      <div className='min-h-screen flex items-center justify-center bg-secondary-50 py-12 px-4 sm:px-6 lg:px-8'>
         <div className='max-w-md w-full space-y-8'>
           <div>
-            <h2 className='mt-6 text-center text-3xl font-extrabold text-gray-900'>
+            <h2 className='mt-6 text-center text-3xl font-extrabold text-secondary-900'>
               Welcome to BX Library
             </h2>
-            <p className='mt-2 text-center text-sm text-gray-600'>
+            <p className='mt-2 text-center text-sm text-secondary-600'>
               Complete your registration to access the library
             </p>
             {userEmail && (
-              <p className='mt-1 text-center text-sm font-medium text-gray-900'>
+              <p className='mt-1 text-center text-sm font-medium text-secondary-900'>
                 {userEmail}
               </p>
             )}
@@ -199,7 +199,7 @@ export default function AcceptInvite() {
               <div>
                 <label
                   htmlFor='name'
-                  className='block text-sm font-medium text-gray-700 dark:text-gray-300'
+                  className='block text-sm font-medium text-secondary-700 dark:text-secondary-300'
                 >
                   Full Name
                 </label>
@@ -210,7 +210,7 @@ export default function AcceptInvite() {
                     type='text'
                     autoComplete='name'
                     required
-                    className='appearance-none block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md placeholder-gray-400 dark:placeholder-gray-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm'
+                    className='appearance-none block w-full px-3 py-2 border border-secondary-300 dark:border-secondary-600 rounded-md placeholder-secondary-400 dark:placeholder-secondary-500 bg-white dark:bg-secondary-800 text-secondary-900 dark:text-white focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm'
                     placeholder='Enter your full name'
                     value={formData.name}
                     onChange={handleChange}
@@ -223,7 +223,7 @@ export default function AcceptInvite() {
               <div>
                 <label
                   htmlFor='password'
-                  className='block text-sm font-medium text-gray-700 dark:text-gray-300'
+                  className='block text-sm font-medium text-secondary-700 dark:text-secondary-300'
                 >
                   Password
                 </label>
@@ -234,7 +234,7 @@ export default function AcceptInvite() {
                     type='password'
                     autoComplete='new-password'
                     required
-                    className='appearance-none block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md placeholder-gray-400 dark:placeholder-gray-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm'
+                    className='appearance-none block w-full px-3 py-2 border border-secondary-300 dark:border-secondary-600 rounded-md placeholder-secondary-400 dark:placeholder-secondary-500 bg-white dark:bg-secondary-800 text-secondary-900 dark:text-white focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm'
                     placeholder='Create a password'
                     value={formData.password}
                     onChange={handleChange}
@@ -242,7 +242,7 @@ export default function AcceptInvite() {
                     minLength={4}
                   />
                 </div>
-                <div className='mt-1 text-xs text-gray-500'>
+                <div className='mt-1 text-xs text-secondary-500'>
                   <p>Password must be at least 4 characters long</p>
                 </div>
               </div>
@@ -250,7 +250,7 @@ export default function AcceptInvite() {
               <div>
                 <label
                   htmlFor='confirmPassword'
-                  className='block text-sm font-medium text-gray-700 dark:text-gray-300'
+                  className='block text-sm font-medium text-secondary-700 dark:text-secondary-300'
                 >
                   Confirm Password
                 </label>
@@ -261,7 +261,7 @@ export default function AcceptInvite() {
                     type='password'
                     autoComplete='new-password'
                     required
-                    className='appearance-none block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md placeholder-gray-400 dark:placeholder-gray-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm'
+                    className='appearance-none block w-full px-3 py-2 border border-secondary-300 dark:border-secondary-600 rounded-md placeholder-secondary-400 dark:placeholder-secondary-500 bg-white dark:bg-secondary-800 text-secondary-900 dark:text-white focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm'
                     placeholder='Confirm your password'
                     value={formData.confirmPassword}
                     onChange={handleChange}

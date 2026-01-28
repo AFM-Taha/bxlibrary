@@ -70,8 +70,8 @@ async function createPaymentConfig(req, res, user) {
     } = req.body;
 
     // Validation
-    if (!provider || !['stripe', 'paypal'].includes(provider)) {
-      return res.status(400).json({ error: 'Valid provider is required (stripe or paypal)' });
+    if (!provider || !['rupantor'].includes(provider)) {
+      return res.status(400).json({ error: 'Valid provider is required (rupantor)' });
     }
 
     // Check if provider config already exists
@@ -81,14 +81,10 @@ async function createPaymentConfig(req, res, user) {
     }
 
     // Provider-specific validation
-    if (provider === 'stripe') {
-      if (!stripePublishableKey || !stripeSecretKey) {
-        return res.status(400).json({ error: 'Stripe publishable key and secret key are required' });
+    if (provider === 'rupantor') {
+      if (!req.body.rupantorApiKey || !req.body.rupantorMerchantId || !req.body.rupantorSecretKey) {
+        return res.status(400).json({ error: 'RupantorPay credentials are required' });
       }
-    }
-
-    if (provider === 'paypal') {
-      // PayPal credentials can be added later
     }
 
     // If setting this config as active, deactivate others of the same provider
@@ -110,16 +106,10 @@ async function createPaymentConfig(req, res, user) {
     };
 
     // Add provider-specific fields
-    if (provider === 'stripe') {
-      configData.stripePublishableKey = stripePublishableKey;
-      configData.stripeSecretKey = stripeSecretKey;
-      if (stripeWebhookSecret) configData.stripeWebhookSecret = stripeWebhookSecret;
-    }
-
-    if (provider === 'paypal') {
-      configData.paypalClientId = paypalClientId;
-      configData.paypalClientSecret = paypalClientSecret;
-      if (paypalWebhookId) configData.paypalWebhookId = paypalWebhookId;
+    if (provider === 'rupantor') {
+      configData.rupantorApiKey = req.body.rupantorApiKey;
+      configData.rupantorMerchantId = req.body.rupantorMerchantId;
+      configData.rupantorSecretKey = req.body.rupantorSecretKey;
     }
 
     const config = new PaymentConfig(configData);
@@ -127,7 +117,7 @@ async function createPaymentConfig(req, res, user) {
 
     // Return config without sensitive data
     const responseConfig = await PaymentConfig.findById(config._id)
-      .select('-stripeSecretKey -paypalClientSecret')
+      .select('-rupantorSecretKey')
       .populate('createdBy', 'name email');
 
     return res.status(201).json({

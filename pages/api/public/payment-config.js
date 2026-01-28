@@ -12,7 +12,7 @@ export default async function handler(req, res) {
   try {
     // Get only active payment configurations without sensitive data
     const configs = await PaymentConfig.find({ isActive: true })
-      .select('provider isActive stripePublishableKey paypalClientId')
+      .select('provider isActive rupantorMerchantId')
       .lean();
 
     // Format configs for frontend consumption
@@ -22,8 +22,7 @@ export default async function handler(req, res) {
         formattedConfigs[config.provider] = {
           provider: config.provider,
           isActive: config.isActive,
-          ...(config.provider === 'stripe' && { publishableKey: config.stripePublishableKey }),
-          ...(config.provider === 'paypal' && { clientId: config.paypalClientId })
+          ...(config.provider === 'rupantor' && { merchantId: config.rupantorMerchantId })
         };
       }
     });

@@ -106,17 +106,17 @@ export default function VerifyEmail() {
         />
       </Head>
 
-      <div className='min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8'>
+      <div className='min-h-screen bg-secondary-50 dark:bg-secondary-900 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8'>
         <div className='max-w-md w-full space-y-8'>
           <div className='text-center'>
             {/* Loading State */}
             {isLoading && (
               <>
-                <div className='animate-spin rounded-full h-16 w-16 border-b-2 border-blue-600 mx-auto mb-4'></div>
-                <h2 className='text-3xl font-bold text-gray-900 dark:text-white'>
+                <div className='animate-spin rounded-full h-16 w-16 border-b-2 border-primary-600 mx-auto mb-4'></div>
+                <h2 className='text-3xl font-bold text-secondary-900 dark:text-white'>
                   Verifying Email...
                 </h2>
-                <p className='mt-2 text-gray-600 dark:text-gray-400'>
+                <p className='mt-2 text-secondary-600 dark:text-secondary-400'>
                   Please wait while we verify your email address
                 </p>
               </>
@@ -126,17 +126,17 @@ export default function VerifyEmail() {
             {verificationStatus === 'success' && (
               <>
                 <CheckCircle className='w-16 h-16 text-green-500 mx-auto mb-4' />
-                <h2 className='text-3xl font-bold text-gray-900 dark:text-white'>
+                <h2 className='text-3xl font-bold text-secondary-900 dark:text-white'>
                   Email Verified!
                 </h2>
-                <p className='mt-2 text-gray-600 dark:text-gray-400'>
+                <p className='mt-2 text-secondary-600 dark:text-secondary-400'>
                   Your email has been successfully verified. You will be
                   redirected to the login page shortly.
                 </p>
                 <div className='mt-6'>
                   <Link
                     href='/login'
-                    className='bg-blue-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors inline-block'
+                    className='bg-primary-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-primary-700 transition-colors inline-block'
                   >
                     Sign In Now
                   </Link>
@@ -148,10 +148,10 @@ export default function VerifyEmail() {
             {verificationStatus === 'error' && (
               <>
                 <AlertCircle className='w-16 h-16 text-red-500 mx-auto mb-4' />
-                <h2 className='text-3xl font-bold text-gray-900 dark:text-white'>
+                <h2 className='text-3xl font-bold text-secondary-900 dark:text-white'>
                   Verification Failed
                 </h2>
-                <p className='mt-2 text-gray-600 dark:text-gray-400'>
+                <p className='mt-2 text-secondary-600 dark:text-secondary-400'>
                   The verification link is invalid or has expired. Please
                   request a new verification email.
                 </p>
@@ -161,11 +161,11 @@ export default function VerifyEmail() {
             {/* Default State - Waiting for verification */}
             {!isLoading && !verificationStatus && (
               <>
-                <Mail className='w-16 h-16 text-blue-500 mx-auto mb-4' />
-                <h2 className='text-3xl font-bold text-gray-900 dark:text-white'>
+                <Mail className='w-16 h-16 text-primary-500 mx-auto mb-4' />
+                <h2 className='text-3xl font-bold text-secondary-900 dark:text-white'>
                   Check Your Email
                 </h2>
-                <p className='mt-2 text-gray-600 dark:text-gray-400'>
+                <p className='mt-2 text-secondary-600 dark:text-secondary-400'>
                   We&apos;ve sent a verification link to{' '}
                   {email ? <strong>{email}</strong> : 'your email address'}.
                   Click the link in the email to verify your account.
@@ -177,13 +177,13 @@ export default function VerifyEmail() {
           {/* Resend Email Section */}
           {!isLoading && verificationStatus !== 'success' && (
             <div className='mt-8'>
-              <div className='bg-gray-100 dark:bg-gray-800 rounded-lg p-6'>
-                <h3 className='text-lg font-medium text-gray-900 dark:text-white mb-4'>
+              <div className='bg-secondary-100 dark:bg-secondary-800 rounded-lg p-6'>
+                <h3 className='text-lg font-medium text-secondary-900 dark:text-white mb-4'>
                   Didn&apos;t receive the email?
                 </h3>
 
                 <div className='space-y-4'>
-                  <div className='text-sm text-gray-600 dark:text-gray-400'>
+                  <div className='text-sm text-secondary-600 dark:text-secondary-400'>
                     <p>• Check your spam/junk folder</p>
                     <p>• Make sure the email address is correct</p>
                     <p>• Wait a few minutes for the email to arrive</p>
@@ -191,13 +191,13 @@ export default function VerifyEmail() {
 
                   {email && (
                     <div>
-                      <p className='text-sm text-gray-600 dark:text-gray-400 mb-2'>
+                      <p className='text-sm text-secondary-600 dark:text-secondary-400 mb-2'>
                         Resend verification email to: <strong>{email}</strong>
                       </p>
                       <button
                         onClick={resendVerificationEmail}
                         disabled={isResending}
-                        className='w-full bg-gray-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center justify-center gap-2'
+                        className='w-full bg-secondary-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-secondary-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center justify-center gap-2'
                       >
                         {isResending ? (
                           <>
@@ -221,12 +221,12 @@ export default function VerifyEmail() {
                         placeholder='Enter your email address'
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        className='w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white mb-2'
+                        className='w-full px-3 py-2 border border-secondary-300 dark:border-secondary-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent dark:bg-secondary-700 dark:text-white mb-2'
                       />
                       <button
                         onClick={resendVerificationEmail}
                         disabled={isResending || !email}
-                        className='w-full bg-gray-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center justify-center gap-2'
+                        className='w-full bg-secondary-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-secondary-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center justify-center gap-2'
                       >
                         {isResending ? (
                           <>
@@ -251,13 +251,13 @@ export default function VerifyEmail() {
           <div className='text-center space-y-2'>
             <Link
               href='/login'
-              className='text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 font-medium block'
+              className='text-primary-600 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300 font-medium block'
             >
               Back to Sign In
             </Link>
             <Link
               href='/'
-              className='text-gray-600 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300 block'
+              className='text-secondary-600 hover:text-secondary-700 dark:text-secondary-400 dark:hover:text-secondary-300 block'
             >
               Return to Home
             </Link>

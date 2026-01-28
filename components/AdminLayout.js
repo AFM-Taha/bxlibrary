@@ -13,9 +13,9 @@ export default function AdminLayout({
 
   return (
     <ProtectedRoute requireAdmin={true}>
-      <div className='min-h-screen bg-gray-50 dark:bg-gray-900'>
+      <div className='min-h-screen bg-secondary-50 dark:bg-secondary-950'>
         {/* Header */}
-        <div className='bg-white dark:bg-gray-800 shadow border-b border-gray-200 dark:border-gray-700'>
+        <div className='bg-white dark:bg-secondary-900 shadow border-b border-secondary-200 dark:border-secondary-700'>
           <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
             <div className='flex justify-between items-center py-6'>
               <div>
@@ -25,11 +25,11 @@ export default function AdminLayout({
                 >
                   ← Back to Dashboard
                 </Link>
-                <h1 className='text-3xl font-bold text-gray-900 dark:text-white mt-2'>
+                <h1 className='text-3xl font-bold text-secondary-900 dark:text-white mt-2'>
                   {title}
                 </h1>
                 {subtitle && (
-                  <p className='mt-1 text-sm text-gray-600 dark:text-gray-400'>
+                  <p className='mt-1 text-sm text-secondary-600 dark:text-secondary-400'>
                     {subtitle}
                   </p>
                 )}
@@ -38,7 +38,7 @@ export default function AdminLayout({
                 <CompactThemeToggle />
                 <Link
                   href='/'
-                  className='text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors'
+                  className='text-secondary-600 hover:text-secondary-900 dark:text-secondary-300 dark:hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors'
                 >
                   View Library
                 </Link>

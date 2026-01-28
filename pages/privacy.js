@@ -7,9 +7,9 @@ export default function Privacy() {
   const { user, isAuthenticated } = useAuth()
 
   return (
-    <div className='min-h-screen bg-gray-50 dark:bg-gray-900'>
+    <div className='min-h-screen bg-secondary-50 dark:bg-secondary-950'>
       {/* Navigation */}
-      <nav className='sticky top-0 z-50 bg-transparent backdrop-blur-md shadow-sm border-b border-gray-200 dark:border-gray-700'>
+      <nav className='sticky top-0 z-50 bg-transparent backdrop-blur-md shadow-sm border-b border-secondary-200 dark:border-secondary-700'>
         <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
           <div className='flex justify-between h-16'>
             <div className='flex items-center'>
@@ -17,7 +17,7 @@ export default function Privacy() {
                 href={isAuthenticated ? '/' : '/'}
                 className='flex-shrink-0'
               >
-                <h1 className='text-2xl font-bold text-blue-600 dark:text-blue-400'>
+                <h1 className='text-2xl font-bold text-primary-600 dark:text-primary-400'>
                   BX Library
                 </h1>
               </Link>
@@ -28,13 +28,13 @@ export default function Privacy() {
                   <CompactThemeToggle />
                   <Link
                     href='/'
-                    className='text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 px-3 py-2 rounded-md text-sm font-medium transition-colors'
+                    className='text-secondary-700 dark:text-secondary-300 hover:text-primary-600 dark:hover:text-primary-400 px-3 py-2 rounded-md text-sm font-medium transition-colors'
                   >
                     Library
                   </Link>
                   <Link
                     href='/account'
-                    className='text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors'
+                    className='text-secondary-700 hover:text-primary-600 px-3 py-2 rounded-md text-sm font-medium transition-colors'
                   >
                     Account
                   </Link>
@@ -43,13 +43,13 @@ export default function Privacy() {
                 <>
                   <Link
                     href='/'
-                    className='text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors'
+                    className='text-secondary-700 hover:text-primary-600 px-3 py-2 rounded-md text-sm font-medium transition-colors'
                   >
                     Home
                   </Link>
                   <Link
                     href='/login'
-                    className='bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors flex items-center justify-center'
+                    className='bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors flex items-center justify-center'
                     title='Sign In'
                   >
                     <LogIn size={18} />
@@ -67,35 +67,35 @@ export default function Privacy() {
             <CompactThemeToggle />
           </div>
         )}
-        <div className='bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-8'>
+        <div className='bg-white dark:bg-secondary-800 rounded-lg shadow-sm border border-secondary-200 dark:border-secondary-700 p-8'>
           <div className='text-center mb-8'>
-            <h1 className='text-3xl font-bold text-gray-900 dark:text-gray-100 mb-4'>
+            <h1 className='text-3xl font-bold text-secondary-900 dark:text-white mb-4'>
               Privacy Policy
             </h1>
-            <p className='text-gray-600 dark:text-gray-400'>
+            <p className='text-secondary-600 dark:text-secondary-400'>
               Last updated: January 17, 2025
             </p>
           </div>
 
           <div className='prose max-w-none'>
-            <h2 className='text-xl font-semibold text-gray-900 dark:text-gray-100 mt-8 mb-4'>
+            <h2 className='text-xl font-semibold text-secondary-900 dark:text-white mt-8 mb-4'>
               1. Introduction
             </h2>
-            <p className='text-gray-700 dark:text-gray-300 mb-4'>
+            <p className='text-secondary-700 dark:text-secondary-300 mb-4'>
               BX Library (we, our, or us) is committed to protecting your
               privacy. This Privacy Policy explains how we collect, use,
               disclose, and safeguard your information when you use our digital
               library service.
             </p>
 
-            <h2 className='text-xl font-semibold text-gray-900 dark:text-white mt-8 mb-4'>
+            <h2 className='text-xl font-semibold text-secondary-900 dark:text-white mt-8 mb-4'>
               2. Information We Collect
             </h2>
 
-            <h3 className='text-lg font-medium text-gray-900 dark:text-gray-100 mt-6 mb-3'>
+            <h3 className='text-lg font-medium text-secondary-900 dark:text-white mt-6 mb-3'>
               2.1 Personal Information
             </h3>
-            <div className='text-gray-700 dark:text-gray-300 mb-4'>
+            <div className='text-secondary-700 dark:text-secondary-300 mb-4'>
               <p className='mb-2'>
                 We collect the following personal information:
               </p>
@@ -112,10 +112,10 @@ export default function Privacy() {
               </ul>
             </div>
 
-            <h3 className='text-lg font-medium text-gray-900 dark:text-white mt-6 mb-3'>
+            <h3 className='text-lg font-medium text-secondary-900 dark:text-white mt-6 mb-3'>
               2.2 Usage Information
             </h3>
-            <div className='text-gray-700 dark:text-gray-300 mb-4'>
+            <div className='text-secondary-700 dark:text-secondary-300 mb-4'>
               <p className='mb-2'>
                 We automatically collect certain information about your use of
                 our service:
@@ -129,10 +129,10 @@ export default function Privacy() {
               </ul>
             </div>
 
-            <h3 className='text-lg font-medium text-gray-900 mt-6 mb-3'>
+            <h3 className='text-lg font-medium text-secondary-900 dark:text-white mt-6 mb-3'>
               2.3 Technical Information
             </h3>
-            <div className='text-gray-700 mb-4'>
+            <div className='text-secondary-700 dark:text-secondary-300 mb-4'>
               <p className='mb-2'>
                 We collect technical information to improve our service:
               </p>
@@ -143,10 +143,10 @@ export default function Privacy() {
               </ul>
             </div>
 
-            <h2 className='text-xl font-semibold text-gray-900 mt-8 mb-4'>
+            <h2 className='text-xl font-semibold text-secondary-900 dark:text-white mt-8 mb-4'>
               3. How We Use Your Information
             </h2>
-            <div className='text-gray-700 mb-4'>
+            <div className='text-secondary-700 dark:text-secondary-300 mb-4'>
               <p className='mb-2'>
                 We use your information for the following purposes:
               </p>
@@ -166,23 +166,23 @@ export default function Privacy() {
               </ul>
             </div>
 
-            <h2 className='text-xl font-semibold text-gray-900 mt-8 mb-4'>
+            <h2 className='text-xl font-semibold text-secondary-900 dark:text-white mt-8 mb-4'>
               4. Information Sharing and Disclosure
             </h2>
 
-            <h3 className='text-lg font-medium text-gray-900 mt-6 mb-3'>
+            <h3 className='text-lg font-medium text-secondary-900 dark:text-white mt-6 mb-3'>
               4.1 Internal Sharing
             </h3>
-            <p className='text-gray-700 dark:text-gray-300 mb-4'>
+            <p className='text-secondary-700 dark:text-secondary-300 mb-4'>
               Your information may be accessed by authorized administrators for
               account management, user support, and service administration
               purposes.
             </p>
 
-            <h3 className='text-lg font-medium text-gray-900 mt-6 mb-3'>
+            <h3 className='text-lg font-medium text-secondary-900 dark:text-white mt-6 mb-3'>
               4.2 Third-Party Services
             </h3>
-            <div className='text-gray-700 mb-4'>
+            <div className='text-secondary-700 dark:text-secondary-300 mb-4'>
               <p className='mb-2'>
                 We may share information with third-party services that help us
                 operate our platform:
@@ -195,19 +195,19 @@ export default function Privacy() {
               </ul>
             </div>
 
-            <h3 className='text-lg font-medium text-gray-900 mt-6 mb-3'>
+            <h3 className='text-lg font-medium text-secondary-900 dark:text-white mt-6 mb-3'>
               4.3 Legal Requirements
             </h3>
-            <p className='text-gray-700 mb-4'>
+            <p className='text-secondary-700 dark:text-secondary-300 mb-4'>
               We may disclose your information if required by law, court order,
               or government regulation, or to protect our rights, property, or
               safety.
             </p>
 
-            <h2 className='text-xl font-semibold text-gray-900 mt-8 mb-4'>
+            <h2 className='text-xl font-semibold text-secondary-900 dark:text-white mt-8 mb-4'>
               5. Data Security
             </h2>
-            <div className='text-gray-700 mb-4'>
+            <div className='text-secondary-700 dark:text-secondary-300 mb-4'>
               <p className='mb-2'>
                 We implement appropriate security measures to protect your
                 information:
@@ -221,10 +221,10 @@ export default function Privacy() {
               </ul>
             </div>
 
-            <h2 className='text-xl font-semibold text-gray-900 mt-8 mb-4'>
+            <h2 className='text-xl font-semibold text-secondary-900 dark:text-white mt-8 mb-4'>
               6. Data Retention
             </h2>
-            <div className='text-gray-700 mb-4'>
+            <div className='text-secondary-700 dark:text-secondary-300 mb-4'>
               <p className='mb-2'>
                 We retain your information for the following periods:
               </p>
@@ -241,10 +241,10 @@ export default function Privacy() {
               </ul>
             </div>
 
-            <h2 className='text-xl font-semibold text-gray-900 mt-8 mb-4'>
+            <h2 className='text-xl font-semibold text-secondary-900 dark:text-white mt-8 mb-4'>
               7. Your Rights and Choices
             </h2>
-            <div className='text-gray-700 mb-4'>
+            <div className='text-secondary-700 dark:text-secondary-300 mb-4'>
               <p className='mb-2'>
                 Depending on your location, you may have the following rights:
               </p>
@@ -275,10 +275,10 @@ export default function Privacy() {
               </p>
             </div>
 
-            <h2 className='text-xl font-semibold text-gray-900 mt-8 mb-4'>
+            <h2 className='text-xl font-semibold text-secondary-900 dark:text-white mt-8 mb-4'>
               8. Cookies and Tracking
             </h2>
-            <div className='text-gray-700 mb-4'>
+            <div className='text-secondary-700 dark:text-secondary-300 mb-4'>
               <p className='mb-2'>
                 We use cookies and similar technologies to:
               </p>
@@ -294,57 +294,57 @@ export default function Privacy() {
               </p>
             </div>
 
-            <h2 className='text-xl font-semibold text-gray-900 mt-8 mb-4'>
+            <h2 className='text-xl font-semibold text-secondary-900 dark:text-white mt-8 mb-4'>
               9. Children&apos;s Privacy
             </h2>
-            <p className='text-gray-700 mb-4'>
+            <p className='text-secondary-700 dark:text-secondary-300 mb-4'>
               Our service is not intended for children under 13 years of age. We
               do not knowingly collect personal information from children under
               13. If we become aware that we have collected such information, we
               will take steps to delete it promptly.
             </p>
 
-            <h2 className='text-xl font-semibold text-gray-900 mt-8 mb-4'>
+            <h2 className='text-xl font-semibold text-secondary-900 dark:text-white mt-8 mb-4'>
               10. International Data Transfers
             </h2>
-            <p className='text-gray-700 mb-4'>
+            <p className='text-secondary-700 dark:text-secondary-300 mb-4'>
               Your information may be transferred to and processed in countries
               other than your own. We ensure that such transfers comply with
               applicable data protection laws and implement appropriate
               safeguards.
             </p>
 
-            <h2 className='text-xl font-semibold text-gray-900 mt-8 mb-4'>
+            <h2 className='text-xl font-semibold text-secondary-900 dark:text-white mt-8 mb-4'>
               11. Changes to This Privacy Policy
             </h2>
-            <p className='text-gray-700 mb-4'>
+            <p className='text-secondary-700 dark:text-secondary-300 mb-4'>
               We may update this Privacy Policy from time to time. We will
               notify you of any material changes by email or through our
               service. Your continued use of the service after such changes
               constitutes acceptance of the updated policy.
             </p>
 
-            <h2 className='text-xl font-semibold text-gray-900 mt-8 mb-4'>
+            <h2 className='text-xl font-semibold text-secondary-900 dark:text-white mt-8 mb-4'>
               12. Contact Information
             </h2>
-            <p className='text-gray-700 mb-4'>
+            <p className='text-secondary-700 dark:text-secondary-300 mb-4'>
               If you have any questions about this Privacy Policy or our data
               practices, please contact us:
             </p>
-            <div className='bg-gray-50 dark:bg-gray-700 p-4 rounded-md'>
-              <p className='text-gray-700 dark:text-gray-300'>
+            <div className='bg-secondary-50 dark:bg-secondary-700 p-4 rounded-md'>
+              <p className='text-secondary-700 dark:text-secondary-300'>
                 Email: privacy@bxlibrary.com
               </p>
-              <p className='text-gray-700 dark:text-gray-300'>
+              <p className='text-secondary-700 dark:text-secondary-300'>
                 Address: 123 Library Street, Digital City, DC 12345
               </p>
-              <p className='text-gray-700 dark:text-gray-300'>
+              <p className='text-secondary-700 dark:text-secondary-300'>
                 Phone: +1 (555) 123-4567
               </p>
             </div>
 
-            <div className='mt-8 pt-8 border-t border-gray-200 dark:border-gray-600'>
-              <p className='text-sm text-gray-500 dark:text-gray-400 text-center'>
+            <div className='mt-8 pt-8 border-t border-secondary-200 dark:border-secondary-600'>
+              <p className='text-sm text-secondary-500 dark:text-secondary-400 text-center'>
                 This Privacy Policy is effective as of the date stated above and
                 will remain in effect except with respect to any changes in its
                 provisions in the future.
@@ -358,19 +358,19 @@ export default function Privacy() {
           <div className='space-x-4'>
             <Link
               href='/terms'
-              className='text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 underline'
+              className='text-primary-600 dark:text-primary-400 hover:text-primary-800 dark:hover:text-primary-300 underline'
             >
               Terms of Service
             </Link>
             <Link
               href='/contact'
-              className='text-blue-600 hover:text-blue-800 underline'
+              className='text-primary-600 hover:text-primary-800 underline'
             >
               Contact Us
             </Link>
             <Link
               href={isAuthenticated ? '/' : '/'}
-              className='text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 underline'
+              className='text-primary-600 dark:text-primary-400 hover:text-primary-800 dark:hover:text-primary-300 underline'
             >
               {isAuthenticated ? 'Back to Library' : 'Back to Home'}
             </Link>

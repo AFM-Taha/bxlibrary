@@ -93,12 +93,12 @@ The insights you gain from mastering this material will serve as powerful tools 
   const isLocked = currentPage > maxPreviewPages
   let pageNumber
   return (
-    <div className='bg-gray-50 dark:bg-gray-900 rounded-lg overflow-hidden'>
+    <div className='bg-secondary-50 dark:bg-secondary-900 rounded-lg overflow-hidden'>
       {/* Thumbnail Grid View for Non-Authenticated Users */}
       <div className='p-4'>
         {/* Available Images Grid */}
         <div>
-          <h3 className='text-lg font-semibold text-gray-900 dark:text-white mb-3'>
+          <h3 className='text-lg font-semibold text-secondary-900 dark:text-white mb-3'>
             Available Preview Pages
           </h3>
           <div className='grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-4'>
@@ -108,7 +108,7 @@ The insights you gain from mastering this material will serve as powerful tools 
               return (
                 <div
                   key={pageNumber}
-                  className='relative aspect-[3/4] rounded-lg border-2 border-gray-200 dark:border-gray-600 hover:border-gray-300 dark:hover:border-gray-500 transition-all duration-200'
+                  className='relative aspect-[3/4] rounded-lg border-2 border-secondary-200 dark:border-secondary-600 hover:border-secondary-300 dark:hover:border-secondary-500 transition-all duration-200'
                 >
                   <img
                     src={image.url}
@@ -131,7 +131,7 @@ The insights you gain from mastering this material will serve as powerful tools 
             {[1, 2].map((index) => (
               <div
                 key={`locked-${index}`}
-                className='relative aspect-[3/4] rounded-lg border-2 border-gray-200 dark:border-gray-600'
+                className='relative aspect-[3/4] rounded-lg border-2 border-secondary-200 dark:border-secondary-600'
               >
                 <img
                   src={
@@ -163,10 +163,10 @@ The insights you gain from mastering this material will serve as powerful tools 
 
         {/* Locked Page Message */}
         {currentPage > maxPreviewPages && (
-          <div className='mt-6 bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden'>
+          <div className='mt-6 bg-white dark:bg-secondary-800 rounded-lg shadow-sm border border-secondary-200 dark:border-secondary-700 overflow-hidden'>
             <div className='p-6 text-center'>
               <svg
-                className='w-12 h-12 mx-auto mb-4 text-gray-400'
+                className='w-12 h-12 mx-auto mb-4 text-secondary-400'
                 fill='none'
                 viewBox='0 0 24 24'
                 stroke='currentColor'
@@ -178,17 +178,17 @@ The insights you gain from mastering this material will serve as powerful tools 
                   d='M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z'
                 />
               </svg>
-              <h3 className='text-lg font-semibold text-gray-900 dark:text-white mb-2'>
+              <h3 className='text-lg font-semibold text-secondary-900 dark:text-white mb-2'>
                 Premium Content
               </h3>
-              <p className='text-gray-600 dark:text-gray-400 mb-4'>
+              <p className='text-secondary-600 dark:text-secondary-400 mb-4'>
                 This page is only available to registered users. Login or
                 purchase the book to continue reading.
               </p>
               <div className='flex flex-col sm:flex-row gap-2 justify-center'>
                 <Link
                   href='/login'
-                  className='bg-blue-600 text-white px-4 py-2 rounded-md font-medium hover:bg-blue-700 transition-colors'
+                  className='bg-primary-600 text-white px-4 py-2 rounded-md font-medium hover:bg-primary-700 transition-colors'
                 >
                   Login
                 </Link>
@@ -260,13 +260,13 @@ function BookDetailsPage() {
 
   if (loading) {
     return (
-      <div className='min-h-screen bg-gray-50 dark:bg-gray-900'>
-        <nav className='sticky top-0 z-50 bg-transparent backdrop-blur-md shadow-sm border-b border-gray-200 dark:border-gray-700'>
+      <div className='min-h-screen bg-secondary-50 dark:bg-secondary-950'>
+        <nav className='sticky top-0 z-50 bg-transparent backdrop-blur-md shadow-sm border-b border-secondary-200 dark:border-secondary-700'>
           <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
             <div className='flex justify-between h-16'>
               <div className='flex items-center'>
                 <Link href={user ? '/' : '/'} className='flex-shrink-0'>
-                  <h1 className='text-2xl font-bold text-blue-600 dark:text-blue-400'>
+                  <h1 className='text-2xl font-bold text-primary-600 dark:text-primary-400'>
                     BX Library
                   </h1>
                 </Link>
@@ -277,14 +277,14 @@ function BookDetailsPage() {
                     <CompactThemeToggle />
                     <Link
                       href='/account'
-                      className='text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 p-2 rounded-md text-sm font-medium transition-colors flex items-center'
+                      className='text-secondary-700 dark:text-secondary-300 hover:text-primary-600 dark:hover:text-primary-400 p-2 rounded-md text-sm font-medium transition-colors flex items-center'
                       title='Account'
                     >
                       <User size={18} />
                     </Link>
                     <button
                       onClick={handleLogout}
-                      className='text-gray-700 dark:text-gray-300 hover:text-red-600 dark:hover:text-red-400 p-2 sm:px-3 sm:py-2 rounded-md text-sm font-medium transition-colors flex items-center'
+                      className='text-secondary-700 dark:text-secondary-300 hover:text-red-600 dark:hover:text-red-400 p-2 sm:px-3 sm:py-2 rounded-md text-sm font-medium transition-colors flex items-center'
                       title='Log Out'
                     >
                       <LogOut size={18} />
@@ -296,7 +296,7 @@ function BookDetailsPage() {
                     <CompactThemeToggle />
                     <Link
                       href='/login'
-                      className='text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 p-2 sm:px-3 sm:py-2 rounded-md text-sm font-medium transition-colors flex items-center'
+                      className='text-secondary-700 dark:text-secondary-300 hover:text-primary-600 dark:hover:text-primary-400 p-2 sm:px-3 sm:py-2 rounded-md text-sm font-medium transition-colors flex items-center'
                       title='Log In'
                     >
                       <LogIn size={18} />
@@ -309,7 +309,7 @@ function BookDetailsPage() {
           </div>
         </nav>
         <div className='flex justify-center items-center py-20'>
-          <div className='animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600'></div>
+          <div className='animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600'></div>
         </div>
       </div>
     )
@@ -317,13 +317,13 @@ function BookDetailsPage() {
 
   if (error) {
     return (
-      <div className='min-h-screen bg-gray-50 dark:bg-gray-900'>
-        <nav className='sticky top-0 z-50 bg-transparent backdrop-blur-md shadow-sm border-b border-gray-200 dark:border-gray-700'>
+      <div className='min-h-screen bg-secondary-50 dark:bg-secondary-950'>
+        <nav className='sticky top-0 z-50 bg-transparent backdrop-blur-md shadow-sm border-b border-secondary-200 dark:border-secondary-700'>
           <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
             <div className='flex justify-between h-16'>
               <div className='flex items-center'>
                 <Link href={user ? '/' : '/'} className='flex-shrink-0'>
-                  <h1 className='text-2xl font-bold text-blue-600 dark:text-blue-400'>
+                  <h1 className='text-2xl font-bold text-primary-600 dark:text-primary-400'>
                     BX Library
                   </h1>
                 </Link>
@@ -334,14 +334,14 @@ function BookDetailsPage() {
                     <CompactThemeToggle />
                     <Link
                       href='/account'
-                      className='text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 p-2 rounded-md text-sm font-medium transition-colors flex items-center'
+                      className='text-secondary-700 dark:text-secondary-300 hover:text-primary-600 dark:hover:text-primary-400 p-2 rounded-md text-sm font-medium transition-colors flex items-center'
                       title='Account'
                     >
                       <User size={18} />
                     </Link>
                     <button
                       onClick={handleLogout}
-                      className='text-gray-700 dark:text-gray-300 hover:text-red-600 dark:hover:text-red-400 p-2 rounded-md text-sm font-medium transition-colors flex items-center'
+                      className='text-secondary-700 dark:text-secondary-300 hover:text-red-600 dark:hover:text-red-400 p-2 rounded-md text-sm font-medium transition-colors flex items-center'
                       title='Sign Out'
                     >
                       <LogOut size={18} />
@@ -352,7 +352,7 @@ function BookDetailsPage() {
                     <CompactThemeToggle />
                     <Link
                       href='/login'
-                      className='text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 p-2 sm:px-3 sm:py-2 rounded-md text-sm font-medium transition-colors flex items-center'
+                      className='text-secondary-700 dark:text-secondary-300 hover:text-primary-600 dark:hover:text-primary-400 p-2 sm:px-3 sm:py-2 rounded-md text-sm font-medium transition-colors flex items-center'
                       title='Log In'
                     >
                       <LogIn size={18} />
@@ -367,7 +367,7 @@ function BookDetailsPage() {
         <div className='max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12'>
           <div className='text-center'>
             <svg
-              className='mx-auto h-12 w-12 text-gray-400 mb-4'
+              className='mx-auto h-12 w-12 text-secondary-400 mb-4'
               fill='none'
               viewBox='0 0 24 24'
               stroke='currentColor'
@@ -379,10 +379,12 @@ function BookDetailsPage() {
                 d='M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z'
               />
             </svg>
-            <h3 className='text-lg font-medium text-gray-900 mb-2'>{error}</h3>
+            <h3 className='text-lg font-medium text-secondary-900 mb-2'>
+              {error}
+            </h3>
             <Link
               href='/'
-              className='text-blue-600 hover:text-blue-800 underline'
+              className='text-primary-600 hover:text-primary-800 underline'
             >
               Return to Library
             </Link>
@@ -393,14 +395,14 @@ function BookDetailsPage() {
   }
 
   return (
-    <div className='min-h-screen bg-gray-50 dark:bg-gray-900'>
+    <div className='min-h-screen bg-secondary-50 dark:bg-secondary-950'>
       {/* Navigation */}
-      <nav className='sticky top-0 z-50 bg-transparent backdrop-blur-md shadow-sm border-b border-gray-200 dark:border-gray-700'>
+      <nav className='sticky top-0 z-50 bg-transparent backdrop-blur-md shadow-sm border-b border-secondary-200 dark:border-secondary-700'>
         <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
           <div className='flex justify-between h-16'>
             <div className='flex items-center'>
               <Link href={user ? '/' : '/'} className='flex-shrink-0'>
-                <h1 className='text-2xl font-bold text-blue-600 dark:text-blue-400'>
+                <h1 className='text-2xl font-bold text-primary-600 dark:text-primary-400'>
                   BX Library
                 </h1>
               </Link>
@@ -411,7 +413,7 @@ function BookDetailsPage() {
                   <CompactThemeToggle />
                   <Link
                     href='/account'
-                    className='text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 p-2 rounded-md transition-colors'
+                    className='text-secondary-700 dark:text-secondary-300 hover:text-primary-600 dark:hover:text-primary-400 p-2 rounded-md transition-colors'
                     title='Account'
                   >
                     <svg
@@ -453,7 +455,7 @@ function BookDetailsPage() {
                   <CompactThemeToggle />
                   <Link
                     href='/login'
-                    className='text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center'
+                    className='text-secondary-700 dark:text-secondary-300 hover:text-primary-600 dark:hover:text-primary-400 px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center'
                     title='Log In'
                   >
                     <LogIn size={18} />
@@ -473,7 +475,7 @@ function BookDetailsPage() {
             <li className='inline-flex items-center'>
               <Link
                 href={user ? '/' : '/'}
-                className='inline-flex items-center text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400'
+                className='inline-flex items-center text-sm font-medium text-secondary-700 dark:text-secondary-300 hover:text-primary-600 dark:hover:text-primary-400'
               >
                 <svg
                   className='w-4 h-4 mr-2'
@@ -488,7 +490,7 @@ function BookDetailsPage() {
             <li>
               <div className='flex items-center'>
                 <svg
-                  className='w-6 h-6 text-gray-400'
+                  className='w-6 h-6 text-secondary-400'
                   fill='currentColor'
                   viewBox='0 0 20 20'
                 >
@@ -498,7 +500,7 @@ function BookDetailsPage() {
                     clipRule='evenodd'
                   ></path>
                 </svg>
-                <span className='ml-1 text-sm font-medium text-gray-500 dark:text-gray-400 md:ml-2'>
+                <span className='ml-1 text-sm font-medium text-secondary-500 dark:text-secondary-400 md:ml-2'>
                   {book?.title && book.title.length > 25
                     ? `${book.title.substring(0, 25)}...`
                     : book?.title}
@@ -508,7 +510,7 @@ function BookDetailsPage() {
           </ol>
         </nav>
 
-        <div className='bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden'>
+        <div className='bg-white dark:bg-secondary-800 rounded-lg shadow-sm border border-secondary-200 dark:border-secondary-700 overflow-hidden'>
           <div className='md:flex'>
             {/* Book Cover */}
             <div className='md:flex-shrink-0'>
@@ -526,10 +528,10 @@ function BookDetailsPage() {
             {/* Book Details */}
             <div className='p-8 flex-1'>
               <div className='mb-6'>
-                <h1 className='text-xl md:text-3xl font-bold text-gray-900 dark:text-white mb-2'>
+                <h1 className='text-xl md:text-3xl font-bold text-secondary-900 dark:text-white mb-2'>
                   {book?.title}
                 </h1>
-                <p className='text-md md:text-xl text-gray-600 dark:text-gray-300 mb-4'>
+                <p className='text-md md:text-xl text-secondary-600 dark:text-secondary-300 mb-4'>
                   by {book?.author}
                 </p>
 
@@ -549,10 +551,10 @@ function BookDetailsPage() {
 
                 {book?.description && (
                   <div className='mb-6'>
-                    <h3 className='text-lg font-semibold text-gray-900 dark:text-white mb-2'>
+                    <h3 className='text-lg font-semibold text-secondary-900 dark:text-white mb-2'>
                       Description
                     </h3>
-                    <div className='text-gray-700 dark:text-gray-300 leading-relaxed'>
+                    <div className='text-secondary-700 dark:text-secondary-300 leading-relaxed'>
                       <p className={showFullDescription ? '' : 'line-clamp-3'}>
                         {book.description}
                       </p>
@@ -561,7 +563,7 @@ function BookDetailsPage() {
                           onClick={() =>
                             setShowFullDescription(!showFullDescription)
                           }
-                          className='mt-2 text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium text-sm transition-colors'
+                          className='mt-2 text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 font-medium text-sm transition-colors'
                         >
                           {showFullDescription ? 'Show less' : 'Show more'}
                         </button>
@@ -577,7 +579,7 @@ function BookDetailsPage() {
                   <>
                     <button
                       onClick={handleReadBook}
-                      className='flex-1 bg-blue-600 text-white px-6 py-3 rounded-md font-medium hover:bg-blue-700 transition-colors flex items-center justify-center'
+                      className='flex-1 bg-primary-600 text-white px-6 py-3 rounded-md font-medium hover:bg-primary-700 transition-colors flex items-center justify-center'
                     >
                       <svg
                         className='w-5 h-5 mr-2'
@@ -597,7 +599,7 @@ function BookDetailsPage() {
 
                     <Link
                       href='/'
-                      className='flex-1 sm:flex-initial bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-6 py-3 rounded-md font-medium hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors flex items-center justify-center'
+                      className='flex-1 sm:flex-initial bg-secondary-100 dark:bg-secondary-700 text-secondary-700 dark:text-secondary-300 px-6 py-3 rounded-md font-medium hover:bg-secondary-200 dark:hover:bg-secondary-600 transition-colors flex items-center justify-center'
                     >
                       <svg
                         className='w-5 h-5 mr-2'
@@ -651,7 +653,7 @@ function BookDetailsPage() {
                       onClick={() => {
                         window.location.href = '/pricing'
                       }}
-                      className='flex-1 bg-blue-600 text-white px-6 py-3 rounded-md font-medium hover:bg-blue-700 transition-colors flex items-center justify-center'
+                      className='flex-1 bg-primary-600 text-white px-6 py-3 rounded-md font-medium hover:bg-primary-700 transition-colors flex items-center justify-center'
                     >
                       <svg
                         className='w-5 h-5 mr-2'
@@ -671,7 +673,7 @@ function BookDetailsPage() {
 
                     <Link
                       href='/'
-                      className='flex-1 sm:flex-initial bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-6 py-3 rounded-md font-medium hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors flex items-center justify-center'
+                      className='flex-1 sm:flex-initial bg-secondary-100 dark:bg-secondary-700 text-secondary-700 dark:text-secondary-300 px-6 py-3 rounded-md font-medium hover:bg-secondary-200 dark:hover:bg-secondary-600 transition-colors flex items-center justify-center'
                     >
                       <svg
                         className='w-5 h-5 mr-2'
@@ -699,14 +701,14 @@ function BookDetailsPage() {
         {!user && (
           <div
             id='book-preview'
-            className='mt-8 bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden'
+            className='mt-8 bg-white dark:bg-secondary-800 rounded-lg shadow-sm border border-secondary-200 dark:border-secondary-700 overflow-hidden'
           >
             <div className='p-6'>
               <div className='flex items-center justify-between mb-6'>
-                <h2 className='text-2xl font-bold text-gray-900 dark:text-white'>
+                <h2 className='text-2xl font-bold text-secondary-900 dark:text-white'>
                   Book Preview
                 </h2>
-                <div className='flex items-center space-x-2 text-sm text-gray-500 dark:text-gray-400'>
+                <div className='flex items-center space-x-2 text-sm text-secondary-500 dark:text-secondary-400'>
                   <svg
                     className='w-4 h-4'
                     fill='none'
@@ -728,14 +730,14 @@ function BookDetailsPage() {
               <PDFReader book={book} />
 
               <div className='mt-6 text-center'>
-                <p className='text-gray-600 dark:text-gray-400 mb-4'>
+                <p className='text-secondary-600 dark:text-secondary-400 mb-4'>
                   This is a limited preview. Purchase the book or login to
                   access the full content.
                 </p>
                 <div className='flex flex-col sm:flex-row gap-3 justify-center'>
                   <Link
                     href='/login'
-                    className='bg-blue-600 text-white px-6 py-2 rounded-md font-medium hover:bg-blue-700 transition-colors'
+                    className='bg-primary-600 text-white px-6 py-2 rounded-md font-medium hover:bg-primary-700 transition-colors'
                   >
                     Login to Read Full Book
                   </Link>

@@ -86,7 +86,7 @@ const UserSchema = new mongoose.Schema({
     },
     paymentProvider: {
       type: String,
-      enum: ['stripe', 'paypal'],
+      enum: ['rupantor'],
       required: false
     },
     paymentSessionId: {

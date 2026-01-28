@@ -79,14 +79,14 @@ export default async function handler(req, res) {
     const paymentSession = new PaymentSession({
       sessionId: sessionId,
       subscriptionId: subscriptionId,
-      provider: paymentData.provider || 'stripe',
+      provider: paymentData.provider || 'rupantor',
       planId: planId,
       planDetails: planDetails,
       amount: paymentData.amount || 0,
       currency: paymentData.currency || 'USD',
       status: 'completed',
       customerEmail: paymentData.customerEmail,
-      paymentIntentId: paymentData.paymentIntentId,
+      transactionId: paymentData.transactionId,
       metadata: {
         originalPaymentData: paymentData,
         createdFrom: 'payment-success-page'

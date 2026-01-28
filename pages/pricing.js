@@ -24,9 +24,9 @@ function PricingPage() {
         <meta property='og:type' content='website' />
       </Head>
 
-      <div className='min-h-screen bg-white dark:bg-gray-900'>
+      <div className='min-h-screen bg-white dark:bg-secondary-900'>
         {/* Navigation Breadcrumb */}
-        <div className='bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700'>
+        <div className='bg-secondary-50 dark:bg-secondary-800 border-b border-secondary-200 dark:border-secondary-700'>
           <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
             <div className='flex items-center space-x-2 py-4 text-sm'>
               <Link
@@ -36,7 +36,7 @@ function PricingPage() {
                 Home
               </Link>
               <svg
-                className='w-4 h-4 text-gray-400'
+                className='w-4 h-4 text-secondary-400'
                 fill='currentColor'
                 viewBox='0 0 20 20'
               >
@@ -46,7 +46,7 @@ function PricingPage() {
                   clipRule='evenodd'
                 />
               </svg>
-              <span className='text-gray-500 dark:text-gray-400'>Pricing</span>
+              <span className='text-secondary-500 dark:text-secondary-400'>Pricing</span>
             </div>
           </div>
         </div>

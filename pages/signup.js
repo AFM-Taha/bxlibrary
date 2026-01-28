@@ -3,7 +3,15 @@ import { useRouter } from 'next/router'
 import Link from 'next/link'
 import Head from 'next/head'
 import { toast } from 'react-hot-toast'
-import { Eye, EyeOff, CheckCircle, AlertCircle, User, Mail, Lock } from 'lucide-react'
+import {
+  Eye,
+  EyeOff,
+  CheckCircle,
+  AlertCircle,
+  User,
+  Mail,
+  Lock,
+} from 'lucide-react'
 
 export default function Signup() {
   const [formData, setFormData] = useState({
@@ -52,9 +60,9 @@ export default function Signup() {
         setPaymentDetails(data.paymentDetails)
         // Pre-fill email if available
         if (data.paymentDetails?.customerEmail) {
-          setFormData(prev => ({
+          setFormData((prev) => ({
             ...prev,
-            email: data.paymentDetails.customerEmail
+            email: data.paymentDetails.customerEmail,
           }))
         }
       } else {
@@ -146,7 +154,9 @@ export default function Signup() {
       const data = await response.json()
 
       if (response.ok) {
-        toast.success('Account created successfully! Please check your email to verify your account.')
+        toast.success(
+          'Account created successfully! Please check your email to verify your account.',
+        )
         // Redirect to verification page or login
         router.push('/verify-email?email=' + encodeURIComponent(formData.email))
       } else {
@@ -163,10 +173,12 @@ export default function Signup() {
   // Loading state while validating token
   if (isValidToken === null) {
     return (
-      <div className='min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center'>
+      <div className='min-h-screen bg-secondary-50 dark:bg-secondary-900 flex items-center justify-center'>
         <div className='text-center'>
-          <div className='animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4'></div>
-          <p className='text-gray-600 dark:text-gray-400'>Validating signup token...</p>
+          <div className='animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600 mx-auto mb-4'></div>
+          <p className='text-secondary-600 dark:text-secondary-400'>
+            Validating signup token...
+          </p>
         </div>
       </div>
     )
@@ -175,26 +187,27 @@ export default function Signup() {
   // Invalid token state
   if (isValidToken === false) {
     return (
-      <div className='min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center'>
+      <div className='min-h-screen bg-secondary-50 dark:bg-secondary-900 flex items-center justify-center'>
         <div className='max-w-md w-full mx-auto'>
-          <div className='bg-white dark:bg-gray-800 rounded-lg shadow-lg p-8 text-center'>
-            <AlertCircle className='w-16 h-16 text-red-500 mx-auto mb-4' />
-            <h1 className='text-2xl font-bold text-gray-900 dark:text-white mb-4'>
+          <div className='bg-white dark:bg-secondary-800 rounded-lg shadow-lg p-8 text-center'>
+            <AlertCircle className='w-16 h-16 text-error-500 mx-auto mb-4' />
+            <h1 className='text-2xl font-bold text-secondary-900 dark:text-white mb-4'>
               Invalid Signup Link
             </h1>
-            <p className='text-gray-600 dark:text-gray-400 mb-6'>
-              This signup link is invalid or has expired. Please complete a payment first to get access to account creation.
+            <p className='text-secondary-600 dark:text-secondary-400 mb-6'>
+              This signup link is invalid or has expired. Please complete a
+              payment first to get access to account creation.
             </p>
             <div className='space-y-3'>
               <Link
                 href='/pricing'
-                className='w-full bg-blue-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors inline-block text-center'
+                className='w-full bg-primary-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-primary-700 transition-colors inline-block text-center'
               >
                 View Pricing Plans
               </Link>
               <Link
                 href='/'
-                className='w-full border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 px-6 py-3 rounded-lg font-medium hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors inline-block text-center'
+                className='w-full border border-secondary-300 dark:border-secondary-600 text-secondary-700 dark:text-secondary-300 px-6 py-3 rounded-lg font-medium hover:bg-secondary-50 dark:hover:bg-secondary-800 transition-colors inline-block text-center'
               >
                 Return to Home
               </Link>
@@ -209,18 +222,21 @@ export default function Signup() {
     <>
       <Head>
         <title>Create Your Account - BX Library</title>
-        <meta name='description' content='Complete your account setup after payment' />
+        <meta
+          name='description'
+          content='Complete your account setup after payment'
+        />
       </Head>
 
-      <div className='min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8'>
+      <div className='min-h-screen bg-secondary-50 dark:bg-secondary-900 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8'>
         <div className='max-w-md w-full space-y-8'>
           {/* Header */}
           <div className='text-center'>
             <CheckCircle className='w-16 h-16 text-green-500 mx-auto mb-4' />
-            <h2 className='text-3xl font-bold text-gray-900 dark:text-white'>
+            <h2 className='text-3xl font-bold text-secondary-900 dark:text-white'>
               Create Your Account
             </h2>
-            <p className='mt-2 text-gray-600 dark:text-gray-400'>
+            <p className='mt-2 text-secondary-600 dark:text-secondary-400'>
               Complete your account setup to access your purchased plan
             </p>
           </div>
@@ -233,10 +249,17 @@ export default function Signup() {
               </h3>
               <div className='text-sm text-green-700 dark:text-green-300 space-y-1'>
                 {paymentDetails.planDetails && (
-                  <p><strong>Plan:</strong> {paymentDetails.planDetails.name}</p>
+                  <p>
+                    <strong>Plan:</strong> {paymentDetails.planDetails.name}
+                  </p>
                 )}
-                <p><strong>Amount:</strong> ${paymentDetails.amount} {paymentDetails.currency}</p>
-                <p><strong>Provider:</strong> {paymentDetails.provider}</p>
+                <p>
+                  <strong>Amount:</strong> ${paymentDetails.amount}{' '}
+                  {paymentDetails.currency}
+                </p>
+                <p>
+                  <strong>Provider:</strong> {paymentDetails.provider}
+                </p>
               </div>
             </div>
           )}
@@ -246,11 +269,14 @@ export default function Signup() {
             <div className='space-y-4'>
               {/* Name */}
               <div>
-                <label htmlFor='name' className='block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1'>
+                <label
+                  htmlFor='name'
+                  className='block text-sm font-medium text-secondary-700 dark:text-secondary-300 mb-1'
+                >
                   Full Name *
                 </label>
                 <div className='relative'>
-                  <User className='absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5' />
+                  <User className='absolute left-3 top-1/2 transform -translate-y-1/2 text-secondary-400 w-5 h-5' />
                   <input
                     id='name'
                     name='name'
@@ -258,7 +284,7 @@ export default function Signup() {
                     required
                     value={formData.name}
                     onChange={handleChange}
-                    className='pl-10 w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white'
+                    className='pl-10 w-full px-3 py-2 border border-secondary-300 dark:border-secondary-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent dark:bg-secondary-700 dark:text-white'
                     placeholder='Enter your full name'
                   />
                 </div>
@@ -266,11 +292,14 @@ export default function Signup() {
 
               {/* Email */}
               <div>
-                <label htmlFor='email' className='block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1'>
+                <label
+                  htmlFor='email'
+                  className='block text-sm font-medium text-secondary-700 dark:text-secondary-300 mb-1'
+                >
                   Email Address *
                 </label>
                 <div className='relative'>
-                  <Mail className='absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5' />
+                  <Mail className='absolute left-3 top-1/2 transform -translate-y-1/2 text-secondary-400 w-5 h-5' />
                   <input
                     id='email'
                     name='email'
@@ -278,7 +307,7 @@ export default function Signup() {
                     required
                     value={formData.email}
                     onChange={handleChange}
-                    className='pl-10 w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white'
+                    className='pl-10 w-full px-3 py-2 border border-secondary-300 dark:border-secondary-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent dark:bg-secondary-700 dark:text-white'
                     placeholder='Enter your email address'
                   />
                 </div>
@@ -286,7 +315,10 @@ export default function Signup() {
 
               {/* Phone */}
               <div>
-                <label htmlFor='phone' className='block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1'>
+                <label
+                  htmlFor='phone'
+                  className='block text-sm font-medium text-secondary-700 dark:text-secondary-300 mb-1'
+                >
                   Phone Number (Optional)
                 </label>
                 <input
@@ -295,18 +327,21 @@ export default function Signup() {
                   type='tel'
                   value={formData.phone}
                   onChange={handleChange}
-                  className='w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white'
+                  className='w-full px-3 py-2 border border-secondary-300 dark:border-secondary-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent dark:bg-secondary-700 dark:text-white'
                   placeholder='Enter your phone number'
                 />
               </div>
 
               {/* Password */}
               <div>
-                <label htmlFor='password' className='block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1'>
+                <label
+                  htmlFor='password'
+                  className='block text-sm font-medium text-secondary-700 dark:text-secondary-300 mb-1'
+                >
                   Password *
                 </label>
                 <div className='relative'>
-                  <Lock className='absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5' />
+                  <Lock className='absolute left-3 top-1/2 transform -translate-y-1/2 text-secondary-400 w-5 h-5' />
                   <input
                     id='password'
                     name='password'
@@ -314,23 +349,30 @@ export default function Signup() {
                     required
                     value={formData.password}
                     onChange={handleChange}
-                    className='pl-10 pr-10 w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white'
+                    className='pl-10 pr-10 w-full px-3 py-2 border border-secondary-300 dark:border-secondary-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent dark:bg-secondary-700 dark:text-white'
                     placeholder='Create a strong password'
                   />
                   <button
                     type='button'
                     onClick={() => setShowPassword(!showPassword)}
-                    className='absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600'
+                    className='absolute right-3 top-1/2 transform -translate-y-1/2 text-secondary-400 hover:text-secondary-600'
                   >
-                    {showPassword ? <EyeOff className='w-5 h-5' /> : <Eye className='w-5 h-5' />}
+                    {showPassword ? (
+                      <EyeOff className='w-5 h-5' />
+                    ) : (
+                      <Eye className='w-5 h-5' />
+                    )}
                   </button>
                 </div>
-                
+
                 {/* Password Requirements */}
                 {formData.password && (
                   <div className='mt-2 space-y-1'>
                     {passwordErrors.map((error, index) => (
-                      <p key={index} className='text-sm text-red-600 dark:text-red-400 flex items-center gap-1'>
+                      <p
+                        key={index}
+                        className='text-sm text-red-600 dark:text-red-400 flex items-center gap-1'
+                      >
                         <AlertCircle className='w-3 h-3' />
                         {error}
                       </p>
@@ -347,11 +389,14 @@ export default function Signup() {
 
               {/* Confirm Password */}
               <div>
-                <label htmlFor='confirmPassword' className='block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1'>
+                <label
+                  htmlFor='confirmPassword'
+                  className='block text-sm font-medium text-secondary-700 dark:text-secondary-300 mb-1'
+                >
                   Confirm Password *
                 </label>
                 <div className='relative'>
-                  <Lock className='absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5' />
+                  <Lock className='absolute left-3 top-1/2 transform -translate-y-1/2 text-secondary-400 w-5 h-5' />
                   <input
                     id='confirmPassword'
                     name='confirmPassword'
@@ -359,20 +404,24 @@ export default function Signup() {
                     required
                     value={formData.confirmPassword}
                     onChange={handleChange}
-                    className='pl-10 pr-10 w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white'
+                    className='pl-10 pr-10 w-full px-3 py-2 border border-secondary-300 dark:border-secondary-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent dark:bg-secondary-700 dark:text-white'
                     placeholder='Confirm your password'
                   />
                   <button
                     type='button'
                     onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                    className='absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600'
+                    className='absolute right-3 top-1/2 transform -translate-y-1/2 text-secondary-400 hover:text-secondary-600'
                   >
-                    {showConfirmPassword ? <EyeOff className='w-5 h-5' /> : <Eye className='w-5 h-5' />}
+                    {showConfirmPassword ? (
+                      <EyeOff className='w-5 h-5' />
+                    ) : (
+                      <Eye className='w-5 h-5' />
+                    )}
                   </button>
                 </div>
-                
+
                 {formData.confirmPassword && formData.password !== formData.confirmPassword && (
-                  <p className='mt-1 text-sm text-red-600 dark:text-red-400 flex items-center gap-1'>
+                  <p className='mt-1 text-sm text-error-600 dark:text-error-400 flex items-center gap-1'>
                     <AlertCircle className='w-3 h-3' />
                     Passwords do not match
                   </p>
@@ -384,7 +433,7 @@ export default function Signup() {
             <button
               type='submit'
               disabled={isLoading || passwordErrors.length > 0}
-              className='w-full bg-blue-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center justify-center gap-2'
+              className='w-full bg-primary-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-primary-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center justify-center gap-2'
             >
               {isLoading ? (
                 <>
@@ -398,9 +447,12 @@ export default function Signup() {
 
             {/* Footer */}
             <div className='text-center'>
-              <p className='text-sm text-gray-600 dark:text-gray-400'>
+              <p className='text-sm text-secondary-600 dark:text-secondary-400'>
                 Already have an account?{' '}
-                <Link href='/login' className='text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 font-medium'>
+                <Link
+                  href='/login'
+                  className='text-primary-600 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300 font-medium'
+                >
                   Sign in here
                 </Link>
               </p>

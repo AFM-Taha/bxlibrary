@@ -112,10 +112,10 @@ function ReaderPage() {
 
   if (loading) {
     return (
-      <div className='min-h-screen bg-gray-100 flex items-center justify-center'>
+      <div className='min-h-screen bg-secondary-50 dark:bg-secondary-950 flex items-center justify-center'>
         <div className='text-center'>
-          <div className='animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4'></div>
-          <p className='text-gray-600'>Loading book...</p>
+          <div className='animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600 mx-auto mb-4'></div>
+          <p className='text-secondary-600 dark:text-secondary-400'>Loading book...</p>
         </div>
       </div>
     )
@@ -123,18 +123,18 @@ function ReaderPage() {
 
   if (error || !book) {
     return (
-      <div className='min-h-screen bg-gray-100 flex items-center justify-center'>
+      <div className='min-h-screen bg-secondary-50 dark:bg-secondary-950 flex items-center justify-center'>
         <div className='text-center'>
-          <div className='text-red-500 text-6xl mb-4'>📚</div>
-          <h1 className='text-2xl font-bold text-gray-900 mb-2'>
+          <div className='text-error-500 text-6xl mb-4'>📚</div>
+          <h1 className='text-2xl font-bold text-secondary-900 dark:text-white mb-2'>
             Book Not Found
           </h1>
-          <p className='text-gray-600 mb-4'>
+          <p className='text-secondary-600 dark:text-secondary-400 mb-4'>
             {error || 'The requested book could not be found.'}
           </p>
           <Link
             href='/'
-            className='bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md transition-colors'
+            className='bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-md transition-colors'
           >
             Back to Library
           </Link>
@@ -144,15 +144,15 @@ function ReaderPage() {
   }
 
   return (
-    <div className={`min-h-screen ${darkMode ? 'bg-gray-900' : 'bg-gray-100'}`}>
+    <div className={`min-h-screen ${darkMode ? 'bg-secondary-950' : 'bg-secondary-50'}`}>
       {/* Back Button */}
-      <div className='fixed bg-white z-50 flex items-center justify-center toggle-button-container'>
+      <div className='fixed bg-white dark:bg-secondary-800 z-50 flex items-center justify-center toggle-button-container'>
         <button
           onClick={goBack}
           className={`p-1 rounded-full transition-all ${
             darkMode
-              ? 'text-gray-600 hover:text-gray-800'
-              : 'text-gray-600 hover:text-gray-800'
+              ? 'text-secondary-400 hover:text-secondary-200'
+              : 'text-secondary-600 hover:text-secondary-800'
           }`}
           title='Go Back'
         >
@@ -175,7 +175,7 @@ function ReaderPage() {
       {/* Reader Header - Always Visible */}
       <div
         className={`${
-          darkMode ? 'bg-gray-900 border-gray-900' : 'bg-white border-gray-900'
+          darkMode ? 'bg-secondary-900 border-secondary-900' : 'bg-white border-secondary-900'
         }  border-b-[15px] px-5 py-3 transition-all duration-300`}
       >
         <div className='flex  items-center  justify-between'>
@@ -183,7 +183,7 @@ function ReaderPage() {
           <div className=''>
             <h1
               className={`text-lg  font-semibold ${
-                darkMode ? 'text-white' : 'text-gray-900'
+                darkMode ? 'text-white' : 'text-secondary-900'
               }`}
             >
               {book.title && book.title.length > 20
@@ -192,7 +192,7 @@ function ReaderPage() {
             </h1>
             <span
               className={`text-xs ${
-                darkMode ? 'text-gray-400' : 'text-gray-600'
+                darkMode ? 'text-secondary-400' : 'text-secondary-600'
               }`}
             >
               {'   '}
@@ -206,8 +206,8 @@ function ReaderPage() {
             onClick={toggleDarkMode}
             className={`p-2 rounded ${
               darkMode
-                ? 'bg-yellow-600 text-white'
-                : 'text-gray-600 hover:text-gray-900'
+                ? 'bg-warning-600 text-white'
+                : 'text-secondary-600 hover:text-secondary-900'
             }`}
             title='Toggle Dark Mode'
           >
@@ -274,14 +274,14 @@ function ReaderPage() {
               <div className='text-6xl mb-4'>📄</div>
               <h2
                 className={`text-xl font-semibold mb-2 ${
-                  darkMode ? 'text-white' : 'text-gray-900'
+                  darkMode ? 'text-white' : 'text-secondary-900'
                 }`}
               >
                 PDF.js Reader
               </h2>
               <p
                 className={`${
-                  darkMode ? 'text-gray-400' : 'text-gray-600'
+                  darkMode ? 'text-secondary-400' : 'text-secondary-600'
                 } mb-4`}
               >
                 PDF.js integration would be implemented here for enhanced
@@ -289,7 +289,7 @@ function ReaderPage() {
               </p>
               <p
                 className={`text-sm ${
-                  darkMode ? 'text-gray-500' : 'text-gray-500'
+                  darkMode ? 'text-secondary-500' : 'text-secondary-500'
                 }`}
               >
                 This would include features like text selection, search, and

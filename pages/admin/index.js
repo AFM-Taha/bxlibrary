@@ -54,10 +54,10 @@ function AdminDashboard() {
 
   if (loading) {
     return (
-      <div className='min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900'>
+      <div className='min-h-screen flex items-center justify-center bg-secondary-50 dark:bg-secondary-950'>
         <div className='flex flex-col items-center space-y-4'>
           <div className='animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600'></div>
-          <p className='text-sm text-gray-600 dark:text-gray-400'>
+          <p className='text-sm text-secondary-600 dark:text-secondary-400'>
             Loading dashboard...
           </p>
         </div>
@@ -67,16 +67,16 @@ function AdminDashboard() {
 
   return (
     <ProtectedRoute requireAdmin={true}>
-      <div className='min-h-screen bg-gray-50 dark:bg-gray-900'>
+      <div className='min-h-screen bg-secondary-50 dark:bg-secondary-950'>
         {/* Header */}
-        <div className='bg-white dark:bg-gray-800 shadow border-b border-gray-200 dark:border-gray-700'>
+        <div className='bg-white dark:bg-secondary-800 shadow border-b border-secondary-200 dark:border-secondary-700'>
           <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
             <div className='flex justify-between items-center py-6'>
               <div>
-                <h1 className='text-3xl font-bold text-gray-900 dark:text-white'>
+                <h1 className='text-3xl font-bold text-secondary-900 dark:text-white'>
                   Admin Dashboard
                 </h1>
-                <p className='mt-1 text-sm text-gray-600 dark:text-gray-400'>
+                <p className='mt-1 text-sm text-secondary-600 dark:text-secondary-400'>
                   Welcome back, {user?.name || 'Administrator'}
                 </p>
               </div>
@@ -84,7 +84,7 @@ function AdminDashboard() {
                 <CompactThemeToggle />
                 <Link
                   href='/'
-                  className='text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors'
+                  className='text-secondary-600 hover:text-secondary-900 dark:text-secondary-300 dark:hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors'
                 >
                   View Library
                 </Link>
@@ -104,12 +104,12 @@ function AdminDashboard() {
         <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8'>
           {/* Stats Cards */}
           <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8'>
-            <div className='bg-white dark:bg-gray-800 overflow-hidden shadow rounded-lg'>
+            <div className='bg-white dark:bg-secondary-800 overflow-hidden shadow rounded-lg'>
               <div className='p-5'>
                 <div className='flex items-center'>
                   <div className='flex-shrink-0'>
                     <svg
-                      className='h-6 w-6 text-gray-400'
+                      className='h-6 w-6 text-secondary-400'
                       fill='none'
                       viewBox='0 0 24 24'
                       stroke='currentColor'
@@ -124,10 +124,10 @@ function AdminDashboard() {
                   </div>
                   <div className='ml-5 w-0 flex-1'>
                     <dl>
-                      <dt className='text-sm font-medium text-gray-500 dark:text-gray-400 truncate'>
+                      <dt className='text-sm font-medium text-secondary-500 dark:text-secondary-400 truncate'>
                         Total Users
                       </dt>
-                      <dd className='text-lg font-medium text-gray-900 dark:text-white'>
+                      <dd className='text-lg font-medium text-secondary-900 dark:text-white'>
                         {stats.totalUsers}
                       </dd>
                     </dl>
@@ -136,12 +136,12 @@ function AdminDashboard() {
               </div>
             </div>
 
-            <div className='bg-white dark:bg-gray-800 overflow-hidden shadow rounded-lg'>
+            <div className='bg-white dark:bg-secondary-800 overflow-hidden shadow rounded-lg'>
               <div className='p-5'>
                 <div className='flex items-center'>
                   <div className='flex-shrink-0'>
                     <svg
-                      className='h-6 w-6 text-green-400'
+                      className='h-6 w-6 text-success-500'
                       fill='none'
                       viewBox='0 0 24 24'
                       stroke='currentColor'
@@ -156,10 +156,10 @@ function AdminDashboard() {
                   </div>
                   <div className='ml-5 w-0 flex-1'>
                     <dl>
-                      <dt className='text-sm font-medium text-gray-500 dark:text-gray-400 truncate'>
+                      <dt className='text-sm font-medium text-secondary-500 dark:text-secondary-400 truncate'>
                         Active Users
                       </dt>
-                      <dd className='text-lg font-medium text-gray-900 dark:text-white'>
+                      <dd className='text-lg font-medium text-secondary-900 dark:text-white'>
                         {stats.activeUsers}
                       </dd>
                     </dl>
@@ -168,12 +168,12 @@ function AdminDashboard() {
               </div>
             </div>
 
-            <div className='bg-white dark:bg-gray-800 overflow-hidden shadow rounded-lg'>
+            <div className='bg-white dark:bg-secondary-800 overflow-hidden shadow rounded-lg'>
               <div className='p-5'>
                 <div className='flex items-center'>
                   <div className='flex-shrink-0'>
                     <svg
-                      className='h-6 w-6 text-blue-400'
+                      className='h-6 w-6 text-primary-500'
                       fill='none'
                       viewBox='0 0 24 24'
                       stroke='currentColor'
@@ -188,10 +188,10 @@ function AdminDashboard() {
                   </div>
                   <div className='ml-5 w-0 flex-1'>
                     <dl>
-                      <dt className='text-sm font-medium text-gray-500 dark:text-gray-400 truncate'>
+                      <dt className='text-sm font-medium text-secondary-500 dark:text-secondary-400 truncate'>
                         Total Books
                       </dt>
-                      <dd className='text-lg font-medium text-gray-900 dark:text-white'>
+                      <dd className='text-lg font-medium text-secondary-900 dark:text-white'>
                         {stats.totalBooks}
                       </dd>
                     </dl>
@@ -200,12 +200,12 @@ function AdminDashboard() {
               </div>
             </div>
 
-            <div className='bg-white dark:bg-gray-800 overflow-hidden shadow rounded-lg'>
+            <div className='bg-white dark:bg-secondary-800 overflow-hidden shadow rounded-lg'>
               <div className='p-5'>
                 <div className='flex items-center'>
                   <div className='flex-shrink-0'>
                     <svg
-                      className='h-6 w-6 text-purple-400'
+                      className='h-6 w-6 text-warning-400'
                       fill='none'
                       viewBox='0 0 24 24'
                       stroke='currentColor'
@@ -220,10 +220,10 @@ function AdminDashboard() {
                   </div>
                   <div className='ml-5 w-0 flex-1'>
                     <dl>
-                      <dt className='text-sm font-medium text-gray-500 dark:text-gray-400 truncate'>
+                      <dt className='text-sm font-medium text-secondary-500 dark:text-secondary-400 truncate'>
                         Categories
                       </dt>
-                      <dd className='text-lg font-medium text-gray-900 dark:text-white'>
+                      <dd className='text-lg font-medium text-secondary-900 dark:text-white'>
                         {stats.totalCategories}
                       </dd>
                     </dl>
@@ -234,18 +234,18 @@ function AdminDashboard() {
           </div>
 
           {/* Quick Actions */}
-          <div className='bg-white dark:bg-gray-800 shadow rounded-lg'>
+          <div className='bg-white dark:bg-secondary-800 shadow rounded-lg'>
             <div className='px-4 py-5 sm:p-6'>
-              <h3 className='text-lg leading-6 font-medium text-gray-900 dark:text-white mb-4'>
+              <h3 className='text-lg leading-6 font-medium text-secondary-900 dark:text-white mb-4'>
                 Quick Actions
               </h3>
               <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
                 <Link
                   href='/admin/users'
-                  className='relative group bg-white dark:bg-gray-700 p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-primary-500 border border-gray-200 dark:border-gray-600 rounded-lg hover:border-gray-300 dark:hover:border-gray-500 transition-colors'
+                  className='relative group bg-white dark:bg-secondary-700 p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-primary-500 border border-secondary-200 dark:border-secondary-600 rounded-lg hover:border-secondary-300 dark:hover:border-secondary-500 transition-colors'
                 >
                   <div>
-                    <span className='rounded-lg inline-flex p-3 bg-primary-50 text-primary-600 ring-4 ring-white'>
+                    <span className='rounded-lg inline-flex p-3 bg-primary-50 text-primary-600 ring-4 ring-white dark:ring-secondary-600'>
                       <svg
                         className='h-6 w-6'
                         fill='none'
@@ -262,11 +262,11 @@ function AdminDashboard() {
                     </span>
                   </div>
                   <div className='mt-8'>
-                    <h3 className='text-lg font-medium text-gray-900 dark:text-white'>
+                    <h3 className='text-lg font-medium text-secondary-900 dark:text-white'>
                       <span className='absolute inset-0' aria-hidden='true' />
                       Manage Users
                     </h3>
-                    <p className='mt-2 text-sm text-gray-500 dark:text-gray-400'>
+                    <p className='mt-2 text-sm text-secondary-500 dark:text-secondary-400'>
                       Create, edit, and manage user accounts and permissions.
                     </p>
                   </div>
@@ -274,10 +274,10 @@ function AdminDashboard() {
 
                 <Link
                   href='/admin/books'
-                  className='relative group bg-white dark:bg-gray-700 p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-primary-500 border border-gray-200 dark:border-gray-600 rounded-lg hover:border-gray-300 dark:hover:border-gray-500 transition-colors'
+                  className='relative group bg-white dark:bg-secondary-700 p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-primary-500 border border-secondary-200 dark:border-secondary-600 rounded-lg hover:border-secondary-300 dark:hover:border-secondary-500 transition-colors'
                 >
                   <div>
-                    <span className='rounded-lg inline-flex p-3 bg-blue-50 text-blue-600 ring-4 ring-white'>
+                    <span className='rounded-lg inline-flex p-3 bg-primary-50 text-primary-600 ring-4 ring-white dark:ring-secondary-600'>
                       <svg
                         className='h-6 w-6'
                         fill='none'
@@ -294,11 +294,11 @@ function AdminDashboard() {
                     </span>
                   </div>
                   <div className='mt-8'>
-                    <h3 className='text-lg font-medium text-gray-900 dark:text-white'>
+                    <h3 className='text-lg font-medium text-secondary-900 dark:text-white'>
                       <span className='absolute inset-0' aria-hidden='true' />
                       Manage Books
                     </h3>
-                    <p className='mt-2 text-sm text-gray-500 dark:text-gray-400'>
+                    <p className='mt-2 text-sm text-secondary-500 dark:text-secondary-400'>
                       Add, edit, and organize books in the library.
                     </p>
                   </div>
@@ -306,10 +306,10 @@ function AdminDashboard() {
 
                 <Link
                   href='/admin/categories'
-                  className='relative group bg-white dark:bg-gray-700 p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-primary-500 border border-gray-200 dark:border-gray-600 rounded-lg hover:border-gray-300 dark:hover:border-gray-500 transition-colors'
+                  className='relative group bg-white dark:bg-secondary-700 p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-primary-500 border border-secondary-200 dark:border-secondary-600 rounded-lg hover:border-secondary-300 dark:hover:border-secondary-500 transition-colors'
                 >
                   <div>
-                    <span className='rounded-lg inline-flex p-3 bg-purple-50 text-purple-600 ring-4 ring-white'>
+                    <span className='rounded-lg inline-flex p-3 bg-warning-50 text-warning-600 ring-4 ring-white dark:ring-secondary-600'>
                       <svg
                         className='h-6 w-6'
                         fill='none'
@@ -326,11 +326,11 @@ function AdminDashboard() {
                     </span>
                   </div>
                   <div className='mt-8'>
-                    <h3 className='text-lg font-medium text-gray-900 dark:text-white'>
+                    <h3 className='text-lg font-medium text-secondary-900 dark:text-white'>
                       <span className='absolute inset-0' aria-hidden='true' />
                       Manage Categories
                     </h3>
-                    <p className='mt-2 text-sm text-gray-500 dark:text-gray-400'>
+                    <p className='mt-2 text-sm text-secondary-500 dark:text-secondary-400'>
                       Create and organize book categories and tags.
                     </p>
                   </div>
@@ -338,10 +338,10 @@ function AdminDashboard() {
 
                 <Link
                   href='/admin/pricing'
-                  className='relative group bg-white dark:bg-gray-700 p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-primary-500 border border-gray-200 dark:border-gray-600 rounded-lg hover:border-gray-300 dark:hover:border-gray-500 transition-colors'
+                  className='relative group bg-white dark:bg-secondary-700 p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-primary-500 border border-secondary-200 dark:border-secondary-600 rounded-lg hover:border-secondary-300 dark:hover:border-secondary-500 transition-colors'
                 >
                   <div>
-                    <span className='rounded-lg inline-flex p-3 bg-green-50 text-green-600 ring-4 ring-white'>
+                    <span className='rounded-lg inline-flex p-3 bg-success-50 text-success-600 ring-4 ring-white dark:ring-secondary-600'>
                       <svg
                         className='h-6 w-6'
                         fill='none'
@@ -358,11 +358,11 @@ function AdminDashboard() {
                     </span>
                   </div>
                   <div className='mt-8'>
-                    <h3 className='text-lg font-medium text-gray-900 dark:text-white'>
+                    <h3 className='text-lg font-medium text-secondary-900 dark:text-white'>
                       <span className='absolute inset-0' aria-hidden='true' />
                       Manage Pricing
                     </h3>
-                    <p className='mt-2 text-sm text-gray-500 dark:text-gray-400'>
+                    <p className='mt-2 text-sm text-secondary-500 dark:text-secondary-400'>
                       Create and manage subscription plans and pricing.
                     </p>
                   </div>
@@ -370,10 +370,10 @@ function AdminDashboard() {
 
                 <Link
                   href='/admin/payment-settings'
-                  className='relative group bg-white dark:bg-gray-700 p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-primary-500 border border-gray-200 dark:border-gray-600 rounded-lg hover:border-gray-300 dark:hover:border-gray-500 transition-colors'
+                  className='relative group bg-white dark:bg-secondary-700 p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-primary-500 border border-secondary-200 dark:border-secondary-600 rounded-lg hover:border-secondary-300 dark:hover:border-secondary-500 transition-colors'
                 >
                   <div>
-                    <span className='rounded-lg inline-flex p-3 bg-green-50 text-green-600 ring-4 ring-white'>
+                    <span className='rounded-lg inline-flex p-3 bg-success-50 text-success-600 ring-4 ring-white dark:ring-secondary-600'>
                       <svg
                         className='h-6 w-6'
                         fill='none'
@@ -390,11 +390,11 @@ function AdminDashboard() {
                     </span>
                   </div>
                   <div className='mt-8'>
-                    <h3 className='text-lg font-medium text-gray-900 dark:text-white'>
+                    <h3 className='text-lg font-medium text-secondary-900 dark:text-white'>
                       <span className='absolute inset-0' aria-hidden='true' />
                       Payment Settings
                     </h3>
-                    <p className='mt-2 text-sm text-gray-500 dark:text-gray-400'>
+                    <p className='mt-2 text-sm text-secondary-500 dark:text-secondary-400'>
                       Configure PayPal and Stripe payment gateways.
                     </p>
                   </div>
@@ -402,10 +402,10 @@ function AdminDashboard() {
 
                 <Link
                   href='/admin/settings'
-                  className='relative group bg-white dark:bg-gray-700 p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-primary-500 border border-gray-200 dark:border-gray-600 rounded-lg hover:border-gray-300 dark:hover:border-gray-500 transition-colors'
+                  className='relative group bg-white dark:bg-secondary-700 p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-primary-500 border border-secondary-200 dark:border-secondary-600 rounded-lg hover:border-secondary-300 dark:hover:border-secondary-500 transition-colors'
                 >
                   <div>
-                    <span className='rounded-lg inline-flex p-3 bg-gray-50 text-gray-600 ring-4 ring-white'>
+                    <span className='rounded-lg inline-flex p-3 bg-secondary-100 text-secondary-600 ring-4 ring-white dark:ring-secondary-600'>
                       <svg
                         className='h-6 w-6'
                         fill='none'
@@ -428,11 +428,11 @@ function AdminDashboard() {
                     </span>
                   </div>
                   <div className='mt-8'>
-                    <h3 className='text-lg font-medium text-gray-900 dark:text-white'>
+                    <h3 className='text-lg font-medium text-secondary-900 dark:text-white'>
                       <span className='absolute inset-0' aria-hidden='true' />
                       System Settings
                     </h3>
-                    <p className='mt-2 text-sm text-gray-500 dark:text-gray-400'>
+                    <p className='mt-2 text-sm text-secondary-500 dark:text-secondary-400'>
                       Configure application settings and preferences.
                     </p>
                   </div>
@@ -440,10 +440,10 @@ function AdminDashboard() {
 
                 <Link
                   href='/admin/reports'
-                  className='relative group bg-white dark:bg-gray-700 p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-primary-500 border border-gray-200 dark:border-gray-600 rounded-lg hover:border-gray-300 dark:hover:border-gray-500 transition-colors'
+                  className='relative group bg-white dark:bg-secondary-700 p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-primary-500 border border-secondary-200 dark:border-secondary-600 rounded-lg hover:border-secondary-300 dark:hover:border-secondary-500 transition-colors'
                 >
                   <div>
-                    <span className='rounded-lg inline-flex p-3 bg-green-50 text-green-600 ring-4 ring-white'>
+                    <span className='rounded-lg inline-flex p-3 bg-success-50 text-success-600 ring-4 ring-white dark:ring-secondary-600'>
                       <svg
                         className='h-6 w-6'
                         fill='none'
@@ -460,19 +460,19 @@ function AdminDashboard() {
                     </span>
                   </div>
                   <div className='mt-8'>
-                    <h3 className='text-lg font-medium text-gray-900 dark:text-white'>
+                    <h3 className='text-lg font-medium text-secondary-900 dark:text-white'>
                       <span className='absolute inset-0' aria-hidden='true' />
                       Reports
                     </h3>
-                    <p className='mt-2 text-sm text-gray-500 dark:text-gray-400'>
+                    <p className='mt-2 text-sm text-secondary-500 dark:text-secondary-400'>
                       View usage statistics and generate reports.
                     </p>
                   </div>
                 </Link>
 
-                <div className='relative group bg-white dark:bg-gray-700 p-6 border border-gray-200 dark:border-gray-600 rounded-lg'>
+                <div className='relative group bg-white dark:bg-secondary-700 p-6 border border-secondary-200 dark:border-secondary-600 rounded-lg'>
                   <div>
-                    <span className='rounded-lg inline-flex p-3 bg-yellow-50 text-yellow-600 ring-4 ring-white'>
+                    <span className='rounded-lg inline-flex p-3 bg-warning-50 text-warning-600 ring-4 ring-white dark:ring-secondary-600'>
                       <svg
                         className='h-6 w-6'
                         fill='none'
@@ -489,13 +489,13 @@ function AdminDashboard() {
                     </span>
                   </div>
                   <div className='mt-8'>
-                    <h3 className='text-lg font-medium text-gray-500 dark:text-gray-400'>
+                    <h3 className='text-lg font-medium text-secondary-500 dark:text-secondary-400'>
                       System Health
                     </h3>
-                    <p className='mt-2 text-sm text-gray-400 dark:text-gray-500'>
+                    <p className='mt-2 text-sm text-secondary-400 dark:text-secondary-500'>
                       Monitor system performance and health metrics.
                     </p>
-                    <p className='mt-1 text-xs text-yellow-600'>Coming soon</p>
+                    <p className='mt-1 text-xs text-warning-600'>Coming soon</p>
                   </div>
                 </div>
               </div>

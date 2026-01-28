@@ -49,9 +49,9 @@ export default function Contact() {
   }
 
   return (
-    <div className='min-h-screen bg-gray-50 dark:bg-gray-900'>
+    <div className='min-h-screen bg-secondary-50 dark:bg-secondary-950'>
       {/* Navigation */}
-      <nav className='sticky top-0 z-50 bg-transparent backdrop-blur-md shadow-sm border-b border-gray-200 dark:border-gray-700'>
+      <nav className='sticky top-0 z-50 bg-transparent backdrop-blur-md shadow-sm border-b border-secondary-200 dark:border-secondary-700'>
         <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
           <div className='flex justify-between h-16'>
             <div className='flex items-center'>
@@ -59,7 +59,7 @@ export default function Contact() {
                 href={isAuthenticated ? '/' : '/'}
                 className='flex-shrink-0'
               >
-                <h1 className='text-2xl font-bold text-blue-600 dark:text-blue-400'>
+                <h1 className='text-2xl font-bold text-primary-600 dark:text-primary-400'>
                   BX Library
                 </h1>
               </Link>
@@ -70,13 +70,13 @@ export default function Contact() {
                   <CompactThemeToggle />
                   <Link
                     href='/'
-                    className='text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 px-3 py-2 rounded-md text-sm font-medium transition-colors'
+                    className='text-secondary-700 dark:text-secondary-300 hover:text-primary-600 dark:hover:text-primary-400 px-3 py-2 rounded-md text-sm font-medium transition-colors'
                   >
                     Library
                   </Link>
                   <Link
                     href='/account'
-                    className='text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 px-3 py-2 rounded-md text-sm font-medium transition-colors'
+                    className='text-secondary-700 dark:text-secondary-300 hover:text-primary-600 dark:hover:text-primary-400 px-3 py-2 rounded-md text-sm font-medium transition-colors'
                   >
                     Account
                   </Link>
@@ -86,13 +86,13 @@ export default function Contact() {
                   <CompactThemeToggle />
                   <Link
                     href='/'
-                    className='text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 px-3 py-2 rounded-md text-sm font-medium transition-colors'
+                    className='text-secondary-700 dark:text-secondary-300 hover:text-primary-600 dark:hover:text-primary-400 px-3 py-2 rounded-md text-sm font-medium transition-colors'
                   >
                     Home
                   </Link>
                   <Link
                     href='/login'
-                    className='bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors flex items-center justify-center'
+                    className='bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors flex items-center justify-center'
                     title='Sign In'
                   >
                     <LogIn size={18} />
@@ -106,10 +106,10 @@ export default function Contact() {
 
       <div className='max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12'>
         <div className='text-center mb-12'>
-          <h1 className='text-4xl font-bold text-gray-900 dark:text-white mb-4'>
+          <h1 className='text-4xl font-bold text-secondary-900 dark:text-white mb-4'>
             Contact Us
           </h1>
-          <p className='text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto'>
+          <p className='text-xl text-secondary-600 dark:text-secondary-400 max-w-2xl mx-auto'>
             Have a question or need help? We&apos;d love to hear from you. Send
             us a message and we&apos;ll respond as soon as possible.
           </p>
@@ -118,8 +118,8 @@ export default function Contact() {
         <div className='grid grid-cols-1 lg:grid-cols-3 gap-8'>
           {/* Contact Information */}
           <div className='lg:col-span-1'>
-            <div className='bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6'>
-              <h2 className='text-lg font-semibold text-gray-900 dark:text-white mb-6'>
+            <div className='bg-white dark:bg-secondary-800 rounded-lg shadow-sm border border-secondary-200 dark:border-secondary-700 p-6'>
+              <h2 className='text-lg font-semibold text-secondary-900 dark:text-white mb-6'>
                 Get in Touch
               </h2>
 
@@ -127,7 +127,7 @@ export default function Contact() {
                 <div className='flex items-start'>
                   <div className='flex-shrink-0'>
                     <svg
-                      className='h-6 w-6 text-blue-600'
+                      className='h-6 w-6 text-primary-600'
                       fill='none'
                       viewBox='0 0 24 24'
                       stroke='currentColor'
@@ -141,10 +141,10 @@ export default function Contact() {
                     </svg>
                   </div>
                   <div className='ml-3'>
-                    <p className='text-sm font-medium text-gray-900 dark:text-white'>
+                    <p className='text-sm font-medium text-secondary-900 dark:text-white'>
                       Email
                     </p>
-                    <p className='text-sm text-gray-600 dark:text-gray-400'>
+                    <p className='text-sm text-secondary-600 dark:text-secondary-400'>
                       support@bxlibrary.com
                     </p>
                   </div>
@@ -153,7 +153,7 @@ export default function Contact() {
                 <div className='flex items-start'>
                   <div className='flex-shrink-0'>
                     <svg
-                      className='h-6 w-6 text-blue-600'
+                      className='h-6 w-6 text-primary-600'
                       fill='none'
                       viewBox='0 0 24 24'
                       stroke='currentColor'
@@ -167,10 +167,10 @@ export default function Contact() {
                     </svg>
                   </div>
                   <div className='ml-3'>
-                    <p className='text-sm font-medium text-gray-900 dark:text-white'>
+                    <p className='text-sm font-medium text-secondary-900 dark:text-white'>
                       Phone
                     </p>
-                    <p className='text-sm text-gray-600 dark:text-gray-400'>
+                    <p className='text-sm text-secondary-600 dark:text-secondary-400'>
                       +1 (555) 123-4567
                     </p>
                   </div>
@@ -179,7 +179,7 @@ export default function Contact() {
                 <div className='flex items-start'>
                   <div className='flex-shrink-0'>
                     <svg
-                      className='h-6 w-6 text-blue-600'
+                      className='h-6 w-6 text-primary-600'
                       fill='none'
                       viewBox='0 0 24 24'
                       stroke='currentColor'
@@ -193,10 +193,10 @@ export default function Contact() {
                     </svg>
                   </div>
                   <div className='ml-3'>
-                    <p className='text-sm font-medium text-gray-900 dark:text-white'>
+                    <p className='text-sm font-medium text-secondary-900 dark:text-white'>
                       Response Time
                     </p>
-                    <p className='text-sm text-gray-600 dark:text-gray-400'>
+                    <p className='text-sm text-secondary-600 dark:text-secondary-400'>
                       Within 24 hours
                     </p>
                   </div>
@@ -205,7 +205,7 @@ export default function Contact() {
                 <div className='flex items-start'>
                   <div className='flex-shrink-0'>
                     <svg
-                      className='h-6 w-6 text-blue-600'
+                      className='h-6 w-6 text-primary-600'
                       fill='none'
                       viewBox='0 0 24 24'
                       stroke='currentColor'
@@ -225,10 +225,10 @@ export default function Contact() {
                     </svg>
                   </div>
                   <div className='ml-3'>
-                    <p className='text-sm font-medium text-gray-900 dark:text-white'>
+                    <p className='text-sm font-medium text-secondary-900 dark:text-white'>
                       Office
                     </p>
-                    <p className='text-sm text-gray-600 dark:text-gray-400'>
+                    <p className='text-sm text-secondary-600 dark:text-secondary-400'>
                       123 Library Street
                       <br />
                       Digital City, DC 12345
@@ -241,15 +241,15 @@ export default function Contact() {
 
           {/* Contact Form */}
           <div className='lg:col-span-2'>
-            <div className='bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6'>
-              <h2 className='text-lg font-semibold text-gray-900 dark:text-white mb-6'>
+            <div className='bg-white dark:bg-secondary-800 rounded-lg shadow-sm border border-secondary-200 dark:border-secondary-700 p-6'>
+              <h2 className='text-lg font-semibold text-secondary-900 dark:text-white mb-6'>
                 Send us a Message
               </h2>
 
               {submitted ? (
                 <div className='text-center py-8'>
                   <svg
-                    className='mx-auto h-12 w-12 text-green-500 mb-4'
+                    className='mx-auto h-12 w-12 text-success-500 mb-4'
                     fill='none'
                     viewBox='0 0 24 24'
                     stroke='currentColor'
@@ -261,16 +261,16 @@ export default function Contact() {
                       d='M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z'
                     />
                   </svg>
-                  <h3 className='text-lg font-medium text-gray-900 dark:text-white mb-2'>
+                  <h3 className='text-lg font-medium text-secondary-900 dark:text-white mb-2'>
                     Message Sent!
                   </h3>
-                  <p className='text-gray-600 dark:text-gray-400 mb-4'>
+                  <p className='text-secondary-600 dark:text-secondary-400 mb-4'>
                     Thank you for contacting us. We&apos;ll get back to you
                     soon.
                   </p>
                   <button
                     onClick={() => setSubmitted(false)}
-                    className='text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 underline'
+                    className='text-primary-600 dark:text-primary-400 hover:text-primary-800 dark:hover:text-primary-300 underline'
                   >
                     Send Another Message
                   </button>
@@ -281,7 +281,7 @@ export default function Contact() {
                     <div>
                       <label
                         htmlFor='name'
-                        className='block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2'
+                        className='block text-sm font-medium text-secondary-700 dark:text-secondary-300 mb-2'
                       >
                         Full Name *
                       </label>
@@ -292,7 +292,7 @@ export default function Contact() {
                         value={formData.name}
                         onChange={handleChange}
                         required
-                        className='w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent'
+                        className='w-full px-3 py-2 border border-secondary-300 dark:border-secondary-600 rounded-md bg-white dark:bg-secondary-700 text-secondary-900 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-transparent'
                         placeholder='Your full name'
                       />
                     </div>
@@ -300,7 +300,7 @@ export default function Contact() {
                     <div>
                       <label
                         htmlFor='email'
-                        className='block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2'
+                        className='block text-sm font-medium text-secondary-700 dark:text-secondary-300 mb-2'
                       >
                         Email Address *
                       </label>
@@ -311,7 +311,7 @@ export default function Contact() {
                         value={formData.email}
                         onChange={handleChange}
                         required
-                        className='w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent'
+                        className='w-full px-3 py-2 border border-secondary-300 dark:border-secondary-600 rounded-md bg-white dark:bg-secondary-700 text-secondary-900 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-transparent'
                         placeholder='your.email@example.com'
                       />
                     </div>
@@ -320,7 +320,7 @@ export default function Contact() {
                   <div>
                     <label
                       htmlFor='subject'
-                      className='block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2'
+                      className='block text-sm font-medium text-secondary-700 dark:text-secondary-300 mb-2'
                     >
                       Subject *
                     </label>
@@ -331,7 +331,7 @@ export default function Contact() {
                       value={formData.subject}
                       onChange={handleChange}
                       required
-                      className='w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent'
+                      className='w-full px-3 py-2 border border-secondary-300 dark:border-secondary-600 rounded-md bg-white dark:bg-secondary-700 text-secondary-900 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-transparent'
                       placeholder='What is this about?'
                     />
                   </div>
@@ -339,7 +339,7 @@ export default function Contact() {
                   <div>
                     <label
                       htmlFor='message'
-                      className='block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2'
+                      className='block text-sm font-medium text-secondary-700 dark:text-secondary-300 mb-2'
                     >
                       Message *
                     </label>
@@ -350,7 +350,7 @@ export default function Contact() {
                       onChange={handleChange}
                       required
                       rows={6}
-                      className='w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent'
+                      className='w-full px-3 py-2 border border-secondary-300 dark:border-secondary-600 rounded-md bg-white dark:bg-secondary-700 text-secondary-900 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-transparent'
                       placeholder='Please describe your question or concern in detail...'
                     />
                   </div>
@@ -359,7 +359,7 @@ export default function Contact() {
                     <button
                       type='submit'
                       disabled={loading}
-                      className='px-6 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center'
+                      className='px-6 py-3 bg-primary-600 text-white rounded-md hover:bg-primary-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center'
                     >
                       {loading ? (
                         <>
@@ -398,21 +398,21 @@ export default function Contact() {
         {/* FAQ Section */}
         <div className='mt-16'>
           <div className='text-center mb-8'>
-            <h2 className='text-2xl font-bold text-gray-900 dark:text-white mb-4'>
+            <h2 className='text-2xl font-bold text-secondary-900 dark:text-white mb-4'>
               Frequently Asked Questions
             </h2>
-            <p className='text-gray-600 dark:text-gray-400'>
+            <p className='text-secondary-600 dark:text-secondary-400'>
               Quick answers to common questions
             </p>
           </div>
 
-          <div className='bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700'>
-            <div className='divide-y divide-gray-200 dark:divide-gray-700'>
+          <div className='bg-white dark:bg-secondary-800 rounded-lg shadow-sm border border-secondary-200 dark:border-secondary-700'>
+            <div className='divide-y divide-secondary-200 dark:divide-secondary-700'>
               <div className='p-6'>
-                <h3 className='text-lg font-medium text-gray-900 dark:text-white mb-2'>
+                <h3 className='text-lg font-medium text-secondary-900 dark:text-white mb-2'>
                   How do I access the library?
                 </h3>
-                <p className='text-gray-600 dark:text-gray-400'>
+                <p className='text-secondary-600 dark:text-secondary-400'>
                   You need an active account to access our digital library.
                   Contact your administrator to get an invitation to create your
                   account.
@@ -420,20 +420,20 @@ export default function Contact() {
               </div>
 
               <div className='p-6'>
-                <h3 className='text-lg font-medium text-gray-900 dark:text-white mb-2'>
+                <h3 className='text-lg font-medium text-secondary-900 dark:text-white mb-2'>
                   Can I download books for offline reading?
                 </h3>
-                <p className='text-gray-600 dark:text-gray-400'>
+                <p className='text-secondary-600 dark:text-secondary-400'>
                   Our books are designed for online reading only. You can read
                   them directly in your browser with our built-in PDF reader.
                 </p>
               </div>
 
               <div className='p-6'>
-                <h3 className='text-lg font-medium text-gray-900 dark:text-white mb-2'>
+                <h3 className='text-lg font-medium text-secondary-900 dark:text-white mb-2'>
                   I forgot my password. How can I reset it?
                 </h3>
-                <p className='text-gray-600 dark:text-gray-400'>
+                <p className='text-secondary-600 dark:text-secondary-400'>
                   Use the &quot;Forgot Password&quot; link on the login page to
                   receive a password reset email. If you continue having issues,
                   contact us for assistance.
@@ -441,10 +441,10 @@ export default function Contact() {
               </div>
 
               <div className='p-6'>
-                <h3 className='text-lg font-medium text-gray-900 dark:text-white mb-2'>
+                <h3 className='text-lg font-medium text-secondary-900 dark:text-white mb-2'>
                   How do I search for specific books?
                 </h3>
-                <p className='text-gray-600 dark:text-gray-400'>
+                <p className='text-secondary-600 dark:text-secondary-400'>
                   Use the search bar in the library to find books by title or
                   author. You can also filter by category and sort results to
                   find what you&quot;re looking for.

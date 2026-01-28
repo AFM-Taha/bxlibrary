@@ -45,10 +45,10 @@ const ProtectedRoute = ({ children, requireAdmin = false }) => {
   // Show loading spinner while checking authentication or redirecting
   if (isLoading || isRedirecting) {
     return (
-      <div className='min-h-screen flex items-center justify-center bg-gray-50'>
+      <div className='min-h-screen flex items-center justify-center bg-secondary-50 dark:bg-secondary-950'>
         <div className='flex flex-col items-center space-y-4'>
           <div className='animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600'></div>
-          <p className='text-sm text-gray-600'>{isLoading ? 'Loading...' : 'Redirecting...'}</p>
+          <p className='text-sm text-secondary-600 dark:text-secondary-400'>{isLoading ? 'Loading...' : 'Redirecting...'}</p>
         </div>
       </div>
     )
@@ -57,10 +57,10 @@ const ProtectedRoute = ({ children, requireAdmin = false }) => {
   // Don't render children if not authenticated or if admin is required but user is not admin
   if (!isAuthenticated || (requireAdmin && !isAdmin())) {
     return (
-      <div className='min-h-screen flex items-center justify-center bg-gray-50'>
+      <div className='min-h-screen flex items-center justify-center bg-secondary-50 dark:bg-secondary-950'>
         <div className='flex flex-col items-center space-y-4'>
           <div className='animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600'></div>
-          <p className='text-sm text-gray-600'>Redirecting...</p>
+          <p className='text-sm text-secondary-600 dark:text-secondary-400'>Redirecting...</p>
         </div>
       </div>
     )
@@ -73,12 +73,12 @@ const ProtectedRoute = ({ children, requireAdmin = false }) => {
       (user.expiryDate && new Date(user.expiryDate) < new Date()))
   ) {
     return (
-      <div className='min-h-screen flex items-center justify-center bg-gray-50'>
+      <div className='min-h-screen flex items-center justify-center bg-secondary-50 dark:bg-secondary-950'>
         <div className='max-w-md w-full space-y-8 text-center'>
           <div>
-            <div className='mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-red-100'>
+            <div className='mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-error-100'>
               <svg
-                className='h-6 w-6 text-red-600'
+                className='h-6 w-6 text-error-600'
                 fill='none'
                 viewBox='0 0 24 24'
                 stroke='currentColor'
@@ -91,10 +91,10 @@ const ProtectedRoute = ({ children, requireAdmin = false }) => {
                 />
               </svg>
             </div>
-            <h2 className='mt-6 text-3xl font-extrabold text-gray-900'>
+            <h2 className='mt-6 text-3xl font-extrabold text-secondary-900 dark:text-white'>
               Account Access Restricted
             </h2>
-            <p className='mt-2 text-sm text-gray-600'>
+            <p className='mt-2 text-sm text-secondary-600 dark:text-secondary-400'>
               {user.status !== 'active'
                 ? 'Your account has been deactivated. Please contact support.'
                 : 'Your account has expired. Please contact support for renewal.'}

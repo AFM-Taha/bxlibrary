@@ -45,7 +45,7 @@ export default function ForgotPassword() {
           <meta name='description' content='Password reset instructions sent' />
         </Head>
 
-        <div className='min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 py-12 px-4 sm:px-6 lg:px-8'>
+        <div className='min-h-screen flex items-center justify-center bg-secondary-50 dark:bg-secondary-900 py-12 px-4 sm:px-6 lg:px-8'>
           <div className='max-w-md w-full space-y-8'>
             <div className='flex justify-end'>
               <CompactThemeToggle />
@@ -66,15 +66,15 @@ export default function ForgotPassword() {
                   />
                 </svg>
               </div>
-              <h2 className='mt-6 text-3xl font-extrabold text-gray-900 dark:text-white'>
+              <h2 className='mt-6 text-3xl font-extrabold text-secondary-900 dark:text-white'>
                 Check your email
               </h2>
-              <p className='mt-2 text-sm text-gray-600 dark:text-gray-400'>
+              <p className='mt-2 text-sm text-secondary-600 dark:text-secondary-400'>
                 If an account with that email exists, we&apos;ve sent password
                 reset instructions to:
               </p>
-              <p className='mt-1 text-sm font-medium text-gray-900 dark:text-white'>{email}</p>
-              <p className='mt-4 text-sm text-gray-600 dark:text-gray-400'>
+              <p className='mt-1 text-sm font-medium text-secondary-900 dark:text-white'>{email}</p>
+              <p className='mt-4 text-sm text-secondary-600 dark:text-secondary-400'>
                 Didn&apos;t receive the email? Check your spam folder or try
                 again.
               </p>
@@ -86,7 +86,7 @@ export default function ForgotPassword() {
                   setIsSubmitted(false)
                   setEmail('')
                 }}
-                className='w-full flex justify-center py-2 px-4 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500'
+                className='w-full flex justify-center py-2 px-4 border border-secondary-300 dark:border-secondary-600 rounded-md shadow-sm text-sm font-medium text-secondary-700 dark:text-secondary-300 bg-white dark:bg-secondary-800 hover:bg-secondary-50 dark:hover:bg-secondary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500'
               >
                 Try different email
               </button>
@@ -111,16 +111,16 @@ export default function ForgotPassword() {
         <meta name='description' content='Reset your BX Library password' />
       </Head>
 
-      <div className='min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 py-12 px-4 sm:px-6 lg:px-8'>
+      <div className='min-h-screen flex items-center justify-center bg-secondary-50 dark:bg-secondary-900 py-12 px-4 sm:px-6 lg:px-8'>
         <div className='max-w-md w-full space-y-8'>
           <div className='flex justify-end'>
             <CompactThemeToggle />
           </div>
           <div>
-            <h2 className='mt-6 text-center text-3xl font-extrabold text-gray-900 dark:text-white'>
+            <h2 className='mt-6 text-center text-3xl font-extrabold text-secondary-900 dark:text-white'>
               Forgot your password?
             </h2>
-            <p className='mt-2 text-center text-sm text-gray-600 dark:text-gray-400'>
+            <p className='mt-2 text-center text-sm text-secondary-600 dark:text-secondary-400'>
               Enter your email address and we&apos;ll send you a link to reset
               your password.
             </p>
@@ -130,7 +130,7 @@ export default function ForgotPassword() {
             <div>
               <label
                 htmlFor='email'
-                className='block text-sm font-medium text-gray-700 dark:text-gray-300'
+                className='block text-sm font-medium text-secondary-700 dark:text-secondary-300'
               >
                 Email address
               </label>
@@ -141,7 +141,7 @@ export default function ForgotPassword() {
                   type='email'
                   autoComplete='email'
                   required
-                  className='appearance-none block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md placeholder-gray-400 dark:placeholder-gray-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm'
+                  className='appearance-none block w-full px-3 py-2 border border-secondary-300 dark:border-secondary-600 rounded-md placeholder-secondary-400 dark:placeholder-secondary-500 bg-white dark:bg-secondary-800 text-secondary-900 dark:text-white focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm'
                   placeholder='Enter your email address'
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}

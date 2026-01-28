@@ -18,9 +18,12 @@ export default function PaymentSuccess() {
 
   useEffect(() => {
     const verifyPayment = async () => {
-      const { session_id, subscription_id } = router.query
+      const { session_id, subscription_id, transaction_id, order_id } = router.query
       
-      if (!session_id && !subscription_id) {
+      // Determine the identifier to use
+      const paymentId = session_id || subscription_id || transaction_id || order_id
+      
+      if (!paymentId) {
         setError('No payment session found')
         setIsLoading(false)
         return
@@ -33,8 +36,10 @@ export default function PaymentSuccess() {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            sessionId: session_id,
+            sessionId: session_id || order_id, // Map order_id to sessionId for consistency
             subscriptionId: subscription_id,
+            transactionId: transaction_id, // Pass explicit transaction_id if available
+            orderId: order_id
           }),
         })
 
@@ -50,7 +55,7 @@ export default function PaymentSuccess() {
                 'Content-Type': 'application/json',
               },
               body: JSON.stringify({
-                sessionId: session_id,
+                sessionId: session_id || order_id,
                 subscriptionId: subscription_id,
                 paymentData: data,
               }),
@@ -79,10 +84,10 @@ export default function PaymentSuccess() {
 
   if (isLoading) {
     return (
-      <div className='min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center'>
+      <div className='min-h-screen bg-secondary-50 dark:bg-secondary-900 flex items-center justify-center'>
         <div className='text-center'>
-          <div className='animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4'></div>
-          <p className='text-gray-600 dark:text-gray-400'>
+          <div className='animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600 mx-auto mb-4'></div>
+          <p className='text-secondary-600 dark:text-secondary-400'>
             Verifying your payment...
           </p>
         </div>
@@ -91,13 +96,13 @@ export default function PaymentSuccess() {
   }
 
   return (
-    <div className='min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center px-4'>
+    <div className='min-h-screen bg-secondary-50 dark:bg-secondary-900 flex items-center justify-center px-4'>
       <div className='max-w-md w-full'>
-        <div className='bg-white dark:bg-gray-800 rounded-lg shadow-lg p-8 text-center'>
+        <div className='bg-white dark:bg-secondary-800 rounded-lg shadow-lg p-8 text-center'>
           {/* Success Icon */}
-          <div className='mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-green-100 dark:bg-green-900 mb-6'>
+          <div className='mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-success-100 dark:bg-success-900 mb-6'>
             <svg
-              className='h-8 w-8 text-green-600 dark:text-green-400'
+              className='h-8 w-8 text-success-600 dark:text-success-400'
               fill='none'
               stroke='currentColor'
               viewBox='0 0 24 24'
@@ -112,18 +117,18 @@ export default function PaymentSuccess() {
           </div>
 
           {/* Success Message */}
-          <h1 className='text-2xl font-bold text-gray-900 dark:text-white mb-4'>
+          <h1 className='text-2xl font-bold text-secondary-900 dark:text-white mb-4'>
             Payment Successful!
           </h1>
 
-          <p className='text-gray-600 dark:text-gray-400 mb-6'>
+          <p className='text-secondary-600 dark:text-secondary-400 mb-6'>
             Thank you for your subscription. Your account has been upgraded and
             you now have access to all premium features.
           </p>
 
           {/* Payment Details */}
-          <div className='bg-gray-50 dark:bg-gray-700 rounded-lg p-4 mb-6'>
-            <div className='text-sm text-gray-600 dark:text-gray-400 space-y-2'>
+          <div className='bg-secondary-50 dark:bg-secondary-700 rounded-lg p-4 mb-6'>
+            <div className='text-sm text-secondary-600 dark:text-secondary-400 space-y-2'>
               {provider && (
                 <div className='flex justify-between'>
                   <span>Payment Method:</span>
@@ -161,14 +166,14 @@ export default function PaymentSuccess() {
               <>
                 <Link
                   href={`/signup?token=${signupToken}`}
-                  className='w-full bg-green-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-green-700 transition-colors flex items-center justify-center gap-2'
+                  className='w-full bg-success-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-success-700 transition-colors flex items-center justify-center gap-2'
                 >
                   <UserPlus className='w-5 h-5' />
                   Create Your Account
                 </Link>
                 
-                <div className='bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4'>
-                  <p className='text-sm text-blue-800 dark:text-blue-200'>
+                <div className='bg-primary-50 dark:bg-primary-900/20 border border-primary-200 dark:border-primary-800 rounded-lg p-4'>
+                  <p className='text-sm text-primary-800 dark:text-primary-200'>
                     <strong>Next Step:</strong> Create your account to access your purchased plan and start using the library.
                   </p>
                 </div>
@@ -176,14 +181,14 @@ export default function PaymentSuccess() {
             ) : (
               <>
                 <Link href='/'>
-                  <button className='w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-lg transition-colors flex items-center justify-center gap-2'>
+                  <button className='w-full bg-primary-600 hover:bg-primary-700 text-white font-medium py-3 px-4 rounded-lg transition-colors flex items-center justify-center gap-2'>
                     <BookOpen className='w-5 h-5' />
                     Access Library
                   </button>
                 </Link>
 
                 <Link href='/account'>
-                  <button className='w-full bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-900 dark:text-white font-medium py-3 px-4 rounded-lg transition-colors flex items-center justify-center gap-2'>
+                  <button className='w-full bg-secondary-100 hover:bg-secondary-200 dark:bg-secondary-700 dark:hover:bg-secondary-600 text-secondary-900 dark:text-white font-medium py-3 px-4 rounded-lg transition-colors flex items-center justify-center gap-2'>
                     <User className='w-5 h-5' />
                     View Account
                   </button>
@@ -192,7 +197,7 @@ export default function PaymentSuccess() {
             )}
 
             <Link href='/'>
-              <button className='w-full text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 font-medium py-2 transition-colors flex items-center justify-center gap-2'>
+              <button className='w-full text-primary-600 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300 font-medium py-2 transition-colors flex items-center justify-center gap-2'>
                 <Home className='w-5 h-5' />
                 Return to Home
               </button>
@@ -200,12 +205,12 @@ export default function PaymentSuccess() {
           </div>
 
           {/* Support Info */}
-          <div className='mt-8 pt-6 border-t border-gray-200 dark:border-gray-700'>
-            <p className='text-xs text-gray-500 dark:text-gray-400'>
+          <div className='mt-8 pt-6 border-t border-secondary-200 dark:border-secondary-700'>
+            <p className='text-xs text-secondary-500 dark:text-secondary-400'>
               Need help? Contact our support team at{' '}
               <a
                 href='mailto:support@example.com'
-                className='text-blue-600 hover:text-blue-700 dark:text-blue-400'
+                className='text-primary-600 hover:text-primary-700 dark:text-primary-400'
               >
                 support@example.com
               </a>

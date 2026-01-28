@@ -124,25 +124,25 @@ function AccountPage() {
   const getPasswordStrength = (password) => {
     if (password.length === 0) return { strength: 0, label: '', color: '' }
     if (password.length < 4)
-      return { strength: 1, label: 'Too Short', color: 'bg-red-500' }
+      return { strength: 1, label: 'Too Short', color: 'bg-error-500' }
     if (password.length < 6)
-      return { strength: 2, label: 'Weak', color: 'bg-yellow-500' }
+      return { strength: 2, label: 'Weak', color: 'bg-warning-500' }
     if (password.length < 8)
-      return { strength: 3, label: 'Good', color: 'bg-blue-500' }
-    return { strength: 4, label: 'Strong', color: 'bg-green-500' }
+      return { strength: 3, label: 'Good', color: 'bg-primary-500' }
+    return { strength: 4, label: 'Strong', color: 'bg-success-500' }
   }
 
   const passwordStrength = getPasswordStrength(passwordForm.newPassword)
 
   return (
-    <div className='min-h-screen bg-gray-50 dark:bg-gray-900'>
+    <div className='min-h-screen bg-secondary-50 dark:bg-secondary-950'>
       {/* Navigation */}
-      <nav className='sticky top-0 z-50 bg-transparent backdrop-blur-md shadow-sm border-b border-gray-200 dark:border-gray-700'>
+      <nav className='sticky top-0 z-50 bg-transparent backdrop-blur-md shadow-sm border-b border-secondary-200 dark:border-secondary-700'>
         <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
           <div className='flex justify-between h-16'>
             <div className='flex items-center'>
               <Link href='/' className='flex-shrink-0'>
-                <h1 className='text-2xl font-bold text-blue-600 dark:text-blue-400'>
+                <h1 className='text-2xl font-bold text-primary-600 dark:text-primary-400'>
                   BX Library
                 </h1>
               </Link>
@@ -151,13 +151,13 @@ function AccountPage() {
               <CompactThemeToggle />
               <Link
                 href='/'
-                className='text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 px-3 py-2 rounded-md text-sm font-medium transition-colors'
+                className='text-secondary-700 dark:text-secondary-300 hover:text-primary-600 dark:hover:text-primary-400 px-3 py-2 rounded-md text-sm font-medium transition-colors'
               >
                 Library
               </Link>
               <button
                 onClick={handleLogout}
-                className='text-gray-700 dark:text-gray-300 hover:text-red-600 dark:hover:text-red-400 px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center'
+                className='text-secondary-700 dark:text-secondary-300 hover:text-error-600 dark:hover:text-error-400 px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center'
                 title='Sign Out'
               >
                 <LogOut size={18} />
@@ -170,24 +170,24 @@ function AccountPage() {
       <div className='max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8'>
         {/* Header */}
         <div className='mb-8'>
-          <h1 className='text-3xl font-bold text-gray-900 dark:text-white mb-2'>
+          <h1 className='text-3xl font-bold text-secondary-900 dark:text-white mb-2'>
             Account Settings
           </h1>
-          <p className='text-gray-600 dark:text-gray-400'>
+          <p className='text-secondary-600 dark:text-secondary-400'>
             Manage your account information and preferences
           </p>
         </div>
 
         <div className='card overflow-hidden'>
           {/* Tabs */}
-          <div className='border-b border-gray-200 dark:border-gray-700'>
+          <div className='border-b border-secondary-200 dark:border-secondary-700'>
             <nav className='-mb-px flex'>
               <button
                 onClick={() => setActiveTab('profile')}
                 className={`py-4 px-6 text-sm font-medium border-b-2 transition-colors ${
                   activeTab === 'profile'
-                    ? 'border-blue-500 text-blue-600 dark:text-blue-400'
-                    : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-600'
+                    ? 'border-primary-500 text-primary-600 dark:text-primary-400'
+                    : 'border-transparent text-secondary-500 dark:text-secondary-400 hover:text-secondary-700 dark:hover:text-secondary-300 hover:border-secondary-300 dark:hover:border-secondary-600'
                 }`}
               >
                 Profile Information
@@ -196,8 +196,8 @@ function AccountPage() {
                 onClick={() => setActiveTab('password')}
                 className={`py-4 px-6 text-sm font-medium border-b-2 transition-colors ${
                   activeTab === 'password'
-                    ? 'border-blue-500 text-blue-600 dark:text-blue-400'
-                    : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-600'
+                    ? 'border-primary-500 text-primary-600 dark:text-primary-400'
+                    : 'border-transparent text-secondary-500 dark:text-secondary-400 hover:text-secondary-700 dark:hover:text-secondary-300 hover:border-secondary-300 dark:hover:border-secondary-600'
                 }`}
               >
                 Change Password
@@ -206,8 +206,8 @@ function AccountPage() {
                 onClick={() => setActiveTab('info')}
                 className={`py-4 px-6 text-sm font-medium border-b-2 transition-colors ${
                   activeTab === 'info'
-                    ? 'border-blue-500 text-blue-600 dark:text-blue-400'
-                    : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-600'
+                    ? 'border-primary-500 text-primary-600 dark:text-primary-400'
+                    : 'border-transparent text-secondary-500 dark:text-secondary-400 hover:text-secondary-700 dark:hover:text-secondary-300 hover:border-secondary-300 dark:hover:border-secondary-600'
                 }`}
               >
                 Account Info
@@ -222,7 +222,7 @@ function AccountPage() {
                 <div>
                   <label
                     htmlFor='name'
-                    className='block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2'
+                    className='block text-sm font-medium text-secondary-700 dark:text-secondary-300 mb-2'
                   >
                     Full Name
                   </label>
@@ -233,7 +233,7 @@ function AccountPage() {
                     onChange={(e) =>
                       setProfileForm({ ...profileForm, name: e.target.value })
                     }
-                    className='w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white'
+                    className='w-full px-3 py-2 border border-secondary-300 dark:border-secondary-600 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white dark:bg-secondary-700 text-secondary-900 dark:text-white'
                     required
                   />
                 </div>
@@ -241,7 +241,7 @@ function AccountPage() {
                 <div>
                   <label
                     htmlFor='email'
-                    className='block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2'
+                    className='block text-sm font-medium text-secondary-700 dark:text-secondary-300 mb-2'
                   >
                     Email Address
                   </label>
@@ -249,10 +249,10 @@ function AccountPage() {
                     type='email'
                     id='email'
                     value={profileForm.email}
-                    className='w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-gray-50 dark:bg-gray-800 text-gray-500 dark:text-gray-400'
+                    className='w-full px-3 py-2 border border-secondary-300 dark:border-secondary-600 rounded-md bg-secondary-50 dark:bg-secondary-800 text-secondary-500 dark:text-secondary-400'
                     disabled
                   />
-                  <p className='mt-1 text-sm text-gray-500 dark:text-gray-400'>
+                  <p className='mt-1 text-sm text-secondary-500 dark:text-secondary-400'>
                     Email address cannot be changed
                   </p>
                 </div>
@@ -260,7 +260,7 @@ function AccountPage() {
                 <div>
                   <label
                     htmlFor='phone'
-                    className='block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2'
+                    className='block text-sm font-medium text-secondary-700 dark:text-secondary-300 mb-2'
                   >
                     Phone Number
                   </label>
@@ -271,7 +271,7 @@ function AccountPage() {
                     onChange={(e) =>
                       setProfileForm({ ...profileForm, phone: e.target.value })
                     }
-                    className='w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white'
+                    className='w-full px-3 py-2 border border-secondary-300 dark:border-secondary-600 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white dark:bg-secondary-700 text-secondary-900 dark:text-white'
                   />
                 </div>
 
@@ -279,7 +279,7 @@ function AccountPage() {
                   <button
                     type='submit'
                     disabled={loading}
-                    className='px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors'
+                    className='px-6 py-2 bg-primary-600 text-white rounded-md hover:bg-primary-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors'
                   >
                     {loading ? 'Updating...' : 'Update Profile'}
                   </button>
@@ -293,7 +293,7 @@ function AccountPage() {
                 <div>
                   <label
                     htmlFor='currentPassword'
-                    className='block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2'
+                    className='block text-sm font-medium text-secondary-700 dark:text-secondary-300 mb-2'
                   >
                     Current Password
                   </label>
@@ -307,7 +307,7 @@ function AccountPage() {
                         currentPassword: e.target.value,
                       })
                     }
-                    className='w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white'
+                    className='w-full px-3 py-2 border border-secondary-300 dark:border-secondary-600 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white dark:bg-secondary-700 text-secondary-900 dark:text-white'
                     required
                   />
                 </div>
@@ -315,7 +315,7 @@ function AccountPage() {
                 <div>
                   <label
                     htmlFor='newPassword'
-                    className='block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2'
+                    className='block text-sm font-medium text-secondary-700 dark:text-secondary-300 mb-2'
                   >
                     New Password
                   </label>
@@ -329,13 +329,13 @@ function AccountPage() {
                         newPassword: e.target.value,
                       })
                     }
-                    className='w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white'
+                    className='w-full px-3 py-2 border border-secondary-300 dark:border-secondary-600 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white dark:bg-secondary-700 text-secondary-900 dark:text-white'
                     required
                   />
                   {passwordForm.newPassword && (
                     <div className='mt-2'>
                       <div className='flex items-center space-x-2'>
-                        <div className='flex-1 bg-gray-200 dark:bg-gray-600 rounded-full h-2'>
+                        <div className='flex-1 bg-secondary-200 dark:bg-secondary-600 rounded-full h-2'>
                           <div
                             className={`h-2 rounded-full transition-all duration-300 ${passwordStrength.color}`}
                             style={{
@@ -345,7 +345,7 @@ function AccountPage() {
                             }}
                           ></div>
                         </div>
-                        <span className='text-sm text-gray-600 dark:text-gray-400'>
+                        <span className='text-sm text-secondary-600 dark:text-secondary-400'>
                           {passwordStrength.label}
                         </span>
                       </div>
@@ -356,7 +356,7 @@ function AccountPage() {
                 <div>
                   <label
                     htmlFor='confirmPassword'
-                    className='block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2'
+                    className='block text-sm font-medium text-secondary-700 dark:text-secondary-300 mb-2'
                   >
                     Confirm New Password
                   </label>
@@ -370,13 +370,13 @@ function AccountPage() {
                         confirmPassword: e.target.value,
                       })
                     }
-                    className='w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white'
+                    className='w-full px-3 py-2 border border-secondary-300 dark:border-secondary-600 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white dark:bg-secondary-700 text-secondary-900 dark:text-white'
                     required
                   />
                   {passwordForm.confirmPassword &&
                     passwordForm.newPassword !==
                       passwordForm.confirmPassword && (
-                      <p className='mt-1 text-sm text-red-600 dark:text-red-400'>
+                      <p className='mt-1 text-sm text-error-600 dark:text-error-400'>
                         Passwords do not match
                       </p>
                     )}
@@ -389,7 +389,7 @@ function AccountPage() {
                       loading ||
                       passwordForm.newPassword !== passwordForm.confirmPassword
                     }
-                    className='px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors'
+                    className='px-6 py-2 bg-primary-600 text-white rounded-md hover:bg-primary-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors'
                   >
                     {loading ? 'Updating...' : 'Update Password'}
                   </button>
@@ -402,20 +402,20 @@ function AccountPage() {
               <div className='space-y-6'>
                 <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
                   <div>
-                    <h3 className='text-lg font-medium text-gray-900 dark:text-white mb-4'>
+                    <h3 className='text-lg font-medium text-secondary-900 dark:text-white mb-4'>
                       Account Status
                     </h3>
                     <dl className='space-y-3'>
                       <div>
-                        <dt className='text-sm font-medium text-gray-500 dark:text-gray-400'>
+                        <dt className='text-sm font-medium text-secondary-500 dark:text-secondary-400'>
                           Status
                         </dt>
-                        <dd className='text-sm text-gray-900 dark:text-white'>
+                        <dd className='text-sm text-secondary-900 dark:text-white'>
                           <span
                             className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
                               user?.status === 'active'
-                                ? 'bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200'
-                                : 'bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200'
+                                ? 'bg-success-100 dark:bg-success-900 text-success-800 dark:text-success-200'
+                                : 'bg-error-100 dark:bg-error-900 text-error-800 dark:text-error-200'
                             }`}
                           >
                             {user?.status?.charAt(0).toUpperCase() +
@@ -424,18 +424,18 @@ function AccountPage() {
                         </dd>
                       </div>
                       <div>
-                        <dt className='text-sm font-medium text-gray-500 dark:text-gray-400'>
+                        <dt className='text-sm font-medium text-secondary-500 dark:text-secondary-400'>
                           Role
                         </dt>
-                        <dd className='text-sm text-gray-900 dark:text-white capitalize'>
+                        <dd className='text-sm text-secondary-900 dark:text-white capitalize'>
                           {user?.role}
                         </dd>
                       </div>
                       <div>
-                        <dt className='text-sm font-medium text-gray-500 dark:text-gray-400'>
+                        <dt className='text-sm font-medium text-secondary-500 dark:text-secondary-400'>
                           Member Since
                         </dt>
-                        <dd className='text-sm text-gray-900 dark:text-white'>
+                        <dd className='text-sm text-secondary-900 dark:text-white'>
                           {user?.createdAt
                             ? new Date(user.createdAt).toLocaleDateString()
                             : 'N/A'}
@@ -443,10 +443,10 @@ function AccountPage() {
                       </div>
                       {user?.expiryDate && (
                         <div>
-                          <dt className='text-sm font-medium text-gray-500 dark:text-gray-400'>
+                          <dt className='text-sm font-medium text-secondary-500 dark:text-secondary-400'>
                             Account Expires
                           </dt>
-                          <dd className='text-sm text-gray-900 dark:text-white'>
+                          <dd className='text-sm text-secondary-900 dark:text-white'>
                             {new Date(user.expiryDate).toLocaleDateString()}
                           </dd>
                         </div>
@@ -455,31 +455,31 @@ function AccountPage() {
                   </div>
 
                   <div>
-                    <h3 className='text-lg font-medium text-gray-900 dark:text-white mb-4'>
+                    <h3 className='text-lg font-medium text-secondary-900 dark:text-white mb-4'>
                       Contact Information
                     </h3>
                     <dl className='space-y-3'>
                       <div>
-                        <dt className='text-sm font-medium text-gray-500 dark:text-gray-400'>
+                        <dt className='text-sm font-medium text-secondary-500 dark:text-secondary-400'>
                           Email
                         </dt>
-                        <dd className='text-sm text-gray-900 dark:text-white'>
+                        <dd className='text-sm text-secondary-900 dark:text-white'>
                           {user?.email}
                         </dd>
                       </div>
                       <div>
-                        <dt className='text-sm font-medium text-gray-500 dark:text-gray-400'>
+                        <dt className='text-sm font-medium text-secondary-500 dark:text-secondary-400'>
                           Phone
                         </dt>
-                        <dd className='text-sm text-gray-900 dark:text-white'>
+                        <dd className='text-sm text-secondary-900 dark:text-white'>
                           {user?.phone || 'Not provided'}
                         </dd>
                       </div>
                       <div>
-                        <dt className='text-sm font-medium text-gray-500 dark:text-gray-400'>
+                        <dt className='text-sm font-medium text-secondary-500 dark:text-secondary-400'>
                           Last Login
                         </dt>
-                        <dd className='text-sm text-gray-900 dark:text-white'>
+                        <dd className='text-sm text-secondary-900 dark:text-white'>
                           {user?.lastLogin
                             ? new Date(user.lastLogin).toLocaleString()
                             : 'N/A'}
@@ -489,20 +489,20 @@ function AccountPage() {
                   </div>
                 </div>
 
-                <div className='border-t dark:border-gray-700 pt-6'>
-                  <h3 className='text-lg font-medium text-gray-900 dark:text-white mb-4'>
+                <div className='border-t border-secondary-200 dark:border-secondary-700 pt-6'>
+                  <h3 className='text-lg font-medium text-secondary-900 dark:text-white mb-4'>
                     Account Actions
                   </h3>
                   <div className='flex space-x-4'>
                     <Link
                       href='/'
-                      className='px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors'
+                      className='px-4 py-2 bg-primary-600 text-white rounded-md hover:bg-primary-700 transition-colors'
                     >
                       Go to Library
                     </Link>
                     <button
                       onClick={handleLogout}
-                      className='px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 transition-colors flex items-center justify-center'
+                      className='px-4 py-2 bg-secondary-600 text-white rounded-md hover:bg-secondary-700 transition-colors flex items-center justify-center'
                       title='Sign Out'
                     >
                       <LogOut size={18} />

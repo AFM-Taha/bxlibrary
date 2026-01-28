@@ -38,9 +38,9 @@ const BookImageSlider = ({
   if (!images || images.length === 0) {
     return (
       <div
-        className={`relative bg-gray-200 dark:bg-gray-700 flex items-center justify-center ${className}`}
+        className={`relative bg-secondary-200 dark:bg-secondary-700 flex items-center justify-center ${className}`}
       >
-        <div className='text-gray-400 dark:text-gray-500 text-center'>
+        <div className='text-secondary-400 dark:text-secondary-500 text-center'>
           <svg
             className='w-12 h-12 mx-auto mb-2'
             fill='currentColor'

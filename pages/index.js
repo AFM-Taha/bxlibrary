@@ -94,14 +94,14 @@ function LibraryPage() {
   }
 
   return (
-    <div className='min-h-screen bg-gray-50 dark:bg-gray-900'>
+    <div className='min-h-screen bg-secondary-50 dark:bg-secondary-950'>
       {/* Navigation */}
-      <nav className='sticky top-0 z-50 bg-transparent backdrop-blur-md shadow-sm border-b border-gray-200 dark:border-gray-700'>
+      <nav className='sticky top-0 z-50 bg-transparent backdrop-blur-md shadow-sm border-b border-secondary-200 dark:border-secondary-700'>
         <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
           <div className='flex justify-between h-16'>
             <div className='flex items-center'>
               <Link href='/' className='flex-shrink-0'>
-                <h1 className='text-2xl font-bold text-blue-600 dark:text-blue-400'>
+                <h1 className='text-2xl font-bold text-primary-600 dark:text-primary-400'>
                   BX Library
                 </h1>
               </Link>
@@ -112,14 +112,14 @@ function LibraryPage() {
                 <>
                   <Link
                     href='/account'
-                    className='text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center'
+                    className='text-secondary-700 dark:text-secondary-300 hover:text-primary-600 dark:hover:text-primary-400 px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center'
                     title='Account'
                   >
                     <User size={18} />
                   </Link>
                   <button
                     onClick={handleLogout}
-                    className='text-gray-700 dark:text-gray-300 hover:text-red-600 dark:hover:text-red-400 px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center'
+                    className='text-secondary-700 dark:text-secondary-300 hover:text-red-600 dark:hover:text-red-400 px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center'
                     title='Log Out'
                   >
                     <LogOut size={18} />
@@ -129,7 +129,7 @@ function LibraryPage() {
               ) : (
                 <Link
                   href='/login'
-                  className='text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center'
+                  className='text-secondary-700 dark:text-secondary-300 hover:text-primary-600 dark:hover:text-primary-400 px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center'
                   title='Log In'
                 >
                   <LogIn size={18} />
@@ -144,7 +144,7 @@ function LibraryPage() {
       <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8'>
         {/* Search and Filters */}
         <div
-          className={`bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 px-4 pt-4 mb-8 ${
+          className={`bg-white dark:bg-secondary-800 rounded-lg shadow-sm border border-secondary-200 dark:border-secondary-700 px-4 pt-4 mb-8 ${
             showFilters ? 'pb-4' : 'pb-0 md:pb-4'
           }`}
         >
@@ -156,12 +156,12 @@ function LibraryPage() {
                   placeholder='Search books by title or author...'
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className='w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white dark:placeholder-gray-400'
+                  className='w-full px-4 py-2 border border-secondary-300 dark:border-secondary-600 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-transparent dark:bg-secondary-700 dark:text-white dark:placeholder-secondary-400'
                 />
               </div>
               <button
                 type='submit'
-                className='px-3 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors flex items-center justify-center'
+                className='px-3 py-2 bg-primary-600 text-white rounded-md hover:bg-primary-700 transition-colors flex items-center justify-center'
                 title='Search'
               >
                 <svg
@@ -182,7 +182,7 @@ function LibraryPage() {
               <button
                 type='button'
                 onClick={() => setShowFilters(!showFilters)}
-                className='md:hidden px-3 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 transition-colors flex items-center justify-center'
+                className='md:hidden px-3 py-2 bg-secondary-600 text-white rounded-md hover:bg-secondary-700 transition-colors flex items-center justify-center'
                 title='Toggle Filters'
               >
                 <svg
@@ -210,13 +210,13 @@ function LibraryPage() {
           >
             {/* Category Filter */}
             <div className='flex items-center space-x-2'>
-              <label className='text-sm font-medium text-gray-700 dark:text-gray-300'>
+              <label className='text-sm font-medium text-secondary-700 dark:text-secondary-300'>
                 Category:
               </label>
               <select
                 value={selectedCategory}
                 onChange={(e) => handleCategoryChange(e.target.value)}
-                className='px-3 py-1 border border-gray-300 dark:border-gray-600 rounded-md text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white'
+                className='px-3 py-1 border border-secondary-300 dark:border-secondary-600 rounded-md text-sm focus:ring-2 focus:ring-primary-500 focus:border-transparent dark:bg-secondary-700 dark:text-white'
               >
                 <option value=''>All Categories</option>
                 {categories.map((category) => (
@@ -229,13 +229,13 @@ function LibraryPage() {
 
             {/* Sort Options */}
             <div className='flex items-center space-x-2'>
-              <label className='text-sm font-medium text-gray-700 dark:text-gray-300'>
+              <label className='text-sm font-medium text-secondary-700 dark:text-secondary-300'>
                 Sort by:
               </label>
               <select
                 value={sortBy}
                 onChange={(e) => handleSortChange(e.target.value)}
-                className='px-3 py-1 border border-gray-300 dark:border-gray-600 rounded-md text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white'
+                className='px-3 py-1 border border-secondary-300 dark:border-secondary-600 rounded-md text-sm focus:ring-2 focus:ring-primary-500 focus:border-transparent dark:bg-secondary-700 dark:text-white'
               >
                 <option value='random'>Random</option>
                 <option value='newest'>Newest First</option>
@@ -255,7 +255,7 @@ function LibraryPage() {
                   setSelectedCategory('')
                   setCurrentPage(1)
                 }}
-                className='text-sm text-blue-600 hover:text-blue-800 underline'
+                className='text-sm text-primary-600 hover:text-primary-800 underline'
               >
                 Clear Filters
               </button>
@@ -265,10 +265,10 @@ function LibraryPage() {
 
         {/* Header */}
         <div className='mb-8'>
-          <h1 className='text-3xl font-bold text-gray-900 dark:text-white mb-2'>
+          <h1 className='text-3xl font-bold text-secondary-900 dark:text-white mb-2'>
             Library
           </h1>
-          <p className='text-gray-600 dark:text-gray-400'>
+          <p className='text-secondary-600 dark:text-secondary-400'>
             Discover and read from our collection of{' '}
             {totalBooks.toLocaleString()} books
           </p>
@@ -277,12 +277,12 @@ function LibraryPage() {
         {/* Books Grid */}
         {loading || initialLoad ? (
           <div className='flex justify-center items-center py-12'>
-            <div className='animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600'></div>
+            <div className='animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600'></div>
           </div>
         ) : books.length === 0 ? (
           <div className='text-center py-12'>
             <svg
-              className='mx-auto h-12 w-12 text-gray-400 mb-4'
+              className='mx-auto h-12 w-12 text-secondary-400 mb-4'
               fill='none'
               viewBox='0 0 24 24'
               stroke='currentColor'
@@ -294,10 +294,10 @@ function LibraryPage() {
                 d='M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253'
               />
             </svg>
-            <h3 className='text-lg font-medium text-gray-900 dark:text-white mb-2'>
+            <h3 className='text-lg font-medium text-secondary-900 dark:text-white mb-2'>
               No books found
             </h3>
-            <p className='text-gray-500 dark:text-gray-400'>
+            <p className='text-secondary-500 dark:text-secondary-400'>
               {searchTerm || selectedCategory
                 ? 'Try adjusting your search criteria or filters.'
                 : 'No books are available at the moment.'}
@@ -309,7 +309,7 @@ function LibraryPage() {
               {books.map((book) => (
                 <div
                   key={book._id}
-                  className='bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 hover:shadow-md transition-shadow'
+                  className='bg-white dark:bg-secondary-800 rounded-lg shadow-sm border border-secondary-200 dark:border-secondary-700 hover:shadow-md transition-shadow'
                 >
                   <Link href={`/books/${book._id}`}>
                     <div className='aspect-[2/3] rounded-t-lg overflow-hidden'>
@@ -322,14 +322,14 @@ function LibraryPage() {
                       />
                     </div>
                     <div className='p-2'>
-                      <h3 className='font-medium text-gray-900 dark:text-white text-xs mb-1 line-clamp-2 leading-tight'>
+                      <h3 className='font-medium text-secondary-900 dark:text-white text-xs mb-1 line-clamp-2 leading-tight'>
                         {book.title}
                       </h3>
-                      <p className='text-xs text-gray-600 dark:text-gray-400 mb-1 truncate'>
+                      <p className='text-xs text-secondary-600 dark:text-secondary-400 mb-1 truncate'>
                         {book.author}
                       </p>
                       {book.category && (
-                        <span className='inline-block px-1.5 py-0.5 text-xs font-medium bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full truncate'>
+                        <span className='inline-block px-1.5 py-0.5 text-xs font-medium bg-primary-100 dark:bg-primary-900 text-primary-800 dark:text-primary-200 rounded-full truncate'>
                           {book.category.name}
                         </span>
                       )}
@@ -345,7 +345,7 @@ function LibraryPage() {
                 <button
                   onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
                   disabled={currentPage === 1}
-                  className='px-3 py-2 text-sm font-medium text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed'
+                  className='px-3 py-2 text-sm font-medium text-secondary-500 dark:text-secondary-400 bg-white dark:bg-secondary-800 border border-secondary-300 dark:border-secondary-600 rounded-md hover:bg-secondary-50 dark:hover:bg-secondary-700 disabled:opacity-50 disabled:cursor-not-allowed'
                 >
                   Previous
                 </button>
@@ -369,8 +369,8 @@ function LibraryPage() {
                         onClick={() => setCurrentPage(pageNum)}
                         className={`px-3 py-2 text-sm font-medium rounded-md ${
                           currentPage === pageNum
-                            ? 'bg-blue-600 text-white'
-                            : 'text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700'
+                            ? 'bg-primary-600 text-white'
+                            : 'text-secondary-700 dark:text-secondary-300 bg-white dark:bg-secondary-800 border border-secondary-300 dark:border-secondary-600 hover:bg-secondary-50 dark:hover:bg-secondary-700'
                         }`}
                       >
                         {pageNum}
@@ -384,7 +384,7 @@ function LibraryPage() {
                     setCurrentPage(Math.min(totalPages, currentPage + 1))
                   }
                   disabled={currentPage === totalPages}
-                  className='px-3 py-2 text-sm font-medium text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed'
+                  className='px-3 py-2 text-sm font-medium text-secondary-500 dark:text-secondary-400 bg-white dark:bg-secondary-800 border border-secondary-300 dark:border-secondary-600 rounded-md hover:bg-secondary-50 dark:hover:bg-secondary-700 disabled:opacity-50 disabled:cursor-not-allowed'
                 >
                   Next
                 </button>

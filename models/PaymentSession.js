@@ -13,7 +13,7 @@ const PaymentSessionSchema = new mongoose.Schema(
     },
     provider: {
       type: String,
-      enum: ['stripe', 'paypal'],
+      enum: ['rupantor'],
       required: true,
     },
     planId: {
@@ -74,7 +74,7 @@ const PaymentSessionSchema = new mongoose.Schema(
   },
   {
     timestamps: true,
-  }
+  },
 )
 
 // Index for efficient queries
@@ -84,7 +84,7 @@ PaymentSessionSchema.index({ status: 1 })
 PaymentSessionSchema.index({ createdAt: 1 })
 
 // Method to generate signup token
-PaymentSessionSchema.methods.generateSignupToken = function() {
+PaymentSessionSchema.methods.generateSignupToken = function () {
   const crypto = require('crypto')
   const token = crypto.randomBytes(32).toString('hex')
   this.signupToken = token
@@ -93,12 +93,15 @@ PaymentSessionSchema.methods.generateSignupToken = function() {
 }
 
 // Method to check if signup token is valid
-PaymentSessionSchema.methods.isSignupTokenValid = function() {
-  return this.signupToken && 
-         this.signupTokenExpiry && 
-         this.signupTokenExpiry > new Date() &&
-         this.status === 'completed' &&
-         !this.signupCompleted
+PaymentSessionSchema.methods.isSignupTokenValid = function () {
+  return (
+    this.signupToken &&
+    this.signupTokenExpiry &&
+    this.signupTokenExpiry > new Date() &&
+    this.status === 'completed' &&
+    !this.signupCompleted
+  )
 }
 
-export default mongoose.models.PaymentSession || mongoose.model('PaymentSession', PaymentSessionSchema)
+export default mongoose.models.PaymentSession ||
+  mongoose.model('PaymentSession', PaymentSessionSchema)
