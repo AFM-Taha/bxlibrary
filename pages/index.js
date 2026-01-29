@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
+import Image from 'next/image'
 import { useAuth } from '../contexts/AuthContext'
 import ProtectedRoute from '../components/ProtectedRoute'
 import { CompactThemeToggle } from '../components/ThemeToggle'
@@ -101,9 +102,15 @@ function LibraryPage() {
           <div className='flex justify-between h-16'>
             <div className='flex items-center'>
               <Link href='/' className='flex-shrink-0'>
-                <h1 className='text-2xl font-bold text-primary-600 dark:text-primary-400'>
-                  BX Library
-                </h1>
+                <Image
+                  src='/logo.png'
+                  alt='BX Library'
+                  width={0}
+                  height={0}
+                  sizes='100vw'
+                  className='w-auto h-10'
+                  priority
+                />
               </Link>
             </div>
             <div className='flex items-center space-x-1 sm:space-x-4'>
