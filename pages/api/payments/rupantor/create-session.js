@@ -2,8 +2,6 @@ import dbConnect from '../../../../lib/mongodb'
 import PaymentConfig from '../../../../models/PaymentConfig'
 import Pricing from '../../../../models/Pricing'
 import RupantorPayService from '../../../../lib/payment/rupantor'
-import { getServerSession } from 'next-auth/next'
-import { authOptions } from '../../../api/auth/[...nextauth]' // Adjust path if needed
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
