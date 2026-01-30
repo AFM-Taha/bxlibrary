@@ -122,8 +122,6 @@ async function updatePaymentConfig(req, res, id, user) {
     // Provider-specific updates
     if (config.provider === 'rupantor') {
       if (rupantorApiKey !== undefined) updateData.rupantorApiKey = rupantorApiKey;
-      if (rupantorMerchantId !== undefined) updateData.rupantorMerchantId = rupantorMerchantId;
-      if (rupantorSecretKey !== undefined) updateData.rupantorSecretKey = rupantorSecretKey;
     }
 
     const updatedConfig = await PaymentConfig.findByIdAndUpdate(

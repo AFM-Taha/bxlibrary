@@ -2,6 +2,7 @@ import dbConnect from '../../../../lib/mongodb'
 import PaymentConfig from '../../../../models/PaymentConfig'
 import Pricing from '../../../../models/Pricing'
 import RupantorPayService from '../../../../lib/payment/rupantor'
+import { verifyToken } from '../../../../lib/jwt'
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -22,10 +23,25 @@ export default async function handler(req, res) {
     let email = customerEmail
     let userId = null
 
-    // Try to get session if not explicitly guest
-    // Note: You might need to adjust how you get the session depending on your auth setup
-    // For now, if customerEmail is passed, we treat it as provided.
-    // If not, we could check session.
+    // Try to get session from token if email is not provided or to link user
+    const token = req.cookies.token
+    if (token) {
+      try {
+        const decoded = verifyToken(token)
+        userId = decoded.userId
+        // If email was not explicitly provided (guest checkout), use the logged-in user's email
+        if (!email) {
+          email = decoded.email
+        }
+      } catch (err) {
+        // Token invalid, treat as guest if email provided
+        console.warn('Invalid token in payment session creation', err.message)
+      }
+    }
+
+    if (!email) {
+      return res.status(400).json({ error: 'Email is required' })
+    }
 
     // Fetch active RupantorPay config
     const config = await PaymentConfig.findOne({

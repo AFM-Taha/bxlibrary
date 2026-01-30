@@ -15,8 +15,6 @@ export default function PaymentSettings() {
     provider: 'rupantor',
     environment: 'sandbox',
     rupantorApiKey: '',
-    rupantorMerchantId: '',
-    rupantorSecretKey: '',
     isActive: false,
   })
 
@@ -69,8 +67,6 @@ export default function PaymentSettings() {
       // Add provider-specific fields
       if (formData.provider === 'rupantor') {
         apiData.rupantorApiKey = formData.rupantorApiKey
-        apiData.rupantorMerchantId = formData.rupantorMerchantId
-        apiData.rupantorSecretKey = formData.rupantorSecretKey
       }
 
       const response = await fetch(url, {
@@ -365,42 +361,6 @@ export default function PaymentSettings() {
                       }
                       className='w-full px-3 py-2 border border-secondary-300 dark:border-secondary-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent dark:bg-secondary-700 dark:text-white'
                       required
-                    />
-                  </div>
-
-                  <div>
-                    <label className='block text-sm font-medium text-secondary-700 dark:text-secondary-300 mb-1'>
-                      Merchant ID
-                    </label>
-                    <input
-                      type='text'
-                      value={formData.rupantorMerchantId}
-                      onChange={(e) =>
-                        setFormData({
-                          ...formData,
-                          rupantorMerchantId: e.target.value,
-                        })
-                      }
-                      className='w-full px-3 py-2 border border-secondary-300 dark:border-secondary-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent dark:bg-secondary-700 dark:text-white'
-                      required
-                    />
-                  </div>
-
-                  <div>
-                    <label className='block text-sm font-medium text-secondary-700 dark:text-secondary-300 mb-1'>
-                      Secret Key
-                    </label>
-                    <input
-                      type='password'
-                      value={formData.rupantorSecretKey}
-                      onChange={(e) =>
-                        setFormData({
-                          ...formData,
-                          rupantorSecretKey: e.target.value,
-                        })
-                      }
-                      className='w-full px-3 py-2 border border-secondary-300 dark:border-secondary-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent dark:bg-secondary-700 dark:text-white'
-                      required={!editingConfig}
                     />
                   </div>
                 </>

@@ -117,7 +117,7 @@ async function createPricingPlan(req, res) {
       return res.status(400).json({ error: 'Invalid billing period' });
     }
 
-    if (!['USD', 'EUR', 'GBP', 'INR'].includes(currency)) {
+    if (!['USD', 'EUR', 'GBP', 'INR', 'BDT'].includes(currency)) {
       return res.status(400).json({ error: 'Invalid currency' });
     }
 

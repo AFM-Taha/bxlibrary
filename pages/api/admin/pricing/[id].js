@@ -129,7 +129,7 @@ async function updatePricingPlan(req, res, planId) {
 
     // Update currency
     if (currency && currency !== pricingPlan.currency) {
-      if (!['USD', 'EUR', 'GBP', 'INR'].includes(currency)) {
+      if (!['USD', 'EUR', 'GBP', 'INR', 'BDT'].includes(currency)) {
         return res.status(400).json({ error: 'Invalid currency' });
       }
       pricingPlan.currency = currency;

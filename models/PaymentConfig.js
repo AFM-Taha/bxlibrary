@@ -21,15 +21,9 @@ const paymentConfigSchema = new mongoose.Schema(
     },
     rupantorMerchantId: {
       type: String,
-      required: function () {
-        return this.provider === 'rupantor'
-      },
     },
     rupantorSecretKey: {
       type: String,
-      required: function () {
-        return this.provider === 'rupantor'
-      },
     },
     // Stripe Configuration
     stripePublishableKey: {
